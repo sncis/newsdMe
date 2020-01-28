@@ -49,6 +49,7 @@ export default class Register extends React.Component {
       <form>
         <div>
           <input
+            id="emailInput"
             type="email"
             placeholder="email"
             onChange={e => this.setEmail(e.target.value)}
@@ -63,7 +64,11 @@ export default class Register extends React.Component {
             placeholder="password"
             onChange={e => this.setPassword(e.target.value)}
           />
-          <input type="submit" onClick={this.submitDetails} />
+          <input
+            id="registerSubmitBtn"
+            type="submit"
+            onClick={this.submitDetails}
+          />
         </div>
       </form>
     );

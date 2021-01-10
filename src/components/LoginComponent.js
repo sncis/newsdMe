@@ -1,70 +1,79 @@
-import React from "react";
+import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { loginUser } from "../store/actions/userActions";
 
-const mapDispatchToProps = dispatch => {
-  return {
-    loginUser: user => dispatch(loginUser(user))
-  };
-};
+import { loginUserAction } from "../store/actions/userActions"
+import store from "../store/store/store"
+
+export class Login extends Component {
+	constructor(props){
+		super(props)
+		this.state = {
+		username: '',
+		password: ''
+	}}
+
+	setUsername = (username) => {
+		this.setState({
+			username: username,
+		})
+	}
+
+	setPassword = (password) => {
+		this.setState({
+			password:password
+		})
+	}
+
+	handelLogin = (e)=> {
+		e.preventDefault();
+		this.props.loginUser(this.state)
+		setTimeout(()=> {
+			console.log("login componeent timeout after login click")
+			console.log(store.getState())
+
+		},200)
+		// console.log(this.props);
+
+	}
+
+	render() {
+		return(
+			<div> 
+				<h1>Login</h1>
+				<form>
+					<div>
+					<label htmlFor="username">Username</label>
+					<input placeholder="enter username" name="username" id ="username" onChange={event => this.setUsername(event.target.value)} />
+					</div>
+
+					<div>
+					<label htmlFor="password">Password</label>
+					<input placeholder="enter password" name="password" id="password" onChange={event => this.setPassword(event.target.value)} />
+					</div>
+				
+				
+					<button type="submit" onClick={this.handelLogin}>Login</button>
+				</form>
+			</div>
+		)
+	}
 
 
-export class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userName: "",
-      password: ""
-    };
-  }
-
-  setUsername = name => {
-    this.setState({
-      userName: name
-    });
-  };
-
-  setPassword = pass => {
-    this.setState({
-      password: pass
-    });
-  };
-
-  submitDetails = e => {
-    e.preventDefault();
-    try {
-      this.props.loginUser(this.state);
-      this.props.history.push("/test");
-      console.log()
-    } catch(e) {
-      alert(e.message);
-    }
-  };
-
-  goBack = () => {
-    console.log(this.props.history);
-    this.props.history.goBack();
-  };
-
-  render() {
-    return (
-      <form>
-        <input
-          placeholder="username"
-          onChange={e => this.setUsername(e.target.value)}
-        />
-        <input
-          placeholder="password"
-          onChange={e => this.setPassword(e.target.value)}
-        />
-        <button type="submit" onClick={this.submitDetails}>
-          Login
-        </button>
-        <input type="button" onClick={this.goBack} value="goback" />
-      </form>
-    );
-  }
 }
+const mapDispatchToProps = (dispatch) => {
+	return {
+		loginUser: user => { dispatch(loginUserAction(user)) }
+
+		// loginUser: user => { dispatch({type:LOGIN_USER_LOADING, payload: user}) }
+	}
+}
+
+// const mapStateToProps = (state, ownProps) => {
+// 	return {
+// 		userName: state.userName,
+// 		jwtToken: state.jwtToken
+// 	}
+// }
 
 const LoginComponent = connect(null, mapDispatchToProps)(Login);
 

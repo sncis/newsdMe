@@ -46,7 +46,7 @@ const rootReducer = (state = initialState, action='') => {
     case LOGIN_USER_LOADING:
       // console.log("login from reducer ")
       // console.log(action)
-      return{
+      return {
         ...state,
         isLoading: true
       }

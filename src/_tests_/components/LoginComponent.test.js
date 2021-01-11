@@ -12,7 +12,7 @@ describe("LoginComponent", () => {
 	let component;
 	let store;
 	// const loginUserMock = jest.spyOn(LoginComponent.prototype, 'loginUser');
-	const loginUserMock = jest.fn();
+	const loginMock = jest.fn();
 	const mockStore = configureMockStore([thunk])
 
 
@@ -20,8 +20,7 @@ describe("LoginComponent", () => {
 		
 		store = mockStore({});
 		store.dispatch = jest.fn()
-		component = shallow(<LoginComponent store={store} loginUser={loginUserMock}/>).dive()
-		console.log(component.debug())
+		component = shallow(<LoginComponent store={store} LoginUser={loginMock}/>).dive({ context: { store } }).dive()
 	})
 
 	it("should render without errors", () => {
@@ -37,7 +36,7 @@ describe("LoginComponent", () => {
 
 		usernameInput.simulate("change", {target: {value:"someUser"}})
 
-		expect(component.state("username")).toBe("someUser")
+		expect(component.state("userName")).toBe("someUser")
 
 	})
 	it("should setPassword", () => {
@@ -58,6 +57,31 @@ describe("LoginComponent", () => {
 		expect(onClickMock).toHaveBeenCalledTimes(1);
 		// expect(store.dispatch).toHaveBeenCalledWith(action)
 
+	})
+
+})
+
+describe("LoginComponent", () => {
+	let component;
+	let store;
+
+	const mockStore = configureMockStore([thunk])
+
+
+	beforeEach(() => {
+		store = mockStore({isLoading:true, errorMsg: "some error"});
+		component = shallow(<LoginComponent store={store} />).dive({ context: { store } }).dive();
+	})
+
+	it("should render loadingMsg", () => {
+		expect(component.instance().props.isLoading).toEqual(true)
+		expect(component.find("#loadingMsg").length).toEqual(1)
+	
+	})
+	it("should render errorMsg", () => {
+		expect(component.instance().props.errorMsg).toEqual("some error")
+		expect(component.find("#errorMsg").length).toEqual(1)
+	
 	})
 
 })

@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import { registerUserAction } from "../store/actions/userActions"
-import store from "../store/store/store"
 
 export class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      userName: "",
       password: "",
       confirmPassword:"",
       email: "",
@@ -18,7 +17,7 @@ export class Register extends Component {
   
   setUsername = name => {
     this.setState({
-      username: name
+      userName: name
     });
   };
 
@@ -42,8 +41,15 @@ export class Register extends Component {
 
   submitRegistration = e => {
     e.preventDefault(); 
+
+    const {userName, password, email} = this.state;
+    const registerUser = {
+      userName,
+      password,
+      email
+    }
     this.state.confirmPassword === this.state.password ? 
-    this.props.registerUser(this.state) : 
+    this.props.registerUser(registerUser) : 
     this.setState({
       isPasswordMatching : false
     });
@@ -52,7 +58,7 @@ export class Register extends Component {
   cancelRegistration = (e) => { 
     e.preventDefault()
     this.setState({
-      username: "",
+      userName: "",
       password: "",
       confirmPassword:'',
       email: "",
@@ -125,7 +131,9 @@ export class Register extends Component {
         </form>
 
         {!this.state.isPasswordMatching  && <div id="passwordMatchingError"><p>password is not matching</p></div>}
-        {store.getState().isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
+        {this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
+        {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
+
       </div>
     );
   }
@@ -140,7 +148,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
   return{
-    isLoading: state.isLoading
+    isLoading: state.isLoading,
+    errorMsg : state.errorMsg,
   }
 }
 

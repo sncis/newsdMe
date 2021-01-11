@@ -30,7 +30,7 @@ describe("RegisterComponent", () => {
 		const usernameInput = component.find('#username')
 		usernameInput.simulate('change', {target: {value: "someUser"}})
 
-		expect(component.state('username')).toEqual("someUser")
+		expect(component.state('userName')).toEqual("someUser")
 
 	})
 	it("should set password", () => {
@@ -82,13 +82,18 @@ describe("RegisterComponent", () => {
 
 
 	beforeEach(() => {
-		store = mockStore({isLoading:true});
+		store = mockStore({isLoading:true, errorMsg: "some error"});
 		component = shallow(<RegisterComponent store={store} />).dive({ context: { store } }).dive();
 	})
 
 	it("should render loadingMsg", () => {
 		expect(component.instance().props.isLoading).toEqual(true)
-		// expect(component.find("#loadingMsg").length).toEqual(2)
+		expect(component.find("#loadingMsg").length).toEqual(1)
+	
+	})
+	it("should render errorMsg", () => {
+		expect(component.instance().props.errorMsg).toEqual("some error")
+		expect(component.find("#errorMsg").length).toEqual(1)
 	
 	})
 

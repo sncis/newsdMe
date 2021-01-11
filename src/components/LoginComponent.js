@@ -8,13 +8,13 @@ export class Login extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-		username: '',
+		userName: '',
 		password: ''
 	}}
 
 	setUsername = (username) => {
 		this.setState({
-			username: username,
+			userName: username,
 		})
 	}
 
@@ -27,11 +27,11 @@ export class Login extends Component {
 	handelLogin = (e)=> {
 		e.preventDefault();
 		this.props.loginUser(this.state)
-		setTimeout(()=> {
-			console.log("login componeent timeout after login click")
-			console.log(store.getState())
+		// setTimeout(()=> {
+		// 	console.log("login componeent timeout after login click")
+		// 	console.log(store.getState())
 
-		},200)
+		// },200)
 		// console.log(this.props);
 
 	}
@@ -54,6 +54,9 @@ export class Login extends Component {
 				
 					<button type="submit" onClick={this.handelLogin}>Login</button>
 				</form>
+				{this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
+        {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
+
 			</div>
 		)
 	}
@@ -68,13 +71,13 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-// const mapStateToProps = (state, ownProps) => {
-// 	return {
-// 		userName: state.userName,
-// 		jwtToken: state.jwtToken
-// 	}
-// }
+const mapStateToProps = (state, ownProps) => {
+	return {
+		isLoading: state.isLoading,
+		errorMsg: state.errorMsg
+	}
+}
 
-const LoginComponent = connect(null, mapDispatchToProps)(Login);
+const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default LoginComponent;

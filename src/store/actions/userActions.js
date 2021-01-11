@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "../store/store"
 import { LOGIN_USER_LOADING, 
   LOGIN_USER_ERROR, 
   LOGIN_USER_SUCCESS , 
@@ -10,27 +9,30 @@ import { LOGIN_USER_LOADING,
 
 const baseUrl = "http://localhost:8080/";
 
-const header ={
-  headers: {
+const header = {
+  headers:{
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-  },
-}
+    'ACCEPT': 'application/json'
+}}
 
 export const registerUserAction= (user) => {
   return (dispatch) => {
     const url = `${baseUrl}register`
     dispatch(registerUserLoading(user))
+
+    const jsonUser = JSON.stringify(user)
     
     return axios
-      .post(url,header, user)
+      .post(url,jsonUser,header)
       .then(response => {
-        // console.log(response)
+        console.log(response)
         dispatch(registerUserSuccess(response.data))
       }).catch(error => {
-        let message = error.response.data ? error.response.data.message : "some error occured, please try again later"
+        console.log(error.response.data)
+        let message = error.response ? error.response.data.message : "some error occured, please try again later"
         dispatch(registerUserError(message))
-      })
+    })
   }
 }
 
@@ -77,8 +79,8 @@ export const loginUserAction= (user) => {
   return (dispatch) => {
     dispatch(loginUserLoading())
     const url = `${baseUrl}login`
-
-    return axios.post(url, user, header)
+    const jsonUser = JSON.stringify(user)
+    return axios.post(url, jsonUser, header)
       .then(response =>{
         const jwtToken = response.data.jwtToken
         dispatch(loginUserSuccess(user.userName, jwtToken))

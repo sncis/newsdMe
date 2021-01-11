@@ -5,7 +5,7 @@ import { LOGIN_USER_LOADING,
   LOGIN_USER_SUCCESS , 
   REGISTER_USER_LOADING,
   REGISTER_USER_SUCCESS,
-  REGISTER_USER_ERROR} from "../constants/constants";
+  REGISTER_USER_ERROR} from "../constants/userTypes";
 
 
 const baseUrl = "http://localhost:8080/";

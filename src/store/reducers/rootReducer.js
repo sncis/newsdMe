@@ -1,16 +1,64 @@
-import { SET_USER_DETAILS } from "../constants/userActions";
+import {
+  SET_USER_INFO, 
+  LOGIN_USER_LOADING, 
+  LOGIN_USER_SUCCESS, 
+  LOGIN_USER_ERROR, 
+  REGISTER_USER_LOADING,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_ERROR,
+}  from "../constants/constants";
 
 const initialState = {
-  user: ""
+  isLoading: false
+  // articles: [],
+  // userName: ''
 };
 
-const rootReducer = (state = initialState, action = "") => {
+const rootReducer = (state = initialState, action='') => {
   switch (action.type) {
-    case SET_USER_DETAILS:
+    case SET_USER_INFO:
       return {
         ...state,
-        user: action.payload.user
-      };
+        articles: action.payload,
+      }
+    case REGISTER_USER_LOADING:
+      console.log("registerUser Loading dispathced from reducer")
+      console.log(action)
+      return{
+        ...state,
+        isLoading: true
+      }
+      case REGISTER_USER_SUCCESS:
+      console.log("registerUser Loading dispathced from reducer")
+      console.log(action)
+      return{
+        ...state,
+        username: action.payload.username,
+        isLoading: false
+      }
+    case LOGIN_USER_LOADING:
+      console.log("login from reducer ")
+      console.log(action)
+      return{
+        ...state,
+        login: "login from reducter in action",
+        isLoading: true
+      }
+    case LOGIN_USER_SUCCESS:
+    console.log(action)
+    return{
+      ...state,
+      userName : action.payload.userName,
+      jwtToken: action.payload.jwtToken,
+      isLoading: false
+    }
+    case LOGIN_USER_ERROR:
+    console.log(action)
+    return{
+      ...state,
+      errorMsg: action.payload.msg,
+      isLoading: false
+    }
 
     default:
       return state;

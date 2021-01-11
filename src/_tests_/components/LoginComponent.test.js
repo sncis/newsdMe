@@ -21,7 +21,7 @@ describe("LoginComponent", () => {
 		store = mockStore({});
 		store.dispatch = jest.fn()
 		component = shallow(<LoginComponent store={store} loginUser={loginUserMock}/>).dive()
-		
+		console.log(component.debug())
 	})
 
 	it("should render without errors", () => {

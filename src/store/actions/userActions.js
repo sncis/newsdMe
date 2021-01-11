@@ -1,26 +1,90 @@
 import axios from "axios";
-import { SET_USER_DETAILS } from "../constants/userActions";
+import store from "../store/store"
+import { LOGIN_USER_LOADING, 
+  LOGIN_USER_ERROR, 
+  LOGIN_USER_SUCCESS , 
+  REGISTER_USER_LOADING,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_ERROR} from "../constants/constants";
 
-// import store from "../store/store";
 
-export const setUserDetails = (user, token) => ({
-  type: SET_USER_DETAILS,
-  payload: user
-});
+const baseUrl = "http://localhost:8080/";
 
-export const loginUser = user => {
-  return dispatch => {
-    const url = "http://localhost:8080/login";
-    axios
-      .post(url, user)
+const header ={
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+}
+
+export const registerUserAction= (user) => {
+  return (dispatch) => {
+    const url = `${baseUrl}register`
+    dispatch(registerUserLoading(user))
+    
+    return axios
+      .post(url,header, user)
       .then(response => {
-        dispatch(setUserDetails(user.userName, response.data.jwtToken));
-        console.log("dispatch test");
-        console.log(response.data.jwtToken);
-        console.log(user.userName);
+        // console.log(response)
+        dispatch(registerUserSuccess(response.data))
+      }).catch(error => {
+        let message = error.response.data ? error.response.data.message : "some error occured, please try again later"
+        dispatch(registerUserError(message))
       })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-};
+  }
+}
+
+export const registerUserLoading = (user) => {
+  return {
+    type: REGISTER_USER_LOADING
+  }
+}
+export const registerUserSuccess = (user) => {
+  return {
+    type: REGISTER_USER_SUCCESS,
+    payload: {username: user.username}
+  }
+}
+
+export const registerUserError =(errorMsg)=>{
+  return{
+    type: REGISTER_USER_ERROR,
+    payload: errorMsg
+  }
+}
+
+export const loginUserLoading = () => {
+  return{
+    type: LOGIN_USER_LOADING
+  }
+}
+
+export const loginUserSuccess = (username, token ) => {
+  return{
+    type: LOGIN_USER_SUCCESS,
+    payload: {userName: username, jwtToken: token}
+  }
+}
+
+export const loginUserError = (msg) => {
+  return{
+    type: LOGIN_USER_ERROR,
+    payload: msg
+  }
+}
+
+export const loginUserAction= (user) => {
+  return (dispatch) => {
+    dispatch(loginUserLoading())
+    const url = `${baseUrl}login`
+
+    return axios.post(url, user, header)
+      .then(response =>{
+        const jwtToken = response.data.jwtToken
+        dispatch(loginUserSuccess(user.userName, jwtToken))
+      }).catch(error => {
+        let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
+        dispatch(loginUserError(message))
+      })  
+  }
+}

@@ -80,13 +80,14 @@ export const loginUserAction= (user) => {
     dispatch(loginUserLoading())
     const url = `${baseUrl}login`
     const jsonUser = JSON.stringify(user)
-    return axios.post(url, jsonUser, header)
-      .then(response =>{
-        const jwtToken = response.data.jwtToken
-        dispatch(loginUserSuccess(user.userName, jwtToken))
-      }).catch(error => {
-        let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
-        dispatch(loginUserError(message))
-      })  
+    dispatch(loginUserSuccess("someUser", "sometoken"))
+    // return axios.post(url, jsonUser, header)
+    //   .then(response =>{
+    //     const jwtToken = response.data.jwtToken
+    //     dispatch(loginUserSuccess(user.userName, jwtToken))
+    //   }).catch(error => {
+    //     let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
+    //     dispatch(loginUserError(message))
+    //   })  
   }
 }

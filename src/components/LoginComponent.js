@@ -26,7 +26,11 @@ export class Login extends Component {
 
 	handelLogin = (e)=> {
 		e.preventDefault();
-		this.props.loginUser(this.state)
+		this.props.loginUser(this.state);
+		if(this.props.loginSuccessful) {
+			this.props.history.push('/dashboard')
+		}
+		
 		// setTimeout(()=> {
 		// 	console.log("login componeent timeout after login click")
 		// 	console.log(store.getState())
@@ -74,7 +78,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
 	return {
 		isLoading: state.isLoading,
-		errorMsg: state.errorMsg
+		errorMsg: state.errorMsg,
+		loginSuccessful : state.loginSuccessful
 	}
 }
 

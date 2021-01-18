@@ -6,8 +6,10 @@ describe("userReducer", () => {
 
 	it("should return initial state", () => {
 		const action = {type:''};
+
 		expect(userReducer(undefined, action)).toEqual(
-			{isLoading:false}
+			{isLoading:false,
+			}
 		)
 	})
 
@@ -15,7 +17,7 @@ describe("userReducer", () => {
 		const action = { type: types.REGISTER_USER_LOADING}
 		expect(userReducer(undefined, action)).toEqual(
 			{
-				isLoading: true
+				isLoading: true,
 			}
 		)
 	})
@@ -25,7 +27,8 @@ describe("userReducer", () => {
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: false,
-				username: "some user"
+				username: "some user",
+				registerSuccessful: true
 			}
 		)
 	})
@@ -53,7 +56,7 @@ describe("userReducer", () => {
 		const action = { type: types.LOGIN_USER_SUCCESS, payload: {userName: "some user", jwtToken: "some token"}}
 		expect(userReducer(undefined, action)).toEqual(
 			{
-				userName: 'some user',
+				username: 'some user',
 				jwtToken: "some token",
 				loginSuccessful: true,
 				isLoading: false,

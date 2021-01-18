@@ -53,6 +53,10 @@ export class Register extends Component {
     this.setState({
       isPasswordMatching : false
     });
+    setTimeout(() =>{
+      this.props.registerSuccessful ? this.props.history.push("/dashboard") : this.props.history.push("/home")
+    }, 2000)
+
   };
 
   cancelRegistration = (e) => { 
@@ -148,8 +152,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
   return{
-    isLoading: state.isLoading,
-    errorMsg : state.errorMsg,
+    isLoading: state.userReducer.isLoading,
+    errorMsg : state.userReducer.errorMsg,
+    registerSuccessful: state.userReducer.registerSuccessful
   }
 }
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import { loginUserAction } from "../store/actions/userActions"
-import store from "../store/store/store"
 
 export class Login extends Component {
 	constructor(props){
@@ -55,7 +54,6 @@ export class Login extends Component {
 					<input placeholder="enter password" name="password" id="password" onChange={event => this.setPassword(event.target.value)} />
 					</div>
 				
-				
 					<button type="submit" onClick={this.handelLogin}>Login</button>
 				</form>
 				{this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
@@ -77,9 +75,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		isLoading: state.isLoading,
-		errorMsg: state.errorMsg,
-		loginSuccessful : state.loginSuccessful
+		isLoading: state.userReducer.isLoading,
+		errorMsg: state.userReducer.errorMsg,
+		loginSuccessful : state.userReducer.loginSuccessful,
 	}
 }
 

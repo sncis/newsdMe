@@ -6,12 +6,11 @@ import {
   REGISTER_USER_LOADING,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  SET_GEOLOCATION
 }  from "../constants/userTypes";
 
 const initialState = {
-  isLoading: false
-  // articles: [],
-  // userName: ''
+  isLoading: false,
 };
 
 const userReducer = (state = initialState, action='') => {
@@ -35,6 +34,7 @@ const userReducer = (state = initialState, action='') => {
         ...state,
         username: action.payload.username,
         isLoading: false,
+        registerSuccessful: true
       }
     case REGISTER_USER_ERROR:
     // console.log(action)
@@ -54,7 +54,7 @@ const userReducer = (state = initialState, action='') => {
     // console.log(action)
       return{
         ...state,
-        userName : action.payload.userName,
+        username : action.payload.userName,
         jwtToken: action.payload.jwtToken,
         isLoading: false,
         loginSuccessful: true
@@ -64,6 +64,12 @@ const userReducer = (state = initialState, action='') => {
         ...state,
         errorMsg: action.payload,
         isLoading: false
+      }
+
+    case SET_GEOLOCATION:
+      return{
+        ...state,
+        geoLocation: action.payload
       }
 
     default:

@@ -15,7 +15,7 @@ describe("RegisterComponent", () => {
 
 	beforeEach(() => {
 		
-		store = mockStore({});
+		store = mockStore({userReducer:{}});
 		store.dispatch = jest.fn()
 		component = shallow(<RegisterComponent store={store} registerUser={registerMock}/>).dive({ context: { store } }).dive()
 	})
@@ -82,7 +82,7 @@ describe("RegisterComponent", () => {
 
 
 	beforeEach(() => {
-		store = mockStore({isLoading:true, errorMsg: "some error"});
+		store = mockStore({userReducer: {isLoading:true, errorMsg: "some error"}});
 		component = shallow(<RegisterComponent store={store} />).dive({ context: { store } }).dive();
 	})
 

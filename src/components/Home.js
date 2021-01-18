@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import store from "../store/store/store";
+import { getGeolocation } from "../store/actions/userActions"
 
 function Home() {
+  // store.dispatch(getGeolocation())
   return (
     <div className="">
       <div>
@@ -12,5 +15,7 @@ function Home() {
     </div>
   );
 }
+
+
 
 export default Home;

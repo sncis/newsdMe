@@ -1,10 +1,10 @@
-import * as userActions from "../../../../store/actions/userActions"
-import * as types from "../../../../store/constants/constants"
-
 import configureMockStore from 'redux-mock-store';	
 import thunk from 'redux-thunk';	
 import axios from 'axios';	
 import MockAdapter from 'axios-mock-adapter';	
+
+import * as userActions from "../../../store/actions/userActions"
+import * as types from "../../../store/constants/userTypes"
 
 
 const middleware = [thunk];	

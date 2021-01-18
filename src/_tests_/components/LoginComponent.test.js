@@ -14,11 +14,18 @@ describe("LoginComponent", () => {
 	// const loginUserMock = jest.spyOn(LoginComponent.prototype, 'loginUser');
 	const loginMock = jest.fn();
 	const mockStore = configureMockStore([thunk])
-
+	
+	const initialState = {userReducer: {
+		isLoading: false,
+		userName: 'someUser',
+		}
+	}
+		;
 
 	beforeEach(() => {
 		
-		store = mockStore({});
+		store = mockStore(initialState);
+
 		store.dispatch = jest.fn()
 		component = shallow(<LoginComponent store={store} LoginUser={loginMock}/>).dive({ context: { store } }).dive()
 	})
@@ -69,7 +76,7 @@ describe("LoginComponent", () => {
 
 
 	beforeEach(() => {
-		store = mockStore({isLoading:true, errorMsg: "some error"});
+		store = mockStore({userReducer:{isLoading:true, errorMsg: "some error"}});
 		component = shallow(<LoginComponent store={store} />).dive({ context: { store } }).dive();
 	})
 

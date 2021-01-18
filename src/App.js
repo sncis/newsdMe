@@ -3,9 +3,11 @@ import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import RegisterComponent from "./components/RegisterComponent";
-import TestRouterComp from "./components/TestRouterComp";
 import LoginComponent from "./components/LoginComponent";
 import DashboardComponent  from "./components/DashboardComponent";
+// import TestArticle from "./components/TestArticle";
+// import TestRouterComp from "./components/TestRouterComp";
+
 
 /* when you dont have exact, the component with is mapped to "/" will always be shown with exact not 
   when you dont use switch, the order in with when components are listed matters. with exact "/" musst be the last one
@@ -21,8 +23,10 @@ function App() {
 
       <Route path="/register" component={RegisterComponent} />
       <Route path="/login" component={LoginComponent} />
-      <Route path="/test" component={TestRouterComp} />
       <Route path="/dashboard" component={DashboardComponent} />
+      {/* <Route path="/testToggle" component={TestArticle} /> */}
+      {/* <Route path="/test" component={TestRouterComp} /> */}
+
 
     </Switch>
   );

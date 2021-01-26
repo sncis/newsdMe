@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {BookmarkIcon, BookmarkFillIcon} from '@primer/octicons-react'
 
-import { bookmark, unBookmark } from "../store/actions/articleActions"
+import { saveUserArticle, removeUserArticle } from "../store/actions/articleActions"
 
 import "../css/Article.css";
 
@@ -10,15 +10,9 @@ import dummy from "../assets/img/dummy.jpg";
 
 export class ArticleComp extends Component {
 
-	constructor(props){
-		super(props)
-	
-	}
-
 	toogleIsBoomarked = (article) => {
 		console.log(article.isBookmarked )
-		!article.isBookmarked ? this.props.bookmark(article) : this.props.unBookmark(article)
-		console.log(article.isBookmarked )
+		!article.isBookmarked ? this.props.storeArticle(article) : this.props.removeArticle(article)
 
 	}
 	render(){
@@ -32,9 +26,9 @@ export class ArticleComp extends Component {
 						<h3 className ="title">{this.props.article.title}</h3>
 						<p className="description">{this.props.article.description}</p>
 					</a>
-					{/* <a href={item.source.name} target=""blank>
-						<p className="source">source: {item.source.name}</p>
-					</a> */}
+					<a href={this.props.article.source.name} target="blank">
+						<p className="source">{this.props.article.source.name}</p>
+					</a>
 					<div onClick={() => this.toogleIsBoomarked(this.props.article)}>
 						{ !this.props.article.isBookmarked && <BookmarkIcon size={16} className="bookMark" /> }
 						{ this.props.article.isBookmarked && <BookmarkFillIcon size={16} className="bookMark" /> }
@@ -48,8 +42,8 @@ export class ArticleComp extends Component {
 
 const mapDispatchToProps = dispatch =>{
 	return{
-		bookmark: article => { dispatch(bookmark(article))},
-		unBookmark : article => {dispatch(unBookmark(article))}
+		storeArticle: article => {dispatch(saveUserArticle(article))},
+		removeArticle: article => {dispatch(removeUserArticle(article))}
 	}	
 }
 

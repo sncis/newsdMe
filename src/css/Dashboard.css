@@ -1,0 +1,6 @@
+.articleSection{
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: nowrap;
+	flex-direction: row;
+}

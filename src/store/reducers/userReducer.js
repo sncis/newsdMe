@@ -32,7 +32,7 @@ const userReducer = (state = initialState, action='') => {
       // console.log(action)
       return{
         ...state,
-        username: action.payload.username,
+        userName: action.payload.username,
         isLoading: false,
         registerSuccessful: true
       }
@@ -54,7 +54,7 @@ const userReducer = (state = initialState, action='') => {
     // console.log(action)
       return{
         ...state,
-        username : action.payload.userName,
+        userName : action.payload.userName,
         jwtToken: action.payload.jwtToken,
         isLoading: false,
         loginSuccessful: true
@@ -63,7 +63,8 @@ const userReducer = (state = initialState, action='') => {
       return{
         ...state,
         errorMsg: action.payload,
-        isLoading: false
+        isLoading: false,
+        loginSuccessful: false
       }
 
     case SET_GEOLOCATION:

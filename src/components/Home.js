@@ -1,21 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import store from "../store/store/store";
-import { getGeolocation } from "../store/actions/userActions"
 
 function Home() {
-  // store.dispatch(getGeolocation())
   return (
     <div className="">
       <div>
         <h1>welcome to newsd</h1>
-        <Link to="/register">register</Link>
-        <Link to="/login">login</Link>
+        <h2> Top Headlines</h2>
+        <p>articles loding when compoent mount</p>
+        <Link to="/register" className="registerLink">register</Link>
+        <Link to="/login" className="loginLink">login</Link>
       </div>
     </div>
   );
 }
-
 
 
 export default Home;

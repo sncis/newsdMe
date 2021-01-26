@@ -1,14 +1,15 @@
 import { LOAD_USER_ARTICELS, 
 	GET_USER_ARTICELS_ERROR, 
 	GET_USER_ARTICELS_SUCCESSFUL,
-	SET_BOOKMARK,
-	SET_UNBOOKMARK
+	SET_DAILY_ARTICLES,
+	ADD_ARTICLE_TO_SAVED_ARTICLELIST,
 } from "../constants/articelTypes"
-import { dummyArticles } from "../dummyArticles";
+import { dummyArticles, dailyArticles } from "../dummyArticles";
 
 const initialState = {
 	isLoading:false,
-	articles: dummyArticles
+	savedArticles: dummyArticles,
+	dailyArticles: dailyArticles
 }
 
 const articleReducer = (state=initialState, action='') => {
@@ -22,7 +23,7 @@ const articleReducer = (state=initialState, action='') => {
 			return {
 				...state,
 				isLoading: false,
-				articles: action.payload
+				savedArticles: action.payload
 			}
 		case GET_USER_ARTICELS_ERROR:
 			return{
@@ -30,16 +31,15 @@ const articleReducer = (state=initialState, action='') => {
 				isLoading: false,
 				errorMsg: action.payload
 			}
-		case SET_BOOKMARK:	
+		case SET_DAILY_ARTICLES:	
 			return{
 				...state,
-				articles: action.payload
+				dailyArticles: action.payload
 			}
-		case SET_UNBOOKMARK:	
+		case ADD_ARTICLE_TO_SAVED_ARTICLELIST:
 			return{
 				...state,
-				articles: action.payload
-
+				savedArticles: [...state.savedArticles, action.payload]
 			}
 		default:
 			return state;

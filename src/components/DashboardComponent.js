@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import store from "../store/store/store";
-import { handleSearch, getUserArticelsSuccessfull } from "../store/actions/articleActions"
+import { handleSearch, getUserArticles } from "../store/actions/articleActions"
 
 import ArticleList from "./ArticleList"
+import SavedArticleList from './SavedArticleList';
+
+import "../css/Dashboard.css"
 
 
 export class Dashboard extends Component {
-	constructor(props){
-		super(props)
+
+	componentDidMount(){
+		this.props.loadArticles();
 	}
 
 	render(){
@@ -18,7 +21,10 @@ export class Dashboard extends Component {
 				<input className="searchInput" placeholder="enter searchterm"></input>
 				<button onClick={this.props.handleSearch}>search</button>
 			
-				<ArticleList />	
+				<div className="articleSection">
+					<ArticleList />
+					<SavedArticleList />
+				</div>
 			</div>
 
 		)
@@ -31,7 +37,6 @@ const mapStateToProps = state => {
 	return{
 		jwtToken : state.userReducer.jwtToken,
 		userName: state.userReducer.userName,
-		articles: state.articleReducer.articles
 	}
 
 };
@@ -39,7 +44,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		handelSearch: () => dispatch(handleSearch(this.state.searchTerm)),
-		// getUserArticelsSuccessfull : () => dispatch(getUserArticelsSuccessfull(store.getState().articleReducer.articles))
+		loadArticles: () => dispatch(getUserArticles())
 	};
 }
 

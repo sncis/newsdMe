@@ -20,6 +20,9 @@ const header = {
     'ACCEPT': 'application/json'
 }}
 
+
+/**********Register actions */
+
 export const registerUserAction= (user) => {
   return (dispatch) => {
     const url = `${baseUrl}register`
@@ -50,7 +53,7 @@ export const registerUserLoading = (user) => {
 export const registerUserSuccess = (user) => {
   return {
     type: REGISTER_USER_SUCCESS,
-    payload: {username: user.username}
+    payload: {userName: user.username}
   }
 }
 
@@ -60,6 +63,29 @@ export const registerUserError =(errorMsg)=>{
     payload: errorMsg
   }
 }
+
+
+/**********login actions */
+
+export const loginUserAction= (user) => {
+  return (dispatch) => {
+    dispatch(loginUserLoading())
+    const url = `${baseUrl}login`
+    const jsonUser = JSON.stringify(user)
+    console.log("json user")
+    console.log(jsonUser)
+    // dispatch(loginUserSuccess("someUser", "sometoken"))
+    return axios.post(url, jsonUser, header)
+      .then(response =>{
+        const jwtToken = response.data.jwtToken
+        dispatch(loginUserSuccess(user.userName, jwtToken))
+      }).catch(error => {
+        let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
+        dispatch(loginUserError(message))
+      })  
+  }
+}
+
 
 export const loginUserLoading = () => {
   return{
@@ -81,22 +107,12 @@ export const loginUserError = (msg) => {
   }
 }
 
-export const loginUserAction= (user) => {
-  return (dispatch) => {
-    dispatch(loginUserLoading())
-    const url = `${baseUrl}login`
-    const jsonUser = JSON.stringify(user)
-    // dispatch(loginUserSuccess("someUser", "sometoken"))
-    return axios.post(url, jsonUser, header)
-      .then(response =>{
-        const jwtToken = response.data.jwtToken
-        dispatch(loginUserSuccess(user.userName, jwtToken))
-      }).catch(error => {
-        let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
-        dispatch(loginUserError(message))
-      })  
-  }
-}
+
+
+
+
+
+/**********Geolocation actions */
 
 const googleGeo = (latitude, longitude) => {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`

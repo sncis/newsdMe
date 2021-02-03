@@ -1,20 +1,21 @@
-import { LOAD_USER_ARTICELS, 
+import { IS_LOADING_ARTICELS, 
 	GET_USER_ARTICELS_ERROR, 
 	GET_USER_ARTICELS_SUCCESSFUL,
 	SET_DAILY_ARTICLES,
 	ADD_ARTICLE_TO_SAVED_ARTICLELIST,
+	SET_DAILY_ARTICLES_ERROR,
 } from "../constants/articelTypes"
 import { dummyArticles, dailyArticles } from "../dummyArticles";
 
 const initialState = {
 	isLoading:false,
-	savedArticles: dummyArticles,
-	dailyArticles: dailyArticles
+	savedArticles: [],
+	dailyArticles: []
 }
 
 const articleReducer = (state=initialState, action='') => {
 	switch(action.type){
-		case LOAD_USER_ARTICELS:
+		case IS_LOADING_ARTICELS:
 			return{
 				...state,
 				isLoading: true
@@ -29,12 +30,19 @@ const articleReducer = (state=initialState, action='') => {
 			return{
 				...state,
 				isLoading: false,
-				errorMsg: action.payload
+				savedArticlesErrorMsg: action.payload
 			}
 		case SET_DAILY_ARTICLES:	
 			return{
 				...state,
+				isLoading: false,
 				dailyArticles: action.payload
+			}
+		case SET_DAILY_ARTICLES_ERROR:
+			return{
+				...state,
+				errorMsg:action.payload,
+				isLoading: false,
 			}
 		case ADD_ARTICLE_TO_SAVED_ARTICLELIST:
 			return{

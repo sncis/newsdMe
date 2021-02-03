@@ -6,12 +6,13 @@ import SavedArticleComponent from "./SavedArticleComponent"
 
 
 
-const SavedArticleListItem = ({ articles, isLoading}) => {
+const SavedArticleListItem = ({ articles, isLoading, errorMsg}) => {
 	return(
 		<div className="savedArticles-list">
-				{articles.length > 0 && articles.map(item => 
-				<SavedArticleComponent article={item} key={uuidv4()} />)} 
-			{isLoading && <p>Loading...!</p>}
+			{articles.length > 0 && articles.map(item => 
+			<SavedArticleComponent article={item} key={uuidv4()} />)} 
+			{isLoading && <p className="isLoading">Loading...!</p>}
+			{articles.length === 0 && errorMsg && <p className="errorMsg">{errorMsg}</p>}
 		</div>
 		
 	)
@@ -20,7 +21,8 @@ const SavedArticleListItem = ({ articles, isLoading}) => {
 const mapStateToProps = (state) =>{
 	return{
 		articles: state.articleReducer.savedArticles,
-		isLoading: state.articleReducer.isLoading
+		isLoading: state.articleReducer.isLoading,
+		errorMsg: state.articleReducer.savedArticlesErrorMsg
 	}
 }
 

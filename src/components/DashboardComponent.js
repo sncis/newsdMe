@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleSearch, getUserArticles } from "../store/actions/articleActions"
+import { getUserArticles } from "../store/actions/articleActions"
+import { handleSearch, loadDailyArticles } from '../store/actions/newsApiActions'
 
 import ArticleList from "./ArticleList"
 import SavedArticleList from './SavedArticleList';
@@ -12,6 +13,7 @@ export class Dashboard extends Component {
 
 	componentDidMount(){
 		this.props.loadArticles();
+		this.props.loadDailyArticles()	
 	}
 
 	render(){
@@ -22,7 +24,7 @@ export class Dashboard extends Component {
 				<button onClick={this.props.handleSearch}>search</button>
 			
 				<div className="articleSection">
-					<ArticleList />
+					<ArticleList articles={this.articles}/>
 					<SavedArticleList />
 				</div>
 			</div>
@@ -33,22 +35,16 @@ export class Dashboard extends Component {
 
 
 
-const mapStateToProps = state => {
-	return{
-		jwtToken : state.userReducer.jwtToken,
-		userName: state.userReducer.userName,
-	}
-
-};
 
 const mapDispatchToProps = dispatch => {
 	return {
 		handelSearch: () => dispatch(handleSearch(this.state.searchTerm)),
-		loadArticles: () => dispatch(getUserArticles())
+		loadArticles: () => dispatch(getUserArticles()),
+		loadDailyArticles: () => dispatch(loadDailyArticles())
 	};
 }
 
 
-const DashboardComponent = connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+const DashboardComponent = connect(null, mapDispatchToProps)(Dashboard);
 
 export default DashboardComponent;

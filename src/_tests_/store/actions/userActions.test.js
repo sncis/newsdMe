@@ -23,7 +23,7 @@ describe("userActions", () => {
 	describe("registerUserAction", () => {
 		it("should dispatch registerUserisLoading", () => {
 			let expectedAction = [{
-				type: types.REGISTER_USER_LOADING,
+				type: types.USER_LOADING,
 			}]
 		store.dispatch(userActions.registerUserAction(user))
 		expect(store.getActions()).toEqual(expectedAction)
@@ -36,7 +36,7 @@ describe("userActions", () => {
 
 		return store.dispatch(userActions.registerUserAction(user)).then(()=>{
 			let expectedAction = [{
-				type: types.REGISTER_USER_LOADING,
+				type: types.USER_LOADING,
 			},
 			{
 				type: types.REGISTER_USER_SUCCESS,
@@ -52,7 +52,7 @@ describe("userActions", () => {
 
 		return store.dispatch(userActions.registerUserAction(user)).then(()=>{
 			let expectedAction = [{
-				type: types.REGISTER_USER_LOADING,
+				type: types.USER_LOADING,
 			},
 			{
 				type: types.REGISTER_USER_ERROR,
@@ -68,7 +68,7 @@ describe("userActions", () => {
 	describe("loginUserAction", () =>{
 		it("should dispatch loginUserisLoading", () => {
 			let expectedAction = [{
-				type: types.LOGIN_USER_LOADING,
+				type: types.USER_LOADING,
 			}]
 		store.dispatch(userActions.loginUserAction(user))
 		expect(store.getActions()).toEqual(expectedAction)
@@ -80,7 +80,7 @@ describe("userActions", () => {
 
 			return store.dispatch(userActions.loginUserAction(user)).then(()=>{
 				let expectedAction = [{
-					type: types.LOGIN_USER_LOADING,
+					type: types.USER_LOADING,
 				},
 				{
 					type: types.LOGIN_USER_SUCCESS,
@@ -96,7 +96,7 @@ describe("userActions", () => {
 
 			return store.dispatch(userActions.loginUserAction(user)).then(()=>{
 				let expectedAction = [{
-					type: types.LOGIN_USER_LOADING,
+					type: types.USER_LOADING,
 				},
 				{
 					type: types.LOGIN_USER_ERROR,
@@ -110,7 +110,7 @@ describe("userActions", () => {
 			mock.onPost("http://localhost:8080/login").reply(400);
 			return store.dispatch(userActions.loginUserAction(user)).then(()=>{
 				let expectedAction = [{
-					type: types.LOGIN_USER_LOADING,
+					type: types.USER_LOADING,
 				},
 				{
 					type: types.LOGIN_USER_ERROR,

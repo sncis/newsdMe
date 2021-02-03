@@ -14,7 +14,7 @@ describe("userReducer", () => {
 	})
 
 	it("should handle REGISTER_USER_LOADING", () => {
-		const action = { type: types.REGISTER_USER_LOADING}
+		const action = { type: types.USER_LOADING}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: true,
@@ -27,7 +27,7 @@ describe("userReducer", () => {
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: false,
-				username: "some user",
+				userName: "some user",
 				registerSuccessful: true
 			}
 		)
@@ -44,7 +44,7 @@ describe("userReducer", () => {
 	})
 
 	it("should handle LOGIN_USER_LOADING", () => {
-		const action = { type: types.LOGIN_USER_LOADING}
+		const action = { type: types.USER_LOADING}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: true
@@ -56,7 +56,7 @@ describe("userReducer", () => {
 		const action = { type: types.LOGIN_USER_SUCCESS, payload: {userName: "some user", jwtToken: "some token"}}
 		expect(userReducer(undefined, action)).toEqual(
 			{
-				username: 'some user',
+				userName: 'some user',
 				jwtToken: "some token",
 				loginSuccessful: true,
 				isLoading: false,
@@ -69,7 +69,8 @@ describe("userReducer", () => {
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: false,
-				errorMsg: "login error"
+				errorMsg: "login error",
+				loginSuccessful: false
 			}
 		)
 	})

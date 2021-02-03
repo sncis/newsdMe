@@ -1,9 +1,8 @@
 import {
   SET_USER_INFO, 
-  LOGIN_USER_LOADING, 
+  USER_LOADING, 
   LOGIN_USER_SUCCESS, 
   LOGIN_USER_ERROR, 
-  REGISTER_USER_LOADING,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   SET_GEOLOCATION
@@ -20,7 +19,7 @@ const userReducer = (state = initialState, action='') => {
         ...state,
         articles: action.payload,
       }
-    case REGISTER_USER_LOADING:
+    case USER_LOADING:
       // console.log("registerUser Loading dispathced from reducer")
       // console.log(action)
       return{
@@ -37,21 +36,12 @@ const userReducer = (state = initialState, action='') => {
         registerSuccessful: true
       }
     case REGISTER_USER_ERROR:
-    // console.log(action)
     return{
       ...state,
       errorMsg: action.payload,
       isLoading: false
     }
-    case LOGIN_USER_LOADING:
-      // console.log("login from reducer ")
-      // console.log(action)
-      return {
-        ...state,
-        isLoading: true
-      }
     case LOGIN_USER_SUCCESS:
-    // console.log(action)
       return{
         ...state,
         userName : action.payload.userName,

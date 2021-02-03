@@ -29,7 +29,7 @@ export class ArticleComp extends Component {
 					<a href={this.props.article.source.name} target="blank">
 						<p className="source">{this.props.article.source.name}</p>
 					</a>
-					<div onClick={() => this.toogleIsBoomarked(this.props.article)}>
+					<div className="bookmark-container" onClick={() => this.toogleIsBoomarked(this.props.article)}>
 						{ !this.props.article.isBookmarked && <BookmarkIcon size={16} className="bookMark" /> }
 						{ this.props.article.isBookmarked && <BookmarkFillIcon size={16} className="bookMark" /> }
 					</div>
@@ -39,13 +39,19 @@ export class ArticleComp extends Component {
 	}
 }
 
+const mapStateToProps = state =>{
+	return{
+		jwtToken: state.userReducer.jwtToken,
+		usernam: state.userReducer.userName
+	}
+}
 
-const mapDispatchToProps = dispatch =>{
+const mapDispatchToProps = (dispatch) =>{
 	return{
 		storeArticle: article => {dispatch(saveUserArticle(article))},
 		removeArticle: article => {dispatch(removeUserArticle(article))}
 	}	
 }
 
-const ArticleComponent = connect(null, mapDispatchToProps)(ArticleComp)
+const ArticleComponent = connect(mapStateToProps, mapDispatchToProps)(ArticleComp)
 export default ArticleComponent;

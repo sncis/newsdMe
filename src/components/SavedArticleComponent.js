@@ -26,7 +26,7 @@ export class SavedArticleComponentItem extends Component {
 					<p>{this.props.article.source.name.toUpperCase()}</p>
 				</a>
 				</div>
-				<div onClick={() => this.props.removeArticle(this.props.article)}>
+				<div className="saved_bookmark-container" onClick={() => this.props.removeArticle(this.props.article)}>
 					<BookmarkFillIcon size={16} className="saved_bookMark" /> 
 				</div>
 				{/* </div> */}

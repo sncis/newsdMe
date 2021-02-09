@@ -1,10 +1,16 @@
 import React from "react";
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+
 import Home from "./components/Home";
 import RegisterComponent from "./components/RegisterComponent";
 import LoginComponent from "./components/LoginComponent";
 import DashboardComponent  from "./components/DashboardComponent";
+import NavBar from "./components/NavBar"
+import ProtectedRoute from "./components/ProtectedRoute"
+import { Profiler } from "react";
+
 // import TestArticle from "./components/TestArticle";
 // import TestRouterComp from "./components/TestRouterComp";
 
@@ -15,21 +21,38 @@ import DashboardComponent  from "./components/DashboardComponent";
   only components which are loaded through a route have route props. -> thats why its good to make conatainer components which are loaded by
   route and render other components. If router props are needed in component which are not used in Router components we
   can export them withRouter: export default withRouter(coponentName) in component file */
-function App() {
+export function AppComp({isLoggedIn}) {
   return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/home" component={Home} />
+    <div>
+      <NavBar />
 
-      <Route path="/register" component={RegisterComponent} />
-      <Route path="/login" component={LoginComponent} />
-      <Route path="/dashboard" component={DashboardComponent} />
-      {/* <Route path="/testToggle" component={TestArticle} /> */}
-      {/* <Route path="/test" component={TestRouterComp} /> */}
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/home" component={Home} />
+        <Route path="/register" component={RegisterComponent} />
+        <Route path="/login" component={LoginComponent} />
+        {/* <Route path="/dashboard" >{isLoggedIn ? (
+          <Redirect to="/dashboard"/>) : (<Redirect to="/home" />
+        )}</Route> */}
 
+        <ProtectedRoute path="/dashboard" component={DashboardComponent} isLoggedIn={isLoggedIn}/>
 
-    </Switch>
+        {/* <Route  path="/dashboard" component={DashboardComponent} /> */}
+        {/* <Route path="/testToggle" component={TestArticle} /> */}
+        {/* <Route path="/test" component={TestRouterComp} /> */}
+      </Switch>
+
+    </div>
+   
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.userReducer.loggedIn
+  }
+}
+
+
+const App = connect(mapStateToProps, null)(AppComp)
 export default App;

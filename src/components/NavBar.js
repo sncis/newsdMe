@@ -10,15 +10,16 @@ export class NavBarComponent extends Component {
 				{
 					!this.props.isLoggedIn &&
 					<div>
+						<Link to="/home" className="homeLink">Home</Link>
 						<Link to="/register" className="registerLink">register</Link>
-						<Link to="/login" className="loginLink">login</Link>
+						<Link to="/login" className="loginLink">Login</Link>
 					</div>
 					
 				}
 			
 				{this.props.isLoggedIn && 
 				<div>	
-					<p>logout</p> 
+					<p>Logout</p> 
 					<Link to="/home" className="homeLink">Home</Link>
 					<Link to="/dashboard" className="dashboardLink">Dashboard</Link>
 				</div>

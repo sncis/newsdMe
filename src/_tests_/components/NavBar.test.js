@@ -10,9 +10,11 @@ describe("NavBar", ()=>{
 		const component = shallow(<NavBarComponent isLoggedIn={false} />)
 
 		expect(component.length).toEqual(1)
-		expect(component.find(Link).length).toEqual(2)
+		expect(component.find(Link).length).toEqual(3)
 		expect(component.find('.registerLink').length).toEqual(1)
 		expect(component.find('.loginLink').length).toEqual(1)
+		expect(component.find('.homeLink').length).toEqual(1)
+
 
 
 	})

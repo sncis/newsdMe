@@ -39,12 +39,12 @@ export class ArticleComp extends Component {
 	}
 }
 
-const mapStateToProps = state =>{
-	return{
-		jwtToken: state.userReducer.jwtToken,
-		usernam: state.userReducer.userName
-	}
-}
+// const mapStateToProps = state =>{
+// 	return{
+// 		jwtToken: state.userReducer.jwtToken,
+// 		usernam: state.userReducer.userName
+// 	}
+// }
 
 const mapDispatchToProps = (dispatch) =>{
 	return{
@@ -53,5 +53,5 @@ const mapDispatchToProps = (dispatch) =>{
 	}	
 }
 
-const ArticleComponent = connect(mapStateToProps, mapDispatchToProps)(ArticleComp)
+const ArticleComponent = connect(null, mapDispatchToProps)(ArticleComp)
 export default ArticleComponent;

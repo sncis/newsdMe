@@ -6,7 +6,7 @@ import SavedArticleComponent from "./SavedArticleComponent"
 
 
 
-const SavedArticleListItem = ({ articles, isLoading, errorMsg}) => {
+export const SavedArticleListItem = ({ articles, isLoading, errorMsg}) => {
 	return(
 		<div className="savedArticles-list">
 			{articles.length > 0 && articles.map(item => 

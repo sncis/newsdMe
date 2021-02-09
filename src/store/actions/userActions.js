@@ -74,6 +74,7 @@ export const loginUserAction= (user) => {
     return axios.post(url, jsonUser, header)
       .then(response =>{
         const jwtToken = response.data.jwtToken
+        localStorage.setItem("token", JSON.stringify(jwtToken))
         dispatch(loginUserSuccess(user.userName, jwtToken))
       }).catch(error => {
         let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'

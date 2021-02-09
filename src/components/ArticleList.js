@@ -6,7 +6,7 @@ import ArticleComponent from "./ArticleComponent";
 import "../css/ArticleList.css"
 
 
-const ArticleListItem = ({ articles, isLoading, errorMsg}) => {
+export const ArticleListItem = ({ articles, isLoading, errorMsg}) => {
 	return (
 		<div className="dailyArticles">
 				{articles.length > 0 && articles.map(item => (

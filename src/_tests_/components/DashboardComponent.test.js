@@ -20,7 +20,6 @@ describe("DashboardComponent", () => {
 	
 
 	beforeEach(() => {
-
 		const props = {
 			loadArticles: jest.fn(),
 			loadDailyArticles: jest.fn(),

@@ -9,7 +9,9 @@ import LoginComponent from "./components/LoginComponent";
 import DashboardComponent  from "./components/DashboardComponent";
 import NavBar from "./components/NavBar"
 import ProtectedRoute from "./components/ProtectedRoute"
-import { Profiler } from "react";
+
+import store from "../src/store/store/store"
+import { LOGIN_USER_SUCCESS, LOGOUT_USER } from "./store/constants/userTypes";
 
 // import TestArticle from "./components/TestArticle";
 // import TestRouterComp from "./components/TestRouterComp";
@@ -21,7 +23,10 @@ import { Profiler } from "react";
   only components which are loaded through a route have route props. -> thats why its good to make conatainer components which are loaded by
   route and render other components. If router props are needed in component which are not used in Router components we
   can export them withRouter: export default withRouter(coponentName) in component file */
-export function AppComp({isLoggedIn}) {
+
+  export function AppComp({isLoggedIn}) {
+  
+
   return (
     <div>
       <NavBar />

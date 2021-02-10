@@ -10,8 +10,9 @@ import { USER_LOADING,
 
 import { GOOGLE_API_KEY } from "../../keys"
 
+import backendInstance  from "../../axiosConfig"
 
-const baseUrl = "http://localhost:8080/";
+// const baseUrl = "http://localhost:8080/";
 
 const header = {
   headers:{
@@ -25,12 +26,12 @@ const header = {
 
 export const registerUserAction= (user) => {
   return (dispatch) => {
-    const url = `${baseUrl}register`
+    const url = `register`
     dispatch(registerUserLoading(user))
 
     const jsonUser = JSON.stringify(user)
     
-    return axios
+    return backendInstance
       .post(url,jsonUser,header)
       .then(response => {
         console.log(response)
@@ -68,22 +69,24 @@ export const registerUserError =(errorMsg)=>{
 export const loginUserAction= (user) => {
   return (dispatch) => {
     dispatch(loginUserLoading())
-    dispatch(loginUserSuccess("someUser", "sometoken"))
+    // dispatch(loginUserSuccess("someUser", "sometoken"))
     console.log("loginuser called")
 
-    // const url = `${baseUrl}login`
-    // const jsonUser = JSON.stringify(user)
-    // console.log("json user")
-    // console.log(jsonUser)
-    // return axios.post(url, jsonUser, header)
-    //   .then(response =>{
-    //     const jwtToken = response.data.jwtToken
-    //     localStorage.setItem("token", JSON.stringify(jwtToken))
-    //     dispatch(loginUserSuccess(user.userName, jwtToken))
-    //   }).catch(error => {
-    //     let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
-    //     dispatch(loginUserError(message))
-      // })  
+    const url = `login`
+    const jsonUser = JSON.stringify(user)
+    console.log("json user")
+    console.log(jsonUser)
+    return backendInstance.post(url, jsonUser, header)
+      .then(response =>{
+        const jwtToken = response.data.jwtToken
+        localStorage.setItem("token", JSON.stringify(jwtToken))
+        dispatch(loginUserSuccess(user.userName, jwtToken))
+      }).catch(error => {
+          let message = error.response ? error.response.data.message :  'some error occured, please try again!'
+          dispatch(loginUserError(message))
+        
+       
+      })  
   }
 }
 
@@ -110,6 +113,7 @@ export const loginUserError = (msg) => {
 
 
 export const logoutAction = () => {
+  localStorage.setItem('token',null)
   return {
     type: LOGOUT_USER
   }

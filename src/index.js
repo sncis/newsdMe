@@ -6,8 +6,18 @@ import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 import store from "../src/store/store/store"
 import "./index.css";
+import { LOGIN_USER_SUCCESS, LOGOUT_USER } from "./store/constants/userTypes";
+
+
+const token = JSON.parse(localStorage.getItem("token")) 
+  if(token !== null){
+    store.dispatch({type:LOGIN_USER_SUCCESS, payload: {userName: "someUser"}})
+  }else{
+    store.dispatch({type:LOGOUT_USER})
+  }
 
 const app = (
+  
   <Provider store={store}>
      <BrowserRouter>
     <App />

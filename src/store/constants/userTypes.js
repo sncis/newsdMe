@@ -12,3 +12,5 @@ export const SET_USER_TOKEN = "SET_USER_DETAILS";
 export const GET_USER_INFO="GET_USER_INFO";
 export const SET_USER_INFO="SET_USER_INFO";
 
+export const LOGOUT_USER="LOGOUT_USER"
+

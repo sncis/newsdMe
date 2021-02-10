@@ -5,11 +5,13 @@ import {
   LOGIN_USER_ERROR, 
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  LOGOUT_USER,
   SET_GEOLOCATION
 }  from "../constants/userTypes";
 
 const initialState = {
   isLoading: false,
+  loggedIn: false
 };
 
 const userReducer = (state = initialState, action='') => {
@@ -47,7 +49,8 @@ const userReducer = (state = initialState, action='') => {
         userName : action.payload.userName,
         jwtToken: action.payload.jwtToken,
         isLoading: false,
-        loginSuccessful: true
+        loginSuccessful: true,
+        loggedIn: true
       }
     case LOGIN_USER_ERROR:
       return{
@@ -56,7 +59,11 @@ const userReducer = (state = initialState, action='') => {
         isLoading: false,
         loginSuccessful: false
       }
-
+    case LOGOUT_USER:
+      return{
+        ...state,
+        loggedIn:false,
+      } 
     case SET_GEOLOCATION:
       return{
         ...state,

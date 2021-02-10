@@ -4,6 +4,7 @@ import { USER_LOADING,
   LOGIN_USER_SUCCESS , 
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  LOGOUT_USER,
   SET_GEOLOCATION
 } from "../constants/userTypes";
 
@@ -67,19 +68,22 @@ export const registerUserError =(errorMsg)=>{
 export const loginUserAction= (user) => {
   return (dispatch) => {
     dispatch(loginUserLoading())
-    const url = `${baseUrl}login`
-    const jsonUser = JSON.stringify(user)
-    console.log("json user")
-    console.log(jsonUser)
-    return axios.post(url, jsonUser, header)
-      .then(response =>{
-        const jwtToken = response.data.jwtToken
-        localStorage.setItem("token", JSON.stringify(jwtToken))
-        dispatch(loginUserSuccess(user.userName, jwtToken))
-      }).catch(error => {
-        let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
-        dispatch(loginUserError(message))
-      })  
+    dispatch(loginUserSuccess("someUser", "sometoken"))
+    console.log("loginuser called")
+
+    // const url = `${baseUrl}login`
+    // const jsonUser = JSON.stringify(user)
+    // console.log("json user")
+    // console.log(jsonUser)
+    // return axios.post(url, jsonUser, header)
+    //   .then(response =>{
+    //     const jwtToken = response.data.jwtToken
+    //     localStorage.setItem("token", JSON.stringify(jwtToken))
+    //     dispatch(loginUserSuccess(user.userName, jwtToken))
+    //   }).catch(error => {
+    //     let message = error.response.data ? error.response.data.message :  'some error occured, please try again!'
+    //     dispatch(loginUserError(message))
+      // })  
   }
 }
 
@@ -105,6 +109,11 @@ export const loginUserError = (msg) => {
 }
 
 
+export const logoutAction = () => {
+  return {
+    type: LOGOUT_USER
+  }
+}
 
 
 

@@ -119,5 +119,13 @@ describe("userActions", () => {
 				expect(store.getActions()).toEqual(expectedAction);
 			})
 		})	
+
+	})
+	describe("logoutAction should dispatch logout", () =>{
+		const expectedAction =[{
+			type: types.LOGOUT_USER
+		}]
+		store.dispatch(userActions.logoutAction())
+		expect(store.getActions()).toEqual(expectedAction)
 	})
 })

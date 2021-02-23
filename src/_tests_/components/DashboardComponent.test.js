@@ -2,10 +2,9 @@ import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
 
-import { mount, shallow } from "enzyme";
-import { Provider } from 'react-redux'
+import { mount } from "enzyme";
 
-import DashboardComponent , {Dashboard} from '../../components/DashboardComponent'
+import {Dashboard} from '../../components/DashboardComponent'
 import ArticleList from "../../components/ArticleList"
 import SavedArticleList from '../../components/SavedArticleList';
 
@@ -23,13 +22,14 @@ describe("DashboardComponent", () => {
 		const props = {
 			loadArticles: jest.fn(),
 			loadDailyArticles: jest.fn(),
-			handleSearch: jest.fn(),
+			handelSearch: jest.fn(),
 		}
 
 		store = mockStore({})
 		store.dispatch = jest.fn()
 
-		component = mount(<DashboardComponent store={store} {...props}/>)
+		component = mount(<Dashboard store={store} {...props}/>
+		)
 			
 	})
 
@@ -45,11 +45,13 @@ describe("DashboardComponent", () => {
 
 	it("should dispatch articleMethods when componentDidMount", () => {
 	
-		expect(store.dispatch).toHaveBeenCalledTimes(2)
+		expect(component.instance().props.loadArticles).toHaveBeenCalledTimes(1)
+		expect(component.instance().props.loadDailyArticles).toHaveBeenCalledTimes(1)
+
 	})
 
 	it("should dispatch handleSearch when click on button", ()=> {
-		const spy = jest.spyOn(component.props(), 'handleSearch')
+		const spy = jest.spyOn(component.instance(), 'handelSearch')
 		const button = component.find('button')
 		button.simulate('click')
 

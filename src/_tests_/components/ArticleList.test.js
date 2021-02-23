@@ -34,7 +34,7 @@ describe("ArticleList", () => {
 	// }) 
 
 
-	it("shoudl render whithout errors", () => {
+	it("shoud render whithout errors", () => {
 		store = mockStore(initialState)
 
 		component= shallow(<ArticleList  store={store}/>).dive({context:{store}}).dive()

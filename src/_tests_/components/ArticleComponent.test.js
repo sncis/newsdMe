@@ -26,8 +26,10 @@ describe("ArticleComponent", () => {
 	beforeEach(() => {
 		const props = {
 			article: article,
-			removeArticle: jest.fn(),
-			storeArticle: jest.fn()
+			removeUserArticle: jest.fn(),
+			saveUserArticle: jest.fn(),
+			history: {push: jest.fn()},
+			isLoggedIn: true
 		}
 	
 		store = mockStore({})
@@ -54,7 +56,7 @@ describe("ArticleComponent", () => {
 	it('should bookMark article when clicking on bookmarkIcon', () => {
 		const bookmark = component.find(".bookmark-container")
 
-		const spy = jest.spyOn(component.instance().props, "storeArticle")
+		const spy = jest.spyOn(component.instance().props, "saveUserArticle")
 
 		bookmark.simulate('click', {article})
 
@@ -80,8 +82,10 @@ describe("ArticleComponent is bookmarked", () => {
 
 		const props = {
 			article: article,
-			removeArticle: jest.fn(),
-			storeArticle: jest.fn()
+			removeUserArticle: jest.fn(),
+			saveUserArticle: jest.fn(),
+			history: {push: jest.fn()},
+			isLoggedIn: true
 		}
 	
 		store = mockStore({})
@@ -91,7 +95,7 @@ describe("ArticleComponent is bookmarked", () => {
 
 		const bookmark = component.find(".bookmark-container")
 
-		const spy = jest.spyOn(component.instance().props, "removeArticle")
+		const spy = jest.spyOn(component.instance().props, "removeUserArticle")
 
 		bookmark.simulate('click', {article})
 

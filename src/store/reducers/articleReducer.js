@@ -5,7 +5,6 @@ import { IS_LOADING_ARTICELS,
 	ADD_ARTICLE_TO_SAVED_ARTICLELIST,
 	SET_DAILY_ARTICLES_ERROR,
 } from "../constants/articelTypes"
-import { dummyArticles, dailyArticles } from "../dummyArticles";
 
 const initialState = {
 	isLoading:false,

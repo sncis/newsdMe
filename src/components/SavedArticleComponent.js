@@ -9,6 +9,11 @@ import "../css/SavedArticle.css";
 
 
 export class SavedArticleComponentItem extends Component {
+	removeArticle = (article) => {
+		article['isBookmarked'] = false
+		this.props.removeArticle(article)
+	}
+
 	render(){
 		return(
 			<div className="saved_container">
@@ -22,11 +27,11 @@ export class SavedArticleComponentItem extends Component {
 					<a className="saved_link-to-article" href={this.props.article.url} target='blank'>	
 					<h3 className ="saved_title">{this.props.article.title}</h3></a>
 					<p className="saved_description">{this.props.article.description}</p>	
-					<a className="saved_source" href={this.props.article.source.name} target='blank'>
-					<p>{this.props.article.source.name.toUpperCase()}</p>
+					<a className="saved_source" href={this.props.article.source} target='blank'>
+					<p>{this.props.article.source}</p>
 				</a>
 				</div>
-				<div className="saved_bookmark-container" onClick={() => this.props.removeArticle(this.props.article)}>
+				<div className="saved_bookmark-container" onClick={() => this.removeArticle(this.props.article)}>
 					<BookmarkFillIcon size={16} className="saved_bookMark" /> 
 				</div>
 				{/* </div> */}

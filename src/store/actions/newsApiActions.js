@@ -3,9 +3,7 @@ import { NEWS_API_KEY } from '../../keys';
 import {IS_LOADING_ARTICELS,
 	SET_DAILY_ARTICLES_ERROR,
 	SET_DAILY_ARTICLES } from "../constants/articelTypes"
-import { v4 as uuidv4 } from 'uuid';
 
-import store from "../store/store"
 import { dummyArticles, dailyArticles } from '../dummyArticles';
 
 const newsApiBaseUrl = "https://newsapi.org/v2/"
@@ -19,35 +17,44 @@ export const isLoadingDailyArticles =()=>{
 
 // export const dispatchApiRequest=()=> {
 export const loadDailyArticles = () => {
-	return dispatch => {
+	return async dispatch => {
 		dispatch(isLoadingDailyArticles())
+		
+		// dispatch(bookmarkResponse(dummyArticles))
 		const url = `${newsApiBaseUrl}top-headlines?country=de&apiKey=${NEWS_API_KEY}`
-		return axios.get(url).then(response => {
+		try {
+			const response = await axios.get(url)
 			dispatch(bookmarkResponse(response.data.articles))
-			// let array = bookmarkResponse(response.data.articles)
-			// let array = bookmarkResponse(dummyArticles)
-			// dispatch(setDailyArticles(response.data))
-		})
-		.catch(error => {
-			// console.log(error)
-			let message = error.response ? error.response.data : "could not fetch daily articles"
+		}catch(error) {
+			let message = error.response !== undefined ? error.response.data : "could not fetch daily articles"
 			dispatch(setDailyArticlesError(message))
-		})
+		}
+	
 	}
 }
 
 export const bookmarkResponse = (array) => {
 	return dispatch =>{
-		const bookmarkedArticles = localStorage.getItem("bookmarkedArticles") !== null ? JSON.parse(localStorage.getItem("bookmarkedArticles")) : []
+		const bookmarkedArticles = localStorage.getItem("bookmarkedArticles") !== null ? JSON.parse(localStorage.getItem("bookmarkedArticles")) : null
+		
 		const titles = []
-		 bookmarkedArticles.forEach(el => {
-			titles.push(el.title)
-		})
-		array.forEach(el => titles.includes(el.title) ? el.isBookmarked=true : el.isBookmarked= false)
+		const newArticles = []
 
-		dispatch(setDailyArticles(array))
+		if(bookmarkedArticles !== null ){
+			array.forEach(el => {
+				titles.push(el.title)
+			})
+			array.forEach(el => titles.includes(el.title) ? bookmarkedArticles.forEach(item => item.title === el.title ? newArticles.push(item) : newArticles.push(el)) : null)
+			
+			dispatch(setDailyArticles(newArticles))
+		}else{
+			dispatch(setDailyArticles(array))
+		}
+	
+		// array.forEach(el => titles.includes(el.title) ? null : newArticles.push(el))
+		// array.forEach(el => titles.includes(el.title) ? newArticles.push(bookmarkedArticles.filter(item => item.title === el.title)) : newArticles.push(el))
+
 	}
-	// return array
 }
 
 export const setDailyArticles = articles => {
@@ -72,25 +79,12 @@ export const handleSearch = (term) => {
 
 
 
-
-
-
-
-/** filter response to not have them in article list again */
-
-// const filterResponse = (arr)=>{
-// 	const bookmarkedArticles = JSON.parse(localStorage.getItem("bookmarkedArticles") || "[]")
-
-// 	const bookmakrTitles = []
-// 	bookmarkedArticles.forEach(el => {
-// 		bookmakrTitles.push(el.title)
-// 	})
-// 	console.log(bookmakrTitles)
-
-// 	let result = arr.filter(el => !bookmakrTitles.includes(el.title))
-	
-// 	return result
-
-
-// }
-
+	// return axios.get(url).then(response => {
+		// 	// console.log(response)
+		// 	dispatch(bookmarkResponse(response.data.articles))
+		
+		// })
+		// .catch(error => {
+		// 	// console.log(error)
+			
+		// })

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {BookmarkIcon, BookmarkFillIcon} from '@primer/octicons-react'
+import { withRouter } from 'react-router-dom'
 
 import { saveUserArticle, removeUserArticle } from "../store/actions/articleActions"
 
@@ -11,11 +12,27 @@ import dummy from "../assets/img/dummy.jpg";
 export class ArticleComp extends Component {
 
 	toogleIsBoomarked = (article) => {
-		console.log(article.isBookmarked )
-		!article.isBookmarked ? this.props.storeArticle(article) : this.props.removeArticle(article)
+		if(this.props.isLoggedIn){
+			if(!article.isBookmarked){
+				article['isBookmarked'] = true;
+
+				this.props.saveUserArticle(article)
+			}else{
+				article['isBookmarked'] = false;
+				this.props.removeUserArticle(article)
+			}
+			// !article.isBookmarked ? this.props.storeArticle(article) : this.props.removeArticle(article)
+		}else {
+			this.props.history.push('/login')
+		}
+		// console.log(article.isBookmarked )
 
 	}
+	
 	render(){
+		// console.log(this.props.article)
+		let source = this.props.article.source.name === undefined ? this.props.article.source : this.props.article.source.name;
+		// console.log(source)
 		return(
 			<div className="container">
 				<div className="" key={this.props.article.id}>
@@ -26,8 +43,8 @@ export class ArticleComp extends Component {
 						<h3 className ="title">{this.props.article.title}</h3>
 						<p className="description">{this.props.article.description}</p>
 					</a>
-					<a href={this.props.article.source.name} target="blank">
-						<p className="source">{this.props.article.source.name}</p>
+					<a href={source} target="blank">
+						<p className="source">{source}</p>
 					</a>
 					<div className="bookmark-container" onClick={() => this.toogleIsBoomarked(this.props.article)}>
 						{ !this.props.article.isBookmarked && <BookmarkIcon size={16} className="bookMark" /> }
@@ -39,19 +56,20 @@ export class ArticleComp extends Component {
 	}
 }
 
-// const mapStateToProps = state =>{
-// 	return{
-// 		jwtToken: state.userReducer.jwtToken,
-// 		usernam: state.userReducer.userName
-// 	}
-// }
+
+const mapStateToProps = state =>{
+	return{
+		isLoggedIn: state.userReducer.loggedIn,
+		// usernam: state.userReducer.userName
+	}
+}
 
 const mapDispatchToProps = (dispatch) =>{
 	return{
-		storeArticle: article => {dispatch(saveUserArticle(article))},
-		removeArticle: article => {dispatch(removeUserArticle(article))}
+		saveUserArticle: article => {dispatch(saveUserArticle(article))},
+		removeUserArticle: article => {dispatch(removeUserArticle(article))}
 	}	
 }
 
-const ArticleComponent = connect(null, mapDispatchToProps)(ArticleComp)
-export default ArticleComponent;
+const ArticleComponent = connect(mapStateToProps, mapDispatchToProps)(ArticleComp)
+export default withRouter(ArticleComponent);

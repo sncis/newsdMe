@@ -28,7 +28,7 @@ export const getUserArticles = () => {
     dispatch(loadUserArticels())
     // console.log("getting user articles")
     const url = `${baseUrl}articles?username=${getState().userReducer.userName}`
-    const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : null
+    const token = localStorage.getItem('token') !== null ? JSON.parse(localStorage.getItem('token')) : null
     header.headers["Authorization"]= `Bearer ${token}`
 
     return axios
@@ -70,9 +70,7 @@ export const setBookmarkInDailyArticles = (article) => {
     const articles = getState().articleReducer.dailyArticles.slice()
 
     const index = articles.findIndex((el) => el.title === article.title)
-    console.log("article in save article")
-    console.log(article)
-   
+    
     const bookmarkedArticles = localStorage.getItem("bookmarkedArticles") !== null ? JSON.parse(localStorage.getItem("bookmarkedArticles")) : []
     bookmarkedArticles.push(article)
     localStorage.setItem("bookmarkedArticles", JSON.stringify(bookmarkedArticles))
@@ -90,15 +88,15 @@ export const saveUserArticle = (article) => {
     article.source = article.source.name ? article.source.name : article.source
 
     const jsonArticle = JSON.stringify(article)
-    const token = localStorage.getItem('token') === null ? null : localStorage.getItem('token')
+    const token = localStorage.getItem('token') === null ? null : JSON.parse(localStorage.getItem('token'))
 
     header.headers.Authorization = `Bearer ${token}`
 
     try{
-      const res = await axios.post(url, jsonArticle, header)
-      console.log(res.data)
-      dispatch(addArticleToSavedArticleList(res.data))
-      dispatch(setBookmarkInDailyArticles(res.data))
+      const response = await axios.post(url, jsonArticle, header)
+      console.log(response.data)
+      dispatch(addArticleToSavedArticleList(response.data))
+      dispatch(setBookmarkInDailyArticles(response.data))
 
     }catch(error){
       console.log(error)
@@ -118,7 +116,7 @@ export const addArticleToSavedArticleList = article => {
 
 export const removeUserArticle = (article) => {
   return (dispatch) => {
-    dispatch(deleteArticleInDB(article.id))
+    dispatch(deleteArticleInDB(article))
   }
 }
 
@@ -131,32 +129,33 @@ export const removeBookmarkInDailyArticles = article => {
    
     const bookmarkedArticles = localStorage.getItem("bookmarkedArticles") !== null ? JSON.parse(localStorage.getItem("bookmarkedArticles")) : []
     const articlesNotToDelete = bookmarkedArticles.filter(el => el.id !== article.id)
-    localStorage.setItem("bookmarkedArticles", JSON.stringify(articlesNotToDelete))
+
+    articlesNotToDelete.length > 0 ? localStorage.setItem("bookmarkedArticles", JSON.stringify(articlesNotToDelete)) : localStorage.removeItem("bookmarkedArticles")
   
     dispatch(setDailyArticles(articles))
   }
 }
 
-export const deleteArticleInDB = (id) => {
+export const deleteArticleInDB = (article) => {
   return async dispatch => {
-    const url=`${baseUrl}articles/article?id=${id}`
+    const url=`${baseUrl}articles/article?id=${article.id}`
     // const url=`${baseUrl}articles/article?id=100000`
 
-    const token = localStorage.getItem('token') !== null ? localStorage.getItem('token'): null
+    const token = localStorage.getItem('token') !== null ? JSON.parse(localStorage.getItem('token')) : null
     header.headers.Authorization = `Bearer ${token}`
-
+    
     try{
       const response = await axios.delete(url,header)
-      dispatch(removeBookmarkInDailyArticles(response.data))
-      console.log(response.data)
-      dispatch(getUserArticles())
-    }catch(error){
-      console.log(error.response)
-      let message  = error.response !== undefined ?  error.response.data.message : "could not delete article"
-
-      console.log(message)
-    }
     
+      if(response){
+        console.log(response)
+        dispatch(removeBookmarkInDailyArticles(article))
+        dispatch(getUserArticles())
+      }
+    }catch(error){
+      let message  = error.response.data !== undefined ?  error.response.data.message : "could not delete article"
+      dispatch(getUserArticelsError(message))
+    }  
   }
   
 }

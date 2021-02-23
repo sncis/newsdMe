@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom';
 
 import { loginUserAction } from "../store/actions/userActions"
+
 
 export class Login extends Component {
 	constructor(props){
@@ -26,9 +28,9 @@ export class Login extends Component {
 	handelLogin = (e)=> {
 		e.preventDefault();
 		this.props.loginUser(this.state);
-		if(this.props.loginSuccessful) {
-			this.props.history.push('/dashboard')
-		}
+		// if(this.props.loginSuccessful) {
+			// this.props.history.push('/dashboard')
+		// }
 		
 		// setTimeout(()=> {
 		// 	console.log("login componeent timeout after login click")
@@ -42,6 +44,7 @@ export class Login extends Component {
 	render() {
 		return(
 			<div> 
+				{this.props.isLoggedIn && <Redirect to='/dashboard'/>}
 				<h1>Login</h1>
 				<form>
 					<div>
@@ -67,7 +70,7 @@ export class Login extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loginUser: user => { dispatch(loginUserAction(user)) }
+	loginUser: user =>  {dispatch(loginUserAction(user)) }
 
 		// loginUser: user => { dispatch({type:LOGIN_USER_LOADING, payload: user}) }
 	}
@@ -78,6 +81,7 @@ const mapStateToProps = (state, ownProps) => {
 		isLoading: state.userReducer.isLoading,
 		errorMsg: state.userReducer.errorMsg,
 		loginSuccessful : state.userReducer.loginSuccessful,
+		isLoggedIn : state.userReducer.loggedIn
 	}
 }
 

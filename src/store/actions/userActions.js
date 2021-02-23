@@ -9,42 +9,42 @@ import { USER_LOADING,
 } from "../constants/userTypes";
 
 import { GOOGLE_API_KEY } from "../../keys"
+import { loadUserArticels } from "./articleActions";
 
-import backendInstance  from "../../axiosConfig"
+// import backendInstance  from "../../axiosConfig"
 
-// const baseUrl = "http://localhost:8080/";
+const baseUrl = "http://localhost:8080/";
+const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : null
 
 const header = {
   headers:{
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'ACCEPT': 'application/json'
+    'ACCEPT': 'application/json',
 }}
 
 
 /**********Register actions */
 
-export const registerUserAction= (user) => {
-  return (dispatch) => {
-    const url = `register`
-    dispatch(registerUserLoading(user))
+export const registerUserAction = (user) => {
+  return async (dispatch) => {
+    const url = `${baseUrl}register`
+    dispatch(registerUserLoading())
 
     const jsonUser = JSON.stringify(user)
     
-    return backendInstance
-      .post(url,jsonUser,header)
-      .then(response => {
-        console.log(response)
-        dispatch(registerUserSuccess(response.data))
-      }).catch(error => {
-        console.log(error.response.data)
-        let message = error.response ? error.response.data.message : "some error occured, please try again later"
-        dispatch(registerUserError(message))
-    })
+    try {
+      const response = await axios.post(url, jsonUser, header);
+      console.log(response);
+      dispatch(registerUserSuccess(response.data));
+    } catch (error) {
+      let message = (error.response.data === undefined) ? "some error occured, please try again later" : error.response.data.message;
+      dispatch(registerUserError(message));
+    }
   }
 }
 
-export const registerUserLoading = (user) => {
+export const registerUserLoading = () => {
   return {
     type: USER_LOADING
   }
@@ -52,7 +52,7 @@ export const registerUserLoading = (user) => {
 export const registerUserSuccess = (user) => {
   return {
     type: REGISTER_USER_SUCCESS,
-    payload: {userName: user.username}
+    payload: user.userName
   }
 }
 
@@ -66,27 +66,25 @@ export const registerUserError =(errorMsg)=>{
 
 /**********login actions */
 
-export const loginUserAction= (user) => {
-  return (dispatch) => {
+export const loginUserAction = user => {
+  return async (dispatch) => {
     dispatch(loginUserLoading())
-    // dispatch(loginUserSuccess("someUser", "sometoken"))
-    console.log("loginuser called")
 
-    const url = `login`
-    const jsonUser = JSON.stringify(user)
-    console.log("json user")
-    console.log(jsonUser)
-    return backendInstance.post(url, jsonUser, header)
-      .then(response =>{
-        const jwtToken = response.data.jwtToken
-        localStorage.setItem("token", JSON.stringify(jwtToken))
-        dispatch(loginUserSuccess(user.userName, jwtToken))
-      }).catch(error => {
-          let message = error.response ? error.response.data.message :  'some error occured, please try again!'
-          dispatch(loginUserError(message))
-        
-       
-      })  
+    const url = `${baseUrl}login`
+    const jsonUrl = JSON.stringify(user)
+
+    try{
+      const res = await axios.post(url, jsonUrl,header)
+      const jwtToken = res.data.jwtToken
+      localStorage.setItem("token", JSON.stringify(jwtToken))
+      dispatch(loginUserSuccess(user.userName, jwtToken))
+
+    }catch(error){
+      console.log(error)
+     let message = error.response.data !== undefined ? error.response.data.message : 'some error occured, please try again!';
+      dispatch(loginUserError(message));
+    }
+
   }
 }
 
@@ -97,10 +95,10 @@ export const loginUserLoading = () => {
   }
 }
 
-export const loginUserSuccess = (username, token ) => {
+export const loginUserSuccess = (username, jwtToken ) => {
   return{
     type: LOGIN_USER_SUCCESS,
-    payload: {userName: username, jwtToken: token}
+    payload: {userName: username, jwtToken: jwtToken}
   }
 }
 
@@ -113,7 +111,7 @@ export const loginUserError = (msg) => {
 
 
 export const logoutAction = () => {
-  localStorage.setItem('token',null)
+  localStorage.removeItem('token')
   return {
     type: LOGOUT_USER
   }

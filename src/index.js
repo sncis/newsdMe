@@ -9,7 +9,7 @@ import "./index.css";
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from "./store/constants/userTypes";
 
 
-const token = JSON.parse(localStorage.getItem("token")) 
+const token = localStorage.getItem("token")
   if(token !== null){
     store.dispatch({type:LOGIN_USER_SUCCESS, payload: {userName: "someUser"}})
   }else{

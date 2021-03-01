@@ -5,11 +5,16 @@ import mockAxios from 'axios'
 
 
 import * as actions from "../../../store/actions/newsApiActions"
-import {IS_LOADING_ARTICELS,
-SET_DAILY_ARTICLES_ERROR,
-SET_DAILY_ARTICLES} from "../../../store/constants/articelTypes"
+import {IS_LOADING_API_ARTICELS,
+	SET_DAILY_ARTICLES_ERROR,
+	SET_DAILY_ARTICLES,
+	LOAD_ARTICLE_SEARCH,
+	ARTICLE_SEARCH_SUCCESSFUL,
+	ARTICLE_SEARCH_ERROR
+} from "../../../store/constants/newsAPITypes"
 
 import { NEWS_API_KEY } from "../../../keys"
+import { dummyArticles } from '../../../store/dummyArticles';
 
 const mockStore = configureMockStore([thunk])
 // const mock = new MockAdapter(axios)
@@ -46,7 +51,7 @@ describe("newsApiActions", () => {
 			spy.mockReturnValueOnce(null)
 
 			let expectedAction=[{
-						type: IS_LOADING_ARTICELS
+						type: IS_LOADING_API_ARTICELS
 					},{
 						type: SET_DAILY_ARTICLES,
 						payload: dailyArticles.dailyArticles
@@ -69,7 +74,7 @@ describe("newsApiActions", () => {
 
 			await store.dispatch(actions.loadDailyArticles()).then(()=>{
 				let expectedAction =[{
-					type: IS_LOADING_ARTICELS
+					type: IS_LOADING_API_ARTICELS
 				},{
 					type: SET_DAILY_ARTICLES_ERROR,
 					payload: "some error"
@@ -115,6 +120,46 @@ describe("newsApiActions", () => {
 
 			expect(store.getActions()).toEqual(expectedAction)
 			expect(spy).toHaveBeenCalled()
+		})
+	})
+
+	describe("handelArticleSearch", () => {
+		it("should dispatch loadArticleSearch and articleSearchSuccesfull", async () => {
+			const searchTerm = "some search"
+			
+			const expectedAction = [{
+				type:LOAD_ARTICLE_SEARCH
+				},
+				{type: ARTICLE_SEARCH_SUCCESSFUL,
+					payload: dailyArticles.dailyArticles
+				}
+			]
+
+			mockAxios.get.mockImplementationOnce(() => 
+				Promise.resolve({data:{articles: dailyArticles.dailyArticles}
+			}))
+
+			await store.dispatch(actions.handelArticleSearch(searchTerm)).then(() => {
+				expect(store.getActions()).toEqual(expectedAction)
+
+			})
+		})
+
+		it("should dispatch articelSearchError when error occures", async () => {
+			const expectedAction = [{
+				type: LOAD_ARTICLE_SEARCH
+			},{
+				type:ARTICLE_SEARCH_ERROR,
+				payload: "something went wrong"
+			}]
+			
+			mockAxios.get.mockImplementationOnce(() => Promise.reject({
+				response:{data:"something went wrong"}
+			}))
+
+			await store.dispatch(actions.handelArticleSearch("some search")).then(() => {
+				expect(store.getActions()).toEqual(expectedAction)
+			})
 		})
 	})
 })

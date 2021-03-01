@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 
 import * as actions from "../../../store/actions/articleActions"
 import * as types from "../../../store/constants/articelTypes"
+import { SET_DAILY_ARTICLES } from  "../../../store/constants/newsAPITypes"
 import { dummyArticles,dailyArticles } from '../../../store/dummyArticles';
 import mockAxios from 'axios'
 
@@ -106,7 +107,7 @@ describe("articleActions", () => {
 			expect(setItemSpy).toHaveBeenCalled()
 
 			let expectedAction = [{
-				type: types.SET_DAILY_ARTICLES,
+				type: SET_DAILY_ARTICLES,
 				payload: dailyArticles
 			}]
 
@@ -136,7 +137,7 @@ describe("articleActions", () => {
 					type: types.ADD_ARTICLE_TO_SAVED_ARTICLELIST,
 					payload: article
 				},
-				{type: types.SET_DAILY_ARTICLES,
+				{type: SET_DAILY_ARTICLES,
 				payload: expectedArticles}
 
 			]
@@ -188,7 +189,7 @@ describe("articleActions", () => {
 
 			let expectedAction = [
 			{
-				type: types.SET_DAILY_ARTICLES,
+				type: SET_DAILY_ARTICLES,
 				payload: dailyArticles
 			},{	type: types.IS_LOADING_ARTICELS},
 			{

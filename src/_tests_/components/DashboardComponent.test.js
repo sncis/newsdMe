@@ -22,7 +22,7 @@ describe("DashboardComponent", () => {
 		const props = {
 			loadArticles: jest.fn(),
 			loadDailyArticles: jest.fn(),
-			handelSearch: jest.fn(),
+			handelArticleSearch: jest.fn(),
 		}
 
 		store = mockStore({})
@@ -51,10 +51,11 @@ describe("DashboardComponent", () => {
 	})
 
 	it("should dispatch handleSearch when click on button", ()=> {
-		const spy = jest.spyOn(component.instance(), 'handelSearch')
+		const spy = jest.spyOn(component.instance().props, 'handelArticleSearch')
 		const button = component.find('button')
 		button.simulate('click')
 
 		expect(spy).toHaveBeenCalledTimes(1)
+		expect(component.instance().props.handelArticleSearch).toHaveBeenCalledTimes(1)
 	})
 })

@@ -1,10 +1,11 @@
 import { IS_LOADING_ARTICELS, 
 	GET_USER_ARTICELS_ERROR, 
 	GET_USER_ARTICELS_SUCCESSFUL,
-	SET_DAILY_ARTICLES,
+	
 	ADD_ARTICLE_TO_SAVED_ARTICLELIST,
-	SET_DAILY_ARTICLES_ERROR,
 } from "../constants/articelTypes"
+
+import { SET_DAILY_ARTICLES_ERROR, SET_DAILY_ARTICLES } from "../constants/newsAPITypes"
 
 const initialState = {
 	isLoading:false,
@@ -40,7 +41,7 @@ const articleReducer = (state=initialState, action='') => {
 		case SET_DAILY_ARTICLES_ERROR:
 			return{
 				...state,
-				errorMsg:action.payload,
+				errorMsg: action.payload,
 				isLoading: false,
 			}
 		case ADD_ARTICLE_TO_SAVED_ARTICLELIST:

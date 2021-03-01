@@ -24,22 +24,19 @@ const header = {
 /** Loading user Articles from Backend */
 
 export const getUserArticles = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(loadUserArticels())
-    // console.log("getting user articles")
     const url = `${baseUrl}articles?username=${getState().userReducer.userName}`
     const token = localStorage.getItem('token') !== null ? JSON.parse(localStorage.getItem('token')) : null
     header.headers["Authorization"]= `Bearer ${token}`
 
-    return axios
-      .get(url,header)
-      .then(response => {
-        dispatch(getUserArticelsSuccessfull(response.data));
-      })
-      .catch(error => {
-        let message = error.response.data !== undefined ? error.response.data.message : "could not fetch saved articles"
-        dispatch(getUserArticelsError(message))
-      })
+    try{
+      const response = await axios.get(url, header)
+      dispatch(getUserArticelsSuccessfull(response.data))
+    }catch(error){
+      let message = error.response !== undefined ? error.response.data.message : "could not fetch saved articles"
+      dispatch(getUserArticelsError(message))
+    }
 
   }
 }
@@ -100,6 +97,7 @@ export const saveUserArticle = (article) => {
 
     }catch(error){
       console.log(error)
+
        dispatch(getUserArticelsError(error.response.data.message))
     }
    
@@ -146,14 +144,12 @@ export const deleteArticleInDB = (article) => {
     
     try{
       const response = await axios.delete(url,header)
-    
-      if(response){
-        console.log(response)
-        dispatch(removeBookmarkInDailyArticles(article))
-        dispatch(getUserArticles())
-      }
+      console.log(response)
+      dispatch(removeBookmarkInDailyArticles(article))
+      dispatch(getUserArticles())
+      
     }catch(error){
-      let message  = error.response.data !== undefined ?  error.response.data.message : "could not delete article"
+      let message  = error.response !== undefined ?  error.response.data.message : "could not delete article"
       dispatch(getUserArticelsError(message))
     }  
   }

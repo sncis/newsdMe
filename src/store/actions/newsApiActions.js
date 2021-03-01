@@ -1,8 +1,14 @@
 import axios from 'axios';
 import { NEWS_API_KEY } from '../../keys';
-import {IS_LOADING_ARTICELS,
+
+import {IS_LOADING_API_ARTICELS,
 	SET_DAILY_ARTICLES_ERROR,
-	SET_DAILY_ARTICLES } from "../constants/articelTypes"
+	SET_DAILY_ARTICLES,
+	LOAD_ARTICLE_SEARCH,
+	ARTICLE_SEARCH_SUCCESSFUL,
+	ARTICLE_SEARCH_ERROR
+ } from "../constants/newsAPITypes"
+
 
 import { dummyArticles, dailyArticles } from '../dummyArticles';
 
@@ -11,7 +17,7 @@ const newsApiBaseUrl = "https://newsapi.org/v2/"
 
 export const isLoadingDailyArticles =()=>{
 	return{
-		type: IS_LOADING_ARTICELS,
+		type: IS_LOADING_API_ARTICELS,
 	}
 }
 
@@ -72,19 +78,41 @@ export const setDailyArticlesError = (message) => {
 	}
 }
 
+export const loadArticleSearch = () =>{
+	return{
+		type: LOAD_ARTICLE_SEARCH
+	}
+}
 
-export const handleSearch = (term) => {
+export const articleSearchSuccesful = (articles) => {
+	return {
+		type: ARTICLE_SEARCH_SUCCESSFUL,
+		payload: articles
+	}
+}
 
+export const articleSearchError = errorMsg =>{
+	return {
+		type: ARTICLE_SEARCH_ERROR,
+		payload: errorMsg
+	}
 }
 
 
+export const handelArticleSearch = (searchTerm) => {
+	return async dispatch => {
+		dispatch(loadArticleSearch())
+		const url = `${newsApiBaseUrl}everything?q=${searchTerm}&apiKey=${NEWS_API_KEY}`
+		try{
+			const response = await axios.get(url)
+			console.log(response)
+			dispatch(articleSearchSuccesful(response.data.articles))
+		}catch(error) {
+			console.log(error)
+			let message = error.response !== undefined ? error.response.data : "could not get articles"
+			dispatch(articleSearchError(message))
+		}
 
-	// return axios.get(url).then(response => {
-		// 	// console.log(response)
-		// 	dispatch(bookmarkResponse(response.data.articles))
-		
-		// })
-		// .catch(error => {
-		// 	// console.log(error)
-			
-		// })
+	}
+
+}

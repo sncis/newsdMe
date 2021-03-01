@@ -1,5 +1,5 @@
-import { act } from "react-dom/test-utils"
 import * as types from "../../../store/constants/articelTypes"
+import { SET_DAILY_ARTICLES, SET_DAILY_ARTICLES_ERROR } from "../../../store/constants/newsAPITypes"
 import { dummyArticles } from "../../../store/dummyArticles"
 import articleReducer from "../../../store/reducers/articleReducer"
 
@@ -21,7 +21,7 @@ describe("articleReducer", () =>{
 	it("should handle IS_LOADING_ARTICLES", () =>{
 		const action = {type: types.IS_LOADING_ARTICELS}
 		expect(articleReducer(undefined,action)).toEqual({
-			isLoading:true,
+			isLoading: true,
 			savedArticles: [],
 			dailyArticles: []
 		})
@@ -49,7 +49,7 @@ describe("articleReducer", () =>{
 	})
 
 	it("should handle SET_DAILY_ARTICLES", () =>{
-		const action = {type: types.SET_DAILY_ARTICLES, payload: dummyArticles}
+		const action = {type: SET_DAILY_ARTICLES, payload: dummyArticles}
 
 		expect(articleReducer(undefined,action)).toEqual({
 			isLoading: false,
@@ -59,7 +59,7 @@ describe("articleReducer", () =>{
 	})
 
 	it("should handle SET_DAILY_ARTICLES_ERROR", () =>{
-		const action ={type: types.SET_DAILY_ARTICLES_ERROR, payload: 'some new error'}
+		const action ={type: SET_DAILY_ARTICLES_ERROR, payload: 'some new error'}
 
 		expect(articleReducer(undefined, action)).toEqual({
 			isLoading: false,

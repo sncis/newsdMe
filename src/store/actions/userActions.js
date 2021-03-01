@@ -68,6 +68,8 @@ export const registerUserError =(errorMsg)=>{
 
 export const loginUserAction = user => {
   return async (dispatch) => {
+    // dispatch(loginUserSuccess("some user", "some token "))
+
     dispatch(loginUserLoading())
 
     const url = `${baseUrl}login`

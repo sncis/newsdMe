@@ -1,4 +1,4 @@
-.savedArticles-list{
+.saved_articles-list{
 	display: flex;
 	justify-content: flex-start;
 	flex-wrap: wrap;
@@ -11,7 +11,7 @@
 	justify-content: flex-start;
 	flex-wrap: nowrap;
 	flex-direction: row;
-	border: 1px solid red;
+	border: 1px solid green;
 	border-radius: 5px 0px 0px 5px;
 	margin: 10px;
 	position: relative;
@@ -41,7 +41,7 @@
 .saved_title {
 	margin: 0px 0px 5px 0px;
 	color: black;
-	font-size: 18px;
+	font-size: 1em;
 	font-weight: 600;
 
 }
@@ -58,7 +58,7 @@
 	margin: 10px 0px 0px 0px;
 }
 
-.text-container{
+.saved_text-container{
 	margin: 5px 0px 2px 5px;
 }
 

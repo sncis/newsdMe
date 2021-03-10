@@ -1,34 +1,53 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 
-import ArticleComponent from "./ArticleComponent";
+import Article from './Article'
 import "../css/ArticleList.css"
 
+import dummy from "../assets/img/dummy.jpg";
+import { dummyArticles } from '../store/dummyArticles'
 
-export const ArticleListItem = ({ articles, isLoading, errorMsg}) => {
-	return (
-		<div className="dailyArticles">
-				{articles.length > 0 && articles.map(item => (
-					<ArticleComponent article={item} key={uuidv4()} />
-				))}
+export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
+	return(
+		<div className={listType}>
+			{articles.length > 0 && articles.map(item => (
+				<Article key={uuidv4()} articleType={listType} article={item} />
+			))}
 
-				{/* { articles.length === 0 && !isLoading && <p> no saved articles</p>} */}
-				{ articles.length === 0 && !isLoading && errorMsg && <p className="noArticleError"> { errorMsg }</p> }
-				{ articles.length === 0 && isLoading && <p className="loadingMsg"> Loading....!</p>}
-			</div>
+			{ articles.length === 0 && !isLoading && errorMsg && <p className="noArticleError"> { errorMsg }</p> }
+			{ articles.length === 0 && isLoading && <p className="loadingMsg"> Loading....!</p>}
+		
+		</div>
 	)
 }
 
 const mapStateToProps = (state, ownProp)=>{
 	return{
-		articles: state.articleReducer.dailyArticles,
-
-		// articles: ownProp,
-		errorMsg: state.articleReducer.errorMsg,
+		articles: ownProp.listType === 'daily' ? state.articleReducer.dailyArticles : state.articleReducer.savedArticles,
+		// articles:dummyArticles,
+		errorMsg: ownProp.listType === 'daily' ? state.articleReducer.errorMsg : state.articleReducer.savedArticlesErrorMsg,
 		isLoading: state.articleReducer.isLoading
 	}
 }
-const ArticleList = connect(mapStateToProps, null)(ArticleListItem)
 
-export default ArticleList
+ArticleList.propTypes = {
+	listType : PropTypes.string,
+	articles :PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number,
+		title: PropTypes.string,
+		description: PropTypes.string,
+		url: PropTypes.string,
+		source : PropTypes.any,
+		isBookmarked: PropTypes.bool,
+	})),
+	isLoading: PropTypes.bool,
+	errorMsg: PropTypes.string
+}
+
+export default connect(mapStateToProps, null)(ArticleList)
+
+
+// export default ArticleList

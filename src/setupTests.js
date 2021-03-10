@@ -13,13 +13,6 @@ global.shallow = shallow;
 global.mount = mount;
 global.render = render;
 
-// const localStorageMock = {
-//   getItem: jest.fn(),
-//   setItem: jest.fn(),
-//   clear: jest.fn()
-// };
-// global.localStorage = localStorageMock;
-
 var localStorageMock = (function() {
   var store = {};
   return {
@@ -38,3 +31,16 @@ var localStorageMock = (function() {
   };
 })();
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+
+
+export const consoleSpyForProptypeError = () => {
+  let spy;
+  beforeEach(()=>{
+    spy = jest.spyOn(global.console, 'error')
+  })
+
+  afterEach(()=>{
+    spy.mockRestore()
+  })
+
+}

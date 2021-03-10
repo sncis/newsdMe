@@ -3,17 +3,18 @@ import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
 
 import { shallow } from "enzyme";
-
 import ArticleList from "../../components/ArticleList"
-import ArticleComponent from '../../components/ArticleComponent';
+import Article from '../../components/Article'
+import { consoleSpyForProptypeError } from '../../setupTests'
 
-describe("ArticleList", () => {
-	let component
-	let store 
+const mockStore = configureMockStore([thunk])
 
-	const mockStore = configureMockStore([thunk])
-
+describe("ArticleList as DailyArticleList", () => {
+	let component;
+	let store;
 	
+	consoleSpyForProptypeError()
+
 	const initialState = {articleReducer:{
 		errorMsg:'',
 		isLoading: false,
@@ -27,56 +28,17 @@ describe("ArticleList", () => {
 		]}
 	}
 
-	// beforeEach(() => {
-	// 	store = mockStore(initialState)
-
-	// 	component= shallow(<ArticleList  store={store}/>).dive({context:{store}}).dive()
-	// }) 
-
-
-	it("shoud render whithout errors", () => {
+	it("should render without errors", () =>{
 		store = mockStore(initialState)
 
-		component= shallow(<ArticleList  store={store}/>).dive({context:{store}}).dive()
+		component= shallow(<ArticleList store={store} listType='daily'/>).dive({context:{store}}).dive()
 		expect(component.length).toEqual(1)
-		expect(component.find(ArticleComponent).length).toEqual(1)
+		expect(component.find(Article).length).toEqual(1)
 
 		expect(component.find('.noArticleError').length).toEqual(0)
 		expect(component.find('.loadingMsg').length).toEqual(0)
+		expect(console.error).not.toHaveBeenCalled()
 
 	})
 
-	it("should render errorMsg", () => {
-		store = mockStore({articleReducer:{
-			errorMsg:'some error',
-			isLoading: false,
-			dailyArticles: []
-		}})
-
-		component= shallow(<ArticleList  store={store}/>).dive({context:{store}}).dive()
-
-		expect(component.length).toEqual(1)
-		expect(component.find(ArticleComponent).length).toEqual(0)
-
-		expect(component.find('.noArticleError').length).toEqual(1)
-		expect(component.find('.loadingMsg').length).toEqual(0)
-
-	})
-
-	it("should render loadingMessage", () => {
-		store = mockStore({articleReducer:{
-			errorMsg:'',
-			isLoading: true,
-			dailyArticles: []
-		}})
-
-		component= shallow(<ArticleList  store={store}/>).dive({context:{store}}).dive()
-
-		expect(component.length).toEqual(1)
-		expect(component.find(ArticleComponent).length).toEqual(0)
-
-		expect(component.find('.noArticleError').length).toEqual(0)
-		expect(component.find('.loadingMsg').length).toEqual(1)
-
-	})
 })

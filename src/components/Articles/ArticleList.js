@@ -5,10 +5,7 @@ import { connect } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 
 import Article from './Article'
-import "../css/ArticleList.css"
-
-import dummy from "../assets/img/dummy.jpg";
-import { dummyArticles } from '../store/dummyArticles'
+import "../../css/ArticleList.css"
 
 export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 	return(
@@ -17,7 +14,7 @@ export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 				<Article key={uuidv4()} articleType={listType} article={item} />
 			))}
 
-			{ articles.length === 0 && !isLoading && errorMsg && <p className="noArticleError"> { errorMsg }</p> }
+			{ articles.length === 0 && !isLoading && errorMsg && <p className="noArticleError">{ errorMsg }</p> }
 			{ articles.length === 0 && isLoading && <p className="loadingMsg"> Loading....!</p>}
 		
 		</div>
@@ -27,7 +24,6 @@ export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 const mapStateToProps = (state, ownProp)=>{
 	return{
 		articles: ownProp.listType === 'daily' ? state.articleReducer.dailyArticles : state.articleReducer.savedArticles,
-		// articles:dummyArticles,
 		errorMsg: ownProp.listType === 'daily' ? state.articleReducer.errorMsg : state.articleReducer.savedArticlesErrorMsg,
 		isLoading: state.articleReducer.isLoading
 	}

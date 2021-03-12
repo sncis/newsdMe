@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
 
 import { shallow } from "enzyme";
-import LoginComponent from '../../components/LoginComponent';
+import LoginComponent from '../../../components/Auth/LoginComponent';
 
 
 

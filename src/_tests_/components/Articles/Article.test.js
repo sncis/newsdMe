@@ -1,11 +1,11 @@
 import React from 'react'
 import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
-import { shallow, mount } from "enzyme";
-import {BookmarkIcon, BookmarkFillIcon, ItalicIcon} from '@primer/octicons-react'
-import { consoleSpyForProptypeError } from '../../setupTests'
+import { shallow} from "enzyme";
+import {BookmarkIcon, BookmarkFillIcon} from '@primer/octicons-react'
+import { consoleSpyForProptypeError } from '../../../setupTests'
 
-import { Article } from '../../components/Article';
+import { Article } from '../../../components/Articles/Article';
 
 const mockStore = configureMockStore([thunk])
 
@@ -115,9 +115,9 @@ describe("Article as DailyArticle when logedOut", () =>{
 
 		expect(component.find(BookmarkIcon).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
-
-
 	})
+
+
 
 	it('should not bookmark article when clicking on bookmarkIcon', () => {
 	
@@ -132,7 +132,7 @@ describe("Article as DailyArticle when logedOut", () =>{
 		bookmark.simulate('click', {dummyArticle})
 
 		expect(spy).toHaveBeenCalledTimes(0)
-		expect(spyHistory).toHaveBeenCalledWith('/login')
+		expect(spyHistory).toHaveBeenCalledWith('/auth/1')
 		expect(component.instance().props.article["isBookmarked"]).toEqual(false)	
 	})
 	
@@ -151,6 +151,7 @@ describe("Article as SavedArticle", () => {
 		store.dispatch = jest.fn()
 		component = shallow(<Article store={store} {...props}/>)
 	})
+
 	it("should render without errors and filled Bookmark", () =>{
 		expect(component.length).toEqual(1)
 		expect(component.find('.saved_container').length).toEqual(1)
@@ -163,7 +164,6 @@ describe("Article as SavedArticle", () => {
 
 		expect(component.find(BookmarkFillIcon).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
-
 
 	})
 
@@ -179,5 +179,17 @@ describe("Article as SavedArticle", () => {
 		expect(spy).toHaveBeenCalledTimes(1)
 		expect(component.instance().props.article["isBookmarked"]).toEqual(false)	
 	
+	})
+})
+
+describe("Article", () => {
+	consoleSpyForProptypeError()
+
+	const props = setProps("true", true,'saved')
+	const store = mockStore({})
+
+	it("should throw error when wrong propTyes are provided", ()=>{
+		shallow(<Article store={store} {...props}/>)
+		expect(console.error).toHaveBeenCalledTimes(1)
 	})
 })

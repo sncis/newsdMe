@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
 
 import { shallow } from "enzyme";
-import RegisterComponent from '../../components/RegisterComponent';
+import RegisterComponent from '../../../components/Auth/RegisterComponent';
 
 
 describe("RegisterComponent", () => {
@@ -23,7 +23,7 @@ describe("RegisterComponent", () => {
 	it("should render without errors", () => {
 		expect(component.length).toEqual(1)
 		expect(component.find("input").length).toEqual(4)
-		expect(component.find('button').length).toEqual(2)
+		expect(component.find('button').length).toEqual(1)
 		
 	})
 	it("should set username", () => {

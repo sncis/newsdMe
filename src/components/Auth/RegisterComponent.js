@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
-import { registerUserAction } from "../store/actions/userActions"
+import { registerUserAction } from "../../store/actions/userActions"
+import "../../css/AuthForm.css"
+
 
 export class Register extends Component {
   constructor(props) {
@@ -74,21 +76,19 @@ export class Register extends Component {
   render() {
     return (
       <div>
-        <h1>Register</h1>
-        <form id="registrationForm">
-          <div>
-            <div>
+        <form id="registrationForm" className='auth-form'>
+            <div className="input-container">
               <label htmlFor="username">Username</label>
               <input
+                id="username"
                 type="text"
                 placeholder="enter username"
                 name="username"
-                id="username"
                 onChange={e => this.setUsername(e.target.value)}
               />
             </div>
         
-            <div>
+            <div className="input-container">
               <label htmlFor="email">Email</label>
               <input
                 id="email"
@@ -99,39 +99,31 @@ export class Register extends Component {
               />
             </div>
             
-            <div> 
+            <div className="input-container">  
               <label htmlFor="password">Password</label>
               <input
+                id="password"
                 type="password"
                 name="password"
-                id="password"
                 placeholder="password"
                 onChange={e => this.setPassword(e.target.value)}
               />
             </div>
             
-            <div>
+            <div className="input-container">
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
-                type="password"
                 id="confPassword"
+                type="password"
                 name="confirmPassword"
                 placeholder="Confirm password"
                 onChange={e => this.setConfirmPassword(e.target.value)}
               />
             </div>
-            
-
-            <button
-              id="SubmitRegisterBtn"
-              type="submit"
-              onClick={this.cancelRegistration}>Cancel</button>
-            
-            <button
+            <button 
               id="cancelRegisterBtn"
               type="reset"
               onClick={this.submitRegistration}>Register</button>
-          </div>
         </form>
 
         {!this.state.isPasswordMatching  && <div id="passwordMatchingError"><p>password is not matching</p></div>}

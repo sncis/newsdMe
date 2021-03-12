@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
 
-import { loginUserAction } from "../store/actions/userActions"
-
+import { loginUserAction } from "../../store/actions/userActions"
+import "../../css/AuthForm.css"
 
 export class Login extends Component {
 	constructor(props){
@@ -28,33 +28,21 @@ export class Login extends Component {
 	handelLogin = (e)=> {
 		e.preventDefault();
 		this.props.loginUser(this.state);
-		// if(this.props.loginSuccessful) {
-			// this.props.history.push('/dashboard')
-		// }
-		
-		// setTimeout(()=> {
-		// 	console.log("login componeent timeout after login click")
-		// 	console.log(store.getState())
-
-		// },200)
-		// console.log(this.props);
-
 	}
 
 	render() {
 		return(
 			<div> 
 				{this.props.isLoggedIn && <Redirect to='/dashboard'/>}
-				<h1>Login</h1>
-				<form>
-					<div>
-					<label htmlFor="username">Username</label>
-					<input placeholder="enter username" name="username" id ="username" onChange={event => this.setUsername(event.target.value)} />
+				<form className='auth-form'>
+					<div className="input-container">
+						<label htmlFor="username">Username</label>
+						<input placeholder="enter username" name="username" id ="username" onChange={event => this.setUsername(event.target.value)} />
 					</div>
 
-					<div>
-					<label htmlFor="password">Password</label>
-					<input placeholder="enter password" name="password" id="password" onChange={event => this.setPassword(event.target.value)} />
+					<div className="input-container">
+						<label htmlFor="password">Password</label>
+						<input placeholder="enter password" name="password" id="password" onChange={event => this.setPassword(event.target.value)} />
 					</div>
 				
 					<button type="submit" onClick={this.handelLogin}>Login</button>
@@ -71,12 +59,10 @@ export class Login extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 	loginUser: user =>  {dispatch(loginUserAction(user)) }
-
-		// loginUser: user => { dispatch({type:LOGIN_USER_LOADING, payload: user}) }
 	}
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
 	return {
 		isLoading: state.userReducer.isLoading,
 		errorMsg: state.userReducer.errorMsg,

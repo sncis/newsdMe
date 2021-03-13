@@ -2,6 +2,8 @@ import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
 
+import { consoleSpyForProptypeError } from '../../../setupTests'
+
 import { shallow } from "enzyme";
 import RegisterComponent from '../../../components/Auth/RegisterComponent';
 
@@ -12,6 +14,8 @@ describe("RegisterComponent", () => {
 
 	const mockStore = configureMockStore([thunk])
 	const registerMock = jest.fn()
+
+	consoleSpyForProptypeError()
 
 	beforeEach(() => {
 		
@@ -25,6 +29,7 @@ describe("RegisterComponent", () => {
 		expect(component.find("input").length).toEqual(4)
 		expect(component.find('button').length).toEqual(1)
 		
+		expect(console.error).not.toHaveBeenCalled()
 	})
 	it("should set username", () => {
 		const usernameInput = component.find('#username')
@@ -70,8 +75,6 @@ describe("RegisterComponent", () => {
 
 		expect(registerSpy).not.toHaveBeenCalled()
 	})
-
-
 })
 
 describe("RegisterComponent", () => {
@@ -79,22 +82,36 @@ describe("RegisterComponent", () => {
 	let store;
 
 	const mockStore = configureMockStore([thunk])
+	consoleSpyForProptypeError()
 
 
 	beforeEach(() => {
 		store = mockStore({userReducer: {isLoading:true, errorMsg: "some error"}});
-		component = shallow(<RegisterComponent store={store} />).dive({ context: { store } }).dive();
+		component = shallow(<RegisterComponent store={store} registerUser={jest.fn()}/>).dive({ context: { store } }).dive();
 	})
 
 	it("should render loadingMsg", () => {
 		expect(component.instance().props.isLoading).toEqual(true)
 		expect(component.find("#loadingMsg").length).toEqual(1)
-	
+		
+		
 	})
 	it("should render errorMsg", () => {
 		expect(component.instance().props.errorMsg).toEqual("some error")
 		expect(component.find("#errorMsg").length).toEqual(1)
 	
 	})
+})
 
+describe("RegisterComponen", () => {
+	const mockStore = configureMockStore([thunk])
+	const store =	 mockStore({userReducer: {isLoading:true, errorMsg: "some error"}});
+
+	consoleSpyForProptypeError()
+
+	it("should throw error when wrong propTypes are provided", ()=>{
+		
+		shallow(<RegisterComponent store={store} registerUser={'some'} />)
+		expect(console.error).toHaveBeenCalled()
+	})
 })

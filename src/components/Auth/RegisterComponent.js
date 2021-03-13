@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 import { registerUserAction } from "../../store/actions/userActions"
 import "../../css/AuthForm.css"
@@ -151,5 +152,12 @@ const mapStateToProps = state => {
 }
 
 const RegisterComponent = connect(mapStateToProps, mapDispatchToProps)(Register);
+
+RegisterComponent.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  errorMsg: PropTypes.string,
+  registerSuccessful: PropTypes.bool
+}
 
 export default RegisterComponent;

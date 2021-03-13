@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 import { shallow } from "enzyme";
 import LoginComponent from '../../../components/Auth/LoginComponent';
 
-
+import { consoleSpyForProptypeError } from '../../../setupTests'
 
 
 describe("LoginComponent", () => {
@@ -20,10 +20,10 @@ describe("LoginComponent", () => {
 		userName: 'someUser',
 		}
 	}
-		;
+
+	consoleSpyForProptypeError()
 
 	beforeEach(() => {
-		
 		store = mockStore(initialState);
 
 		store.dispatch = jest.fn()
@@ -33,8 +33,11 @@ describe("LoginComponent", () => {
 	it("should render without errors", () => {
 		expect(component.length).toEqual(1)
 
+		expect(component.find("label").length).toEqual(2)
 		expect(component.find("input").length).toEqual(2)
 		expect(component.find("button").length).toEqual(1)
+
+		expect(console.error).not.toHaveBeenCalled()
 
 	})
 
@@ -57,12 +60,13 @@ describe("LoginComponent", () => {
 
 	it("should dispatch loginUser when button click", () => {
 		const onClickMock = jest.spyOn(component.instance(), 'handelLogin')
-		// const user = {username: "user", password:"pass"}
-		// const action = loginUserAction(user)
+		const button = component.find("button")
 
+		// button.simulate("click", {preventDefault(){}})
 		component.instance().handelLogin({preventDefault(){}});
+		// button.simulate("click", {preventDefault(){}})
 		expect(onClickMock).toHaveBeenCalledTimes(1);
-		// expect(store.dispatch).toHaveBeenCalledWith(action)
+		expect(store.dispatch).toHaveBeenCalled()
 
 	})
 
@@ -74,10 +78,9 @@ describe("LoginComponent", () => {
 
 	const mockStore = configureMockStore([thunk])
 
-
 	beforeEach(() => {
 		store = mockStore({userReducer:{isLoading:true, errorMsg: "some error"}});
-		component = shallow(<LoginComponent store={store} />).dive({ context: { store } }).dive();
+		component = shallow(<LoginComponent store={store} loginUser={jest.fn()}/>).dive({ context: { store } }).dive()
 	})
 
 	it("should render loadingMsg", () => {
@@ -91,4 +94,19 @@ describe("LoginComponent", () => {
 	
 	})
 
+})
+describe("LoginComponent", () => {
+
+	consoleSpyForProptypeError()
+
+	const mockStore = configureMockStore([thunk])
+
+	it("should throw error when wrong propTypes are provided", () => {
+
+		const store = mockStore({userReducer:{isLoading:true, errorMsg: "some error"}});
+		shallow(<LoginComponent store={store} loginUser={'some'}/>).dive()
+		expect(console.error).toHaveBeenCalled()
+		
+	})
+	
 })

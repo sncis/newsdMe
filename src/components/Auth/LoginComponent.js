@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
 
@@ -47,7 +48,7 @@ export class Login extends Component {
 				
 					<button type="submit" onClick={this.handelLogin}>Login</button>
 				</form>
-				{this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
+				{this.props.isLoading && <div><p id="loadingMsg">Loading </p></div>}
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
 
 			</div>
@@ -72,5 +73,13 @@ const mapStateToProps = (state) => {
 }
 
 const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(Login);
+
+LoginComponent.propTypes = {
+	loginUser: PropTypes.func.isRequired,
+	isLoading: PropTypes.bool,
+	errorMsg: PropTypes.string,
+	loginSuccessful : PropTypes.bool,
+	isLoggedIn: PropTypes.bool
+}
 
 export default LoginComponent;

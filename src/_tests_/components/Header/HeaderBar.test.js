@@ -12,7 +12,7 @@ describe("HeaderBar", () => {
 	consoleSpyForProptypeError()
 
 	it("should render without errors", () => {
-		const component = shallow(<HeaderBar left={<LogoComponent link=''/>} middle={<Search />} right={<HeaderAuth />} onlyLogo={false}/>)
+		const component = shallow(<HeaderBar left={<LogoComponent link=''/>} middle={<Search handelArticleSearch={jest.fn()} />} right={<HeaderAuth />} onlyLogo={false}/>)
 		
 		console.log(component.debug())
 		expect(component.length).toEqual(1)
@@ -23,7 +23,7 @@ describe("HeaderBar", () => {
 		expect(console.error).not.toHaveBeenCalled()
 	})
 	it("should render only logo when onlyLogo props is true", () => {
-		const component = shallow(<HeaderBar left={<LogoComponent link=''/>} middle={<Search />} right={<HeaderAuth />} onlyLogo={true}/>)
+		const component = shallow(<HeaderBar left={<LogoComponent link=''/>} middle={<Search handelArticleSearch={jest.fn()} />} right={<HeaderAuth />} onlyLogo={true}/>)
 		console.log(component.debug())
 		expect(component.length).toEqual(1)
 		expect(component.find(LogoComponent).length).toEqual(1)
@@ -33,7 +33,7 @@ describe("HeaderBar", () => {
 	})
 
 	it('should throw console error when wrong propTypes are provided', () => {
-		shallow(<HeaderBar middle={<Search />} right={<HeaderAuth />} />)
+		shallow(<HeaderBar middle={<Search handelArticleSearch={jest.fn()} />} right={<HeaderAuth />} />)
 		expect(console.error).toHaveBeenCalledTimes(1)
 	})
 })

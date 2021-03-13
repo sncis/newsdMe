@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux"
 
 import { logoutAction } from "../../store/actions/userActions"
+import PropTypes from 'prop-types';
 
 
 export const HeaderAuth =(props)=> {
@@ -16,7 +17,7 @@ export const HeaderAuth =(props)=> {
 					</Link>
 
 					<Link to="/auth/2" className="register">
-						<button className="login-btn">register</button>
+						<button className="login-btn">Register</button>
 					</Link>
 				</div>
 			}
@@ -25,14 +26,12 @@ export const HeaderAuth =(props)=> {
 				<button className="logout-btn" onClick={() => props.logout()}>Logout</button> 
 			}
 		</div>
-	)
-	
+	)	
 }
 
 const mapStateToProps = state =>  {
 	return { 
 		isLoggedIn: state.userReducer.loggedIn
-
 	}
 }
 
@@ -45,5 +44,10 @@ const mapDispatchToProps = (dispatch) => {
 
 const HeaderAuthComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderAuth)
 
+
+HeaderAuthComponent.propTypes ={
+	isLoggedIn: PropTypes.bool.isRequired,
+	logout: PropTypes.func.isRequired
+}
 
 export default HeaderAuthComponent

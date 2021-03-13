@@ -1,4 +1,4 @@
-.saved_articles-list{
+.user_articles-list{
 	display: flex;
 	justify-content: flex-start;
 	flex-wrap: wrap;
@@ -6,7 +6,7 @@
 	min-width: 30%;
 }
 
-.saved_container{
+.user_container{
 	display: flex;
 	justify-content: flex-start;
 	flex-wrap: nowrap;
@@ -17,7 +17,7 @@
 	position: relative;
 }
 
-.saved_thumbnail{
+.user_thumbnail{
 	border-radius: 5px 0px 0px 5px;
 	position: relative;
 	width: 50px;
@@ -25,7 +25,7 @@
 	overflow: hidden
 }
 
-.saved_thumbnail img {
+.user_thumbnail img {
   position: absolute;
   height: 100%;
 	width: 100%;
@@ -33,12 +33,12 @@
 	/* object-fit:cover */
 }
 
-.saved_link-to-article , .saved_source {
+.user_link-to-article , .saved_source {
 	text-decoration: none;	
 	cursor: pointer;
 }
 
-.saved_title {
+.usertitle {
 	margin: 0px 0px 5px 0px;
 	color: black;
 	font-size: 1em;
@@ -46,28 +46,28 @@
 
 }
 
-.saved_description {
+.user_description {
 	margin: 0px 0px 5px 0px;
 	color: black;
 	font-size: 14px;
 }
 
-.saved_source p{
+.user_source p{
 	color: black;
 	font-size: 10px;
 	margin: 10px 0px 0px 0px;
 }
 
-.saved_text-container{
+.user_text-container{
 	margin: 5px 0px 2px 5px;
 }
 
-.saved_bookMark {
+.user_bookMark {
   position: absolute;
   right: 0px;
   bottom: 0px;
 }
 
-.saved_bookMark:hover{
+.user_bookMark:hover{
   cursor: pointer;
 }

@@ -15,10 +15,10 @@ describe("ArticleList as DailyArticleList", () => {
 		let component;
 		consoleSpyForProptypeError()
 
-		const initialState = {articleReducer:{
+		const initialState = {newsAPIdailyArticleReducer:{
 		errorMsg:'',
 		isLoading: false,
-		dailyArticles: [{id: 30, 
+		articles: [{id: 30, 
 			title:"daily3 some third article", 
 			description: "daily3 some third description", 
 			url: "daily3 someUrl", 
@@ -54,10 +54,10 @@ describe("ArticleList as DailyArticleList", () => {
 		consoleSpyForProptypeError()
 
 		it('should render isLoading when loading articles' , () => {
-			const state = {articleReducer:{
+			const state = {newsAPIdailyArticleReducer:{
 				errorMsg:'',
 				isLoading: true,
-				dailyArticles: []}
+				articles: []}
 			}
 	
 			store = mockStore(state)
@@ -72,10 +72,10 @@ describe("ArticleList as DailyArticleList", () => {
 
 		it('should render errormsg when error occures', ()=>{
 
-		const state = {articleReducer:{
+		const state = {newsAPIdailyArticleReducer:{
 			errorMsg:'some error',
 			isLoading: false,
-			dailyArticles: []}
+			articles: []}
 		}
 			store = mockStore(state)
 			component = shallow(<ArticleList store={store} listType='daily'/>).dive({context:{store}}).dive()
@@ -90,15 +90,15 @@ describe("ArticleList as DailyArticleList", () => {
 	
 })
 
-describe("ArticleList as SavedArticleList", ()=>{
+describe("ArticleList as userArticleList", ()=>{
 	let store;
 	let component;
 	consoleSpyForProptypeError()
 
-	const initialState = {articleReducer:{
+	const initialState = {userArticleReducer:{
 	errorMsg:'',
 	isLoading: false,
-	savedArticles: [{id: 30, 
+	articles: [{id: 30, 
 		title:"daily3 some third article", 
 		description: "daily3 some third description", 
 		url: "daily3 someUrl", 
@@ -110,12 +110,12 @@ describe("ArticleList as SavedArticleList", ()=>{
 	it("should render without errors", () =>{
 		store = mockStore(initialState)
 
-		component= shallow(<ArticleList store={store} listType='saved'/>).dive({context:{store}}).dive()
+		component= shallow(<ArticleList store={store} listType='user'/>).dive({context:{store}}).dive()
 		expect(component.length).toEqual(1)
 		expect(component.find(Article).length).toEqual(1)
 
 		console.log(component.debug())
-		expect(component.find(Article).props().articleType).toEqual('saved')
+		expect(component.find(Article).props().articleType).toEqual('user')
 
 		expect(component.find('.noArticleError').length).toEqual(0)
 		expect(component.find('.loadingMsg').length).toEqual(0)

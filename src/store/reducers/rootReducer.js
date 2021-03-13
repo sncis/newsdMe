@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
 import  userReducer from './userReducer';
-import  articleReducer from './articleReducer';
+import  userArticleReducer from './userArticleReducer';
+import newsAPIdailyArticleReducer from './newsAPIdailyArticleReducer'
+import newsAPIsearchReducer from './newsAPIsearchReducer'
 
 const rootReducer = combineReducers({
   userReducer,
-  articleReducer
+  userArticleReducer,
+  newsAPIdailyArticleReducer,
+  newsAPIsearchReducer 
 });
 
 export default rootReducer;

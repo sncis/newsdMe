@@ -9,7 +9,7 @@ import "../../css/ArticleList.css"
 
 export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 	return(
-		<div className={listType}>
+		<div className='article-list'>
 			{articles.length > 0 && articles.map(item => (
 				<Article key={uuidv4()} articleType={listType} article={item} />
 			))}
@@ -22,10 +22,31 @@ export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 }
 
 const mapStateToProps = (state, ownProp)=>{
-	return{
-		articles: ownProp.listType === 'daily' ? state.articleReducer.dailyArticles : state.articleReducer.savedArticles,
-		errorMsg: ownProp.listType === 'daily' ? state.articleReducer.errorMsg : state.articleReducer.savedArticlesErrorMsg,
-		isLoading: state.articleReducer.isLoading
+	switch(ownProp.listType){
+		case 'daily':
+			return{
+				articles: state.newsAPIdailyArticleReducer.articles,
+				isLoading: state.newsAPIdailyArticleReducer.isLoading,
+				errorMsg: state.newsAPIdailyArticleReducer.errorMsg
+			}
+		case 'user':
+			return{
+				articles: state.userArticleReducer.articles,
+				isLoading: state.userArticleReducer.isLoading,
+				errorMsg: state.userArticleReducer.errorMsg
+			}
+		case 'search':
+			return{
+				articles: state.newsAPIsearchReducer.articles,
+				isLoading: state.newsAPIsearchReducerReducer.isLoading,
+				errorMsg: state.newsAPIsearchReducerReducer.errorMsg
+			}
+		default:
+			return{
+				articles: [],
+				isLoading: false,
+				errorMsg:''
+			}
 	}
 }
 
@@ -45,5 +66,3 @@ ArticleList.propTypes = {
 
 export default connect(mapStateToProps, null)(ArticleList)
 
-
-// export default ArticleList

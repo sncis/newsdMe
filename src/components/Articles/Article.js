@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import {BookmarkFillIcon, BookmarkIcon} from '@primer/octicons-react'
-import "../../css/SavedArticle.css";
+import "../../css/UserArticle.css";
 import "../../css/Article.css";
 
 

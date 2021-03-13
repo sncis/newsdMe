@@ -139,13 +139,13 @@ describe("Article as DailyArticle when logedOut", () =>{
 })
 
 
-describe("Article as SavedArticle", () => {
+describe("Article as UserArticle", () => {
 	let store;
 	let component;
 	consoleSpyForProptypeError()
 
 	beforeEach(() => {
-		const props = setProps(true, true,'saved')
+		const props = setProps(true, true,'user')
 
 		store = mockStore({})
 		store.dispatch = jest.fn()
@@ -154,13 +154,13 @@ describe("Article as SavedArticle", () => {
 
 	it("should render without errors and filled Bookmark", () =>{
 		expect(component.length).toEqual(1)
-		expect(component.find('.saved_container').length).toEqual(1)
-		expect(component.find('.saved_link-to-article').length).toEqual(1)
-		expect(component.find('.saved_thumbnail').length).toEqual(1)
-		expect(component.find('.saved_title').length).toEqual(1)
-		expect(component.find('.saved_description').length).toEqual(1)
-		expect(component.find('.saved_source').length).toEqual(1)
-		expect(component.find('.saved_bookmark-container').length).toEqual(1)
+		expect(component.find('.user_container').length).toEqual(1)
+		expect(component.find('.user_link-to-article').length).toEqual(1)
+		expect(component.find('.user_thumbnail').length).toEqual(1)
+		expect(component.find('.user_title').length).toEqual(1)
+		expect(component.find('.user_description').length).toEqual(1)
+		expect(component.find('.user_source').length).toEqual(1)
+		expect(component.find('.user_bookmark-container').length).toEqual(1)
 
 		expect(component.find(BookmarkFillIcon).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
@@ -168,7 +168,7 @@ describe("Article as SavedArticle", () => {
 	})
 
 	it("should unBookmark article", () => {
-		const bookmark = component.find(".saved_bookmark-container")
+		const bookmark = component.find(".user_bookmark-container")
 
 		const spy = jest.spyOn(component.instance().props, "removeUserArticle")
 
@@ -185,7 +185,7 @@ describe("Article as SavedArticle", () => {
 describe("Article", () => {
 	consoleSpyForProptypeError()
 
-	const props = setProps("true", true,'saved')
+	const props = setProps("true", true,'user')
 	const store = mockStore({})
 
 	it("should throw error when wrong propTyes are provided", ()=>{

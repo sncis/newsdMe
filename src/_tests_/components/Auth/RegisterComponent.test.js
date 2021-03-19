@@ -103,15 +103,15 @@ describe("RegisterComponent", () => {
 	})
 })
 
-describe("RegisterComponen", () => {
+describe("RegisterComponent", () => {
 	const mockStore = configureMockStore([thunk])
-	const store =	 mockStore({userReducer: {isLoading:true, errorMsg: "some error"}});
+	const store =	 mockStore({userReducer: {isLoading:false, errorMsg: "some error"}});
 
 	consoleSpyForProptypeError()
 
 	it("should throw error when wrong propTypes are provided", ()=>{
 		
-		shallow(<RegisterComponent store={store} registerUser={'some'} />)
+		shallow(<RegisterComponent store={store} />).dive({ context: { store } }).dive()
 		expect(console.error).toHaveBeenCalled()
 	})
 })

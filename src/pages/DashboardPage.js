@@ -1,11 +1,12 @@
 import React from 'react'
+import DashboardComponent from '../components/DashboardComponent'
 
 import PageContainer from '../containers/PageContainer'
 
 export const DashboardPage =({isLoggedIn}) => {
 	return(
 		<PageContainer onlyLogo ={false}>
-			<div>I'm the dashboard page'</div>		
+			<DashboardComponent />		
 		</PageContainer>
 	
 	)

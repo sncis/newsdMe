@@ -10,7 +10,7 @@ import "../../css/Article.css";
 
 import dummy from "../../assets/img/dummy.jpg";
 
-import { saveUserArticle, removeUserArticle } from "../../store/actions/articleActions"
+import { saveUserArticle, removeUserArticle } from "../../store/actions/userArticleActions"
 
 
 export class Article extends React.Component {
@@ -18,7 +18,6 @@ export class Article extends React.Component {
 		if(this.props.isLoggedIn){
 			if(!article.isBookmarked){
 				article['isBookmarked'] = true;
-
 				this.props.saveUserArticle(article)
 			}else{
 				article['isBookmarked'] = false;
@@ -32,7 +31,7 @@ export class Article extends React.Component {
 	render(){
 		let source = this.props.article.source.name !== undefined ? this.props.article.source.name : this.props.article.source;
 		return(
-			<div className={`${this.props.articleType}_container`}>
+			<div className={`${this.props.articleType}_container`} >
 					
 					<a className={`${this.props.articleType}_link-to-article`} href={this.props.article.url} target='blank'>
 						

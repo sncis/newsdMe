@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Article from './Article'
 import "../../css/ArticleList.css"
+import { dummyArticles } from "../../store/dummyArticles";
 
 export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 	return(
@@ -25,6 +26,7 @@ const mapStateToProps = (state, ownProp)=>{
 	switch(ownProp.listType){
 		case 'daily':
 			return{
+				// articles: dummyArticles,
 				articles: state.newsAPIdailyArticleReducer.articles,
 				isLoading: state.newsAPIdailyArticleReducer.isLoading,
 				errorMsg: state.newsAPIdailyArticleReducer.errorMsg

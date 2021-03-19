@@ -46,7 +46,7 @@ const HeaderAuthComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderA
 
 
 HeaderAuthComponent.propTypes ={
-	isLoggedIn: PropTypes.bool.isRequired,
+	isLoggedIn: PropTypes.bool,
 	logout: PropTypes.func.isRequired
 }
 

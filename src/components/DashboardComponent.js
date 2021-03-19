@@ -1,62 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react'
 import { connect } from 'react-redux';
-import { getUserArticles } from "../store/actions/articleActions"
-import { handelArticleSearch, loadDailyArticles } from '../store/actions/newsApiActions'
-import { withRouter } from 'react-router-dom' // turne it into a ompoene twith acces to the routes
-import ArticleList from "./ArticleList"
-import SavedArticleList from './SavedArticleList';
-
-import "../css/Dashboard.css"
+import ArticleList from "./Articles/ArticleList"
+import { getUserArticles } from '../store/actions/userArticleActions'
 
 
-export class Dashboard extends Component {
-	constructor(props){
-		super(props)
-		this.state = {
-		searchTerm: '',
-	}}
 
-	componentDidMount(){
-		this.props.loadArticles();
-		this.props.loadDailyArticles()	
-	}
+export class DashboardComponent extends React.Component {
+  componentDidMount(){
+    this.props.loadUserArticles()
+  }
 
-	// handelArticleSearch(){
-	// 	this.props.handelArticleSearch(this.state.searchTerm)
-	// }
-	
-	render(){
-		return(
-			<div>
-				<p>Hello {this.props.userName}</p> 
-				<input className="searchInput" placeholder="enter searchterm" onChange={(e) => this.setState({searchTerm: e.target.value})}></input>
-				<button onClick={()=>this.props.handelArticleSearch(this.state.searchTerm)}>search</button>
-			<div>
-				<p>search terme</p>
-				<p>{this.state.searchTerm}</p>
-			</div>
-				<div className="articleSection">
-					<ArticleList articles={this.articles}/>
-					<SavedArticleList />
-				</div>
-			</div>
-
-		)
-	}
+  render(){
+    return (
+      <div className="">
+        <div>
+         <h2>Your bookmarked Articles</h2>  
+         <ArticleList listType='user'/>
+       </div>
+     </div>
+    )
+  }
 }
-
-
 
 
 const mapDispatchToProps = dispatch => {
-	return {
-		handelArticleSearch: () => {dispatch(handelArticleSearch())},
-		loadArticles: () => {dispatch(getUserArticles())},
-		loadDailyArticles: () => {dispatch(loadDailyArticles())}
-	};
+  return{
+    loadUserArticles: () => dispatch(getUserArticles())
+  }
 }
 
 
-const DashboardComponent = connect(null, mapDispatchToProps)(Dashboard);
+export default connect(null, mapDispatchToProps)(DashboardComponent)
 
-export default withRouter(DashboardComponent);

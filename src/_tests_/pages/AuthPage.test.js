@@ -9,6 +9,8 @@ import LoginComponent from '../../components/Auth/LoginComponent'
 import RegisterComponent from '../../components/Auth/RegisterComponent'
 import PageContainer from '../../containers/PageContainer'
 
+jest.mock('../../components/Auth/LoginComponent', ()=>"LoginComponent")
+jest.mock('../../components/Auth/RegisterComponent', ()=>"RegisterComponent")
 describe("AuthPage", ()=> { 
 	let page;
 

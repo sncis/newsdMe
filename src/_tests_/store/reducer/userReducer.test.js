@@ -1,4 +1,4 @@
-import * as types  from "../../../store/constants/userTypes"
+import * as types  from "../../../store/types/userTypes"
 import userReducer from "../../../store/reducers/userReducer"
 
 

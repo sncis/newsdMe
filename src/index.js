@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 import store from "../src/store/store/store"
 import "./index.css";
-import { LOGIN_USER_SUCCESS, LOGOUT_USER } from "./store/constants/userTypes";
+import { LOGIN_USER_SUCCESS, LOGOUT_USER } from "./store/types/userTypes";
 
 
 const token = localStorage.getItem("token")
@@ -19,9 +19,9 @@ const token = localStorage.getItem("token")
 const app = (
   
   <Provider store={store}>
-     <BrowserRouter>
+     {/* <BrowserRouter> */}
     <App />
-  </BrowserRouter>
+  {/* </BrowserRouter> */}
 
   </Provider>
  

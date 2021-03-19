@@ -6,13 +6,17 @@ import HeaderBarContainer from '../../containers/HeaderBarContainer'
 import HeaderBar from '../../components/Header/HeaderBar'
 
 
+jest.mock('../../components/Header/HeaderAuthComponent')
+jest.mock('../../components/Header/LogoComponent')
+jest.mock('../../components/Header/SearchComponent')
+
 describe("HeaderBarComponent", ()=>{
 	let container;
 	consoleSpyForProptypeError()
 
 	it("should render without error", ()=>{
 		container = shallow(<HeaderBarContainer onlyLogo={true} />)
-
+		console.log(container.debug())
 		expect(container.find(HeaderBar).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
 	})

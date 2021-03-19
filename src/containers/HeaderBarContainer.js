@@ -9,7 +9,7 @@ import HeaderAuthComponent from '../components/Header/HeaderAuthComponent'
 
 const HeaderBarContainer = ({onlyLogo}) => {
 	return(
-			<HeaderBar left={<LogoComponent link='/'/>} middle={<SearchComponent />} right={<HeaderAuthComponent />} onlyLogo={onlyLogo} />
+		<HeaderBar left={<LogoComponent link='/'/>} middle={<SearchComponent />} right={<HeaderAuthComponent />} onlyLogo={onlyLogo} />
 	)
 }
 

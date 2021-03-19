@@ -7,7 +7,7 @@ import {
   REGISTER_USER_ERROR,
   LOGOUT_USER,
   SET_GEOLOCATION
-}  from "../constants/userTypes";
+}  from "../types/userTypes";
 
 const initialState = {
   isLoading: false,

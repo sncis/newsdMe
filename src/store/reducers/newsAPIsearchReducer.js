@@ -1,17 +1,18 @@
-import { IS_LOADING_ARTICLES,
+import { LOAD_ARTICLE_SEARCH,
 	ARTICLE_SEARCH_SUCCESS,
 	ARTICLE_SEARCH_ERROR } from '../types/newsAPIsearchTypes'
 
 const initialState ={
 	isLoading:false,
-	articles: []
+	articles: [],
+	isSearch: true
 }
 const newsAPIsearchReducer = (state= initialState, action='') => {
 	switch(action.type){
-		case IS_LOADING_ARTICLES:
+		case LOAD_ARTICLE_SEARCH:
 			return {
 				...state,
-				isLoading:true
+				isLoading:true,
 			}
 			case ARTICLE_SEARCH_SUCCESS:
 				return {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { handelArticleSearch } from '../../store/actions/newsApiActions'
+// import { handelArticleSearch } from '../../store/actions/newsApiActions'
 import PropTypes from 'prop-types';
 
 
@@ -30,12 +30,17 @@ Search.propTypes = {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		handelArticleSearch: () => {dispatch(handelArticleSearch())},
+				handelArticleSearch: () => {console.log("search was called")},
+
+		// handelArticleSearch: () => {dispatch(handelArticleSearch())},
 	};
 }
 
 
 const SearchComponent = connect(null, mapDispatchToProps)(Search);
 
+SearchComponent.propTypes = {
+	handelArticleSearch: PropTypes.func.isRequired
+}
 
 export default SearchComponent

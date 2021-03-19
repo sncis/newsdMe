@@ -6,7 +6,7 @@ import { registerUserAction } from "../../store/actions/userActions"
 import "../../css/AuthForm.css"
 
 
-export class Register extends Component {
+export class RegisterComp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -151,8 +151,7 @@ const mapStateToProps = state => {
   }
 }
 
-const RegisterComponent = connect(mapStateToProps, mapDispatchToProps)(Register);
-
+const RegisterComponent = connect(mapStateToProps, mapDispatchToProps)(RegisterComp);
 RegisterComponent.propTypes = {
   registerUser: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
@@ -160,4 +159,4 @@ RegisterComponent.propTypes = {
   registerSuccessful: PropTypes.bool
 }
 
-export default RegisterComponent;
+export default RegisterComponent

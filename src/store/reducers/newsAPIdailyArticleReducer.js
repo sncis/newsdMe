@@ -16,6 +16,7 @@ const newsAPIdailyArticleReducer = (state=initialState, action='') => {
 			}
 		
 		case SET_DAILY_ARTICLES_SUCCESS:
+			console.log("called newsAPI reducer in article success")
 			return{
 				...state,
 				isLoading: false,

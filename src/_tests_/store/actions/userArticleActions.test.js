@@ -1,24 +1,26 @@
 import configureMockStore from 'redux-mock-store';	
 import thunk from 'redux-thunk';
 
-import * as actions from "../../../store/actions/articleActions"
-import * as types from "../../../store/constants/articelTypes"
-import { SET_DAILY_ARTICLES } from  "../../../store/constants/newsAPITypes"
+import * as actions from "../../../store/actions/userArticleActions"
+import * as types from "../../../store/types/userArticelTypes"
+import { SET_DAILY_ARTICLES_SUCCESS } from  "../../../store/types/newsAPIdailyArticleTypes"
 import { dummyArticles,dailyArticles } from '../../../store/dummyArticles';
 import mockAxios from 'axios'
-
+import * as helpers from "../../../store/actions/articleActionHelpers"
 
 const mockStore = configureMockStore([thunk])
 
-describe("articleActions", () => {
-	let store;
 
+describe("userArticleActions", () => {
+	let store;
 
 	beforeEach(() =>{
 		const mockState = {
-			articleReducer:{
-				savedArticles: dummyArticles,
-				dailyArticles: dailyArticles},
+			userArticleReducer:{
+				articles: dummyArticles},
+			newsAPIdailyArticleReducer:{
+				articles: dailyArticles
+			},
 			userReducer:{
 				userName: 'someUser',
 				jwtToken: 'someToken'
@@ -27,60 +29,60 @@ describe("articleActions", () => {
 
 		store = mockStore(mockState)
 		store.clearActions();
-	
 		mockAxios.mockClear()
-
-		const getItemSpy = jest.spyOn(global.localStorage, "getItem").mockImplementation().mockReturnValue(null)
-
 	})
 
 	describe("getUserArticles", () => {
+		beforeEach(()=>{
+			jest.spyOn(global.localStorage, 'getItem').mockImplementationOnce(()=> null)
+
+		})
+
 		it("should dispatch loadUserArticles", () => {
 			mockAxios.get.mockImplementationOnce(() => Promise.resolve({
 				data: {} }))
 
-			let expectedAction =[{type: types.IS_LOADING_ARTICELS}]
+			let expectedAction =[{type: types.IS_LOADING_ARTICLES}]
 
 			store.dispatch(actions.getUserArticles())
 			expect(store.getActions()).toEqual(expectedAction)
 
 		})
 
-		it("should dispatch getUserArticelsSuccessfull", () => {
+		it("should dispatch getUserArticelsSuccessfull", async () => {
 			mockAxios.get.mockImplementationOnce(() => Promise.resolve({
 				data: dummyArticles }))
 
-			 return store.dispatch(actions.getUserArticles()).then(()=>{
-				let expectedAction =[{
-					type: types.IS_LOADING_ARTICELS
-				},
-				{
-					type: types.GET_USER_ARTICELS_SUCCESSFUL,
-					payload: dummyArticles
-				}
-			]
+			let expectedAction =[{
+				type: types.IS_LOADING_ARTICLES
+			},
+			{
+				type: types.GET_USER_ARTICLES_SUCCESS,
+				payload: dummyArticles
+			}]
+
+			await store.dispatch(actions.getUserArticles()).then(()=>{	
 			expect(store.getActions()).toEqual(expectedAction)
 			})
 		})
 
-		it("should dispatch getUserArticleError", () => {
+		it("should dispatch getUserArticleError", async () => {
 			mockAxios.get.mockImplementationOnce(() => Promise.reject({
 				response: {data: {
 					"status": 400,
 					"message": "some error",
 			}}}))
 
+			let expectedAction =[{
+				type: types.IS_LOADING_ARTICLES
+			},
+			{
+				type: types.GET_USER_ARTICLES_ERROR,
+				payload: "some error"
+			}
+		]
 
-		return store.dispatch(actions.getUserArticles()).then(() =>{
-				let expectedAction =[{
-					type: types.IS_LOADING_ARTICELS
-				},
-				{
-					type: types.GET_USER_ARTICELS_ERROR,
-					payload: "some error"
-				}
-			]
-
+		await store.dispatch(actions.getUserArticles()).then(() => {
 			expect(store.getActions()).toEqual(expectedAction)
 			})
 		})
@@ -89,36 +91,31 @@ describe("articleActions", () => {
 
 	
 	describe("setBookmarkInDailyArticles", ()=>{
-		it("should dispatch setDailyArticles", ()=>{
-			const article = dailyArticles[0]
+		it("should dispatch setDailyArticlesSuccess", ()=>{
 
-			expect(dailyArticles[0].isBookmarked).toBeFalsy()
+			const addArticleToLocalStorageSpy = jest.spyOn(helpers, "addArticleToLocalStorage").mockImplementationOnce(()=> jest.fn())
+			const replaceArticleSpy = jest.spyOn(helpers, 'replaceArticleInArticlesArray').mockImplementationOnce(()=> dailyArticles)
 
-			const getItemSpy = jest.spyOn(global.localStorage, 'getItem').mockImplementationOnce().mockReturnValueOnce('[]')
-			const setItemSpy = jest.spyOn(global.localStorage, 'setItem')
-
-
-			article.isBookmarked = true
-			store.dispatch(actions.setBookmarkInDailyArticles(article))
-			
-			expect(dailyArticles[0].isBookmarked).toEqual(true)
-
-			expect(getItemSpy).toHaveBeenCalledWith("bookmarkedArticles")
-			expect(setItemSpy).toHaveBeenCalled()
+			store.dispatch(actions.setBookmarkInDailyArticles(dailyArticles[0]))
 
 			let expectedAction = [{
-				type: SET_DAILY_ARTICLES,
+				type: SET_DAILY_ARTICLES_SUCCESS,
 				payload: dailyArticles
 			}]
 
 			expect(store.getActions()).toEqual(expectedAction)
-
+			expect(addArticleToLocalStorageSpy).toHaveBeenCalled()
+			expect(replaceArticleSpy).toHaveBeenCalled()
 		})
 
 	})
 
 	describe("saveUserArticle", () => {
-		it("should dispatch addArticle and setBookmarkInDailyArticles", async () =>{
+		beforeEach(()=>{
+			jest.spyOn(global.localStorage, 'getItem').mockImplementationOnce(()=> null)
+		})
+
+		it("should dispatch addArticleToUserArticleList and setBookmarkInDailyArticles", async () =>{
 			const article = {id: 15, 
 				title:"someerercwee article", 
 				description: "some description", 
@@ -129,15 +126,17 @@ describe("articleActions", () => {
 			}
 
 			const expectedArticles = [dailyArticles[0], article]
+			jest.spyOn(helpers, "addArticleToLocalStorage")
+			jest.spyOn(helpers, 'replaceArticleInArticlesArray').mockImplementationOnce(()=> expectedArticles)
 
 			mockAxios.post.mockImplementationOnce(() => Promise.resolve({data: article}))
 
-			const expectedAction = [
+			let expectedAction = [
 				{
-					type: types.ADD_ARTICLE_TO_SAVED_ARTICLELIST,
+					type: types.ADD_ARTICLE_TO_USER_ARTICLELIST,
 					payload: article
 				},
-				{type: SET_DAILY_ARTICLES,
+				{type: SET_DAILY_ARTICLES_SUCCESS,
 				payload: expectedArticles}
 
 			]
@@ -166,7 +165,7 @@ describe("articleActions", () => {
 			}))
 
 			let expectedAction=[
-				{type: types.GET_USER_ARTICELS_ERROR,
+				{type: types.GET_USER_ARTICLES_ERROR,
 					payload: "some error message"
 				}
 			]
@@ -179,28 +178,26 @@ describe("articleActions", () => {
 	})
 
 	describe("deleteArticleInDB", () => {
+		beforeEach(() =>{
+			jest.spyOn(global.localStorage, 'getItem').mockImplementationOnce(()=> null)
+		})
+		
 		it('should dispatch removeBookmarkInDailyArticles and getUserArticles when deleted succesfully', async () => {
 			const article = dailyArticles[0]
 			
 			mockAxios.delete.mockImplementationOnce(() => Promise.resolve({response:{ data: "someData"}}))
-			mockAxios.get.mockImplementationOnce(()=> Promise.resolve({data:article}))
-			// const consoleSpy = jest.spyOn(global.console, 'log')
-			// const spy = jest.spyOn(actions, "removeBookmarkInDailyArticles")
+			
+			jest.spyOn(helpers, 'replaceArticleInArticlesArray').mockImplementationOnce(()=> dailyArticles)
 
 			let expectedAction = [
 			{
-				type: SET_DAILY_ARTICLES,
+				type: SET_DAILY_ARTICLES_SUCCESS,
 				payload: dailyArticles
-			},{	type: types.IS_LOADING_ARTICELS},
-			{
-				type:types.GET_USER_ARTICELS_SUCCESSFUL,
-				payload: article
-			}
-		
+			},{	
+				type: types.IS_LOADING_ARTICLES}
 		]
 
 			await store.dispatch(actions.deleteArticleInDB(article)).then(()=>{
-				// expect(consoleSpy).toHaveBeenCalledWith(article)
 				expect(store.getActions()).toEqual(expectedAction)
 			})
 
@@ -213,17 +210,15 @@ describe("articleActions", () => {
 					message:"error message"
 				}}
 			}))
+			// jest.spyOn(global.localStorage, 'getItem').mockImplementationOnce(()=> null)
 
 			const expectedAction = [
-				{type: types.GET_USER_ARTICELS_ERROR,
+				{type: types.GET_USER_ARTICLES_ERROR,
 				payload: "error message"}
 			]
 			await store.dispatch(actions.deleteArticleInDB(dailyArticles[0])).then(() => {
 				expect(store.getActions()).toEqual(expectedAction)
-			}
-			)
-
+			})
 		})
-
 	})
 })

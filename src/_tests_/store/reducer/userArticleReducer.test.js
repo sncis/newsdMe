@@ -1,4 +1,4 @@
-import * as types from "../../../store/constants/userArticelTypes"
+import * as types from "../../../store/types/userArticelTypes"
 import { dummyArticles } from "../../../store/dummyArticles"
 
 import userArticleReducer from '../../../store/reducers/userArticleReducer'

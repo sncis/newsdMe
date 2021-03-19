@@ -1,24 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PageContainer from '../containers/PageContainer'
-import Home from "../components/Home"
+import HomeComponent from '../components/HomeComponent'
 
+import PageContainer from '../containers/PageContainer'
 
 export const HomePage =({isLoggedIn}) => {
 	return(
-		<PageContainer onlyLogo={false}>
-			<Home />
+		<PageContainer onlyLogo ={false}>
+			<HomeComponent />		
 		</PageContainer>
 	
 	)
 }
 
-const mapStateToProps = state => {
-  return {
-    isLoggedIn: state.userReducer.loggedIn
-  }
-}
-
-
-
-export default connect(mapStateToProps,null)(HomePage)
+export default HomePage

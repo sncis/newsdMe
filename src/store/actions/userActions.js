@@ -1,20 +1,15 @@
 import axios from "axios";
+
+//refactor import to * as types
 import { USER_LOADING, 
   LOGIN_USER_ERROR, 
   LOGIN_USER_SUCCESS , 
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
-  SET_GEOLOCATION
-} from "../constants/userTypes";
-
-import { GOOGLE_API_KEY } from "../../keys"
-import { loadUserArticels } from "./articleActions";
-
-// import backendInstance  from "../../axiosConfig"
+  } from "../types/userTypes";
 
 const baseUrl = "http://localhost:8080/";
-const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : null
 
 const header = {
   headers:{
@@ -28,17 +23,17 @@ const header = {
 
 export const registerUserAction = (user) => {
   return async (dispatch) => {
-    const url = `${baseUrl}register`
-    dispatch(registerUserLoading())
-
+    const url = `${baseUrl}register`    
     const jsonUser = JSON.stringify(user)
+
+    dispatch(registerUserLoading())
     
     try {
       const response = await axios.post(url, jsonUser, header);
       console.log(response);
       dispatch(registerUserSuccess(response.data));
     } catch (error) {
-      let message = (error.response.data === undefined) ? "some error occured, please try again later" : error.response.data.message;
+      let message = error.response !== undefined ?  error.response.data.message : "some error occured, please try again later";
       dispatch(registerUserError(message));
     }
   }
@@ -64,7 +59,7 @@ export const registerUserError =(errorMsg)=>{
 }
 
 
-/**********login actions */
+/**********login actions *******************/
 
 export const loginUserAction = user => {
   return async (dispatch) => {
@@ -73,11 +68,11 @@ export const loginUserAction = user => {
     dispatch(loginUserLoading())
 
     const url = `${baseUrl}login`
-    const jsonUrl = JSON.stringify(user)
+    const jsonUser = JSON.stringify(user)
 
     try{
-      const res = await axios.post(url, jsonUrl,header)
-      const jwtToken = res.data.jwtToken
+      const response = await axios.post(url, jsonUser,header)
+      const jwtToken = response.data.jwtToken
       localStorage.setItem("token", JSON.stringify(jwtToken))
       dispatch(loginUserSuccess(user.userName, jwtToken))
 

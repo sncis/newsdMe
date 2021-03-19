@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { loginUserAction } from "../../store/actions/userActions"
 import "../../css/AuthForm.css"
 
-export class Login extends Component {
+export class LoginComp extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
@@ -72,7 +72,7 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(Login);
+const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(LoginComp);
 
 LoginComponent.propTypes = {
 	loginUser: PropTypes.func.isRequired,
@@ -82,4 +82,4 @@ LoginComponent.propTypes = {
 	isLoggedIn: PropTypes.bool
 }
 
-export default LoginComponent;
+export default LoginComponent

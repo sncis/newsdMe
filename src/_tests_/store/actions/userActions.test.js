@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import mockAxios from 'axios';	
 
 import * as userActions from "../../../store/actions/userActions"
-import * as types from "../../../store/constants/userTypes"
+import * as types from "../../../store/types/userTypes"
 
 const middleware = [thunk];	
 const mockStore = configureMockStore(middleware);	
@@ -17,52 +17,44 @@ describe("userActions", () => {
 	beforeEach(() => {
 		store.clearActions();
 		user = {"userName": "someUser", "password": "somePassword"}
-
 		mockAxios.mockClear()
 
 	})
 
 	describe("registerUserAction",  () => {
 
-	it("should dispatch registerUserSuccess",  async ()  => {
+	it("should dispatch registerUserSucess",  async ()  => {
+		const expectedAction = [{
+			type: types.USER_LOADING,
+		},
+		{
+			type: types.REGISTER_USER_SUCCESS,
+			payload: "someUsername"
+		}]
+
 		mockAxios.post.mockImplementationOnce(() => Promise.resolve({
-			data:{
-				userName: "someUsername"
-			}
+			data:{userName: "someUsername"}
 		}));
 
 		await store.dispatch(userActions.registerUserAction(user)).then(() =>{
-			let expectedAction = [{
-				type: types.USER_LOADING,
-			},
-			{
-				type: types.REGISTER_USER_SUCCESS,
-				payload: "someUsername"
-			}]
 			expect(store.getActions()).toEqual(expectedAction);
-
 		 })
-
 	})
 
 	it("should dispatch registerUserError", () => {
+		const expectedAction = [{
+			type: types.USER_LOADING,
+		},
+		{
+			type: types.REGISTER_USER_ERROR,
+			payload: "register error"
+		}]
+
 		mockAxios.post.mockImplementationOnce(()=> Promise.reject({
-			response:{
-				data:{
-					message: "register error"
-				}
-			}
+			response:{data:{message: "register error"}}
 		}))
 
 		 store.dispatch(userActions.registerUserAction(user)).then(()=>{
-			let expectedAction = [{
-				type: types.USER_LOADING,
-			},
-			{
-				type: types.REGISTER_USER_ERROR,
-				payload: "register error"
-			}]
-
 			expect(store.getActions()).toEqual(expectedAction);
 		})
 
@@ -71,20 +63,17 @@ describe("userActions", () => {
 
 	describe("loginUserAction", () => {
 	it("should dispatch loginUserSuccess", async () =>{
-		mockAxios.post.mockImplementationOnce(()=> 
-		Promise.resolve({
-			data: {
-				jwtToken: "some token"
-			}
-		}))
-		let expectedAction =[{
+		const expectedAction =[{
 			type: types.USER_LOADING
 			},{
 			type: types.LOGIN_USER_SUCCESS,
 			payload: {userName: user.userName, jwtToken: "some token"}
 		}]
-
 		const spy = jest.spyOn(global.localStorage, 'setItem')
+
+		mockAxios.post.mockImplementationOnce(() => 
+			Promise.resolve({data: {jwtToken: "some token"}
+		}))
 
 		await store.dispatch(userActions.loginUserAction(user)).then(() => {
 			expect(store.getActions()).toEqual(expectedAction)
@@ -94,20 +83,17 @@ describe("userActions", () => {
 	})
 
 	it("should dispatch loginUserError", async () =>{
-		mockAxios.post.mockImplementationOnce(()=> 
-		Promise.reject({
-			response: {
-				data: {
-					message: "some error"
-			}}
-		}))
-		let expectedAction =[{
+		const expectedAction =[{
 			type: types.USER_LOADING
 			},{
 			type: types.LOGIN_USER_ERROR,
 			payload: "some error"
 		}]
 
+		mockAxios.post.mockImplementationOnce(() => Promise.reject({
+			response: {data: {message: "some error"}}
+		}))
+		
 		await store.dispatch(userActions.loginUserAction(user)).then(() => {
 			expect(store.getActions()).toEqual(expectedAction)
 		})
@@ -115,28 +101,26 @@ describe("userActions", () => {
 	})
 
 	it("should dispatch loginUserError and return pre-defined error string when no response message from server", async () =>{
-		mockAxios.post.mockImplementationOnce(()=> 
-		Promise.reject({
-			response: {}
-		}))
-		let expectedAction =[{
+		const expectedAction =[{
 			type: types.USER_LOADING
 			},{
 			type: types.LOGIN_USER_ERROR,
 			payload: "some error occured, please try again!"
 		}]
 
+		mockAxios.post.mockImplementationOnce(()=> 
+			Promise.reject({response: {} 
+		}))
+	
 		await store.dispatch(userActions.loginUserAction(user)).then(() => {
 			expect(store.getActions()).toEqual(expectedAction)
 		})
-
-	})
+		})
 	})
 
 	describe("logout", () => {
 		it("should perform logout action", () => {
 			const spy = jest.spyOn(global.localStorage, 'removeItem')
-
 			store.dispatch(userActions.logoutAction())
 
 			expect(spy).toHaveBeenCalled()

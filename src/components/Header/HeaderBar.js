@@ -14,10 +14,10 @@ const HeaderBar = (props) => {
 }
 
 HeaderBar.propTypes = {
-	left: PropTypes.element.isRequired,
-	middle: PropTypes.element.isRequired,
-	right: PropTypes.element.isRequired,
-	onlyLogo: PropTypes.bool
+	left: PropTypes.element,
+	middle: PropTypes.element,
+	right: PropTypes.element,
+	onlyLogo: PropTypes.bool.isRequired
 }
 
 export default HeaderBar

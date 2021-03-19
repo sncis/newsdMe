@@ -13,7 +13,6 @@ const store = mockStore({});
 describe("userActions", () => {
 	let user;
 
-
 	beforeEach(() => {
 		store.clearActions();
 		user = {"userName": "someUser", "password": "somePassword"}
@@ -126,7 +125,6 @@ describe("userActions", () => {
 			expect(spy).toHaveBeenCalled()
 			expect(store.getActions()).toEqual([{type: types.LOGOUT_USER}])
 		})
-	})
-	
+	})	
 })
 

@@ -22,15 +22,11 @@ const userReducer = (state = initialState, action='') => {
         articles: action.payload,
       }
     case USER_LOADING:
-      // console.log("registerUser Loading dispathced from reducer")
-      // console.log(action)
       return{
         ...state,
         isLoading: true
       }
       case REGISTER_USER_SUCCESS:
-      // console.log("registerUser Loading dispathced from reducer")
-      // console.log(action)
       return{
         ...state,
         userName: action.payload.username,

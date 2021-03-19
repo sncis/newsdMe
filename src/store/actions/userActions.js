@@ -1,13 +1,6 @@
 import axios from "axios";
 
-//refactor import to * as types
-import { USER_LOADING, 
-  LOGIN_USER_ERROR, 
-  LOGIN_USER_SUCCESS , 
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_ERROR,
-  LOGOUT_USER,
-  } from "../types/userTypes";
+import * as types from "../types/userTypes";
 
 const baseUrl = "http://localhost:8080/";
 
@@ -41,19 +34,19 @@ export const registerUserAction = (user) => {
 
 export const registerUserLoading = () => {
   return {
-    type: USER_LOADING
+    type: types.USER_LOADING
   }
 }
 export const registerUserSuccess = (user) => {
   return {
-    type: REGISTER_USER_SUCCESS,
+    type: types.REGISTER_USER_SUCCESS,
     payload: user.userName
   }
 }
 
 export const registerUserError =(errorMsg)=>{
   return{
-    type: REGISTER_USER_ERROR,
+    type: types.REGISTER_USER_ERROR,
     payload: errorMsg
   }
 }
@@ -88,20 +81,20 @@ export const loginUserAction = user => {
 
 export const loginUserLoading = () => {
   return{
-    type: USER_LOADING
+    type: types.USER_LOADING
   }
 }
 
 export const loginUserSuccess = (username, jwtToken ) => {
   return{
-    type: LOGIN_USER_SUCCESS,
+    type: types.LOGIN_USER_SUCCESS,
     payload: {userName: username, jwtToken: jwtToken}
   }
 }
 
 export const loginUserError = (msg) => {
   return{
-    type: LOGIN_USER_ERROR,
+    type: types.LOGIN_USER_ERROR,
     payload: msg
   }
 }
@@ -110,7 +103,7 @@ export const loginUserError = (msg) => {
 export const logoutAction = () => {
   localStorage.removeItem('token')
   return {
-    type: LOGOUT_USER
+    type: types.LOGOUT_USER
   }
 }
 

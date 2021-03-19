@@ -1,15 +1,9 @@
 import axios from 'axios'
 
-//refactor import to * as 
-import { IS_LOADING_ARTICLES,
-  GET_USER_ARTICLES_SUCCESS,
-  GET_USER_ARTICLES_ERROR,
-  ADD_ARTICLE_TO_USER_ARTICLELIST,
- } from '../types/userArticelTypes'
+import * as types from '../types/userArticelTypes'
  
 import { setDailyArticlesSuccess } from './newsAPIdailyArticleActions'
-import { replaceArticleInArticlesArray, addArticleToLocalStorage, getItemFromLocalStorage } from './articleActionHelpers'
-// import  newsAPIdailyArticleReducer from '../reducers/newsAPIdailyArticleReducer'
+import { replaceArticleInArticlesArray, addArticleToLocalStorage, getItemFromLocalStorage,addItemToLocalStorage } from './articleActionHelpers'
 
 const BASE_URL = 'http://localhost:8080/'
 
@@ -23,14 +17,13 @@ const header = {
 
 
 
-/** Loading user Articles from Backend */
 
 //refactor to extract localStorage behavior ?
 export const getUserArticles = () => {
   return async (dispatch, getState) => {
     dispatch(loadUserArticles())
     const url = `${BASE_URL}articles?username=${getState().userReducer.userName}`
-    const token = localStorage.getItem('token') !== null ? JSON.parse(localStorage.getItem('token')) : null
+    const token = getItemFromLocalStorage('token', '')
     header.headers["Authorization"]= `Bearer ${token}`
 
     try{
@@ -47,20 +40,20 @@ export const getUserArticles = () => {
 
 export const loadUserArticles = () => {
   return {
-    type: IS_LOADING_ARTICLES
+    type: types.IS_LOADING_ARTICLES
   }
 }
 
 export const getUserArticlesSuccessful = (articles) => {
   return {
-    type: GET_USER_ARTICLES_SUCCESS,
+    type: types.GET_USER_ARTICLES_SUCCESS,
     payload: articles
   }
 }
 
 export const getUserArticlesError = errorMsg => {
   return {
-    type: GET_USER_ARTICLES_ERROR,
+    type: types.GET_USER_ARTICLES_ERROR,
     payload: errorMsg
   }
 }
@@ -92,7 +85,7 @@ export const saveUserArticle = (article) => {
 
 export const addArticleToUserArticleList = article => {
   return{
-   type: ADD_ARTICLE_TO_USER_ARTICLELIST,
+   type: types.ADD_ARTICLE_TO_USER_ARTICLELIST,
    payload: article
   }
 }
@@ -123,8 +116,6 @@ export const removeUserArticle = (article) => {
 export const deleteArticleInDB = (article) => {
   return async dispatch => {
     const url=`${BASE_URL}articles/article?id=${article.id}`
-    // const url=`${baseUrl}articles/article?id=100000`
-
     const token = getItemFromLocalStorage('token', '')
 
     header.headers.Authorization = `Bearer ${token}`
@@ -140,7 +131,6 @@ export const deleteArticleInDB = (article) => {
   }
 }
 
-
 export const removeBookmarkInDailyArticles = article => {
   return (dispatch) => {
     
@@ -151,7 +141,7 @@ export const removeBookmarkInDailyArticles = article => {
     const bookmarkedArticles = getItemFromLocalStorage("bookmarkedArticles", [])
     const articlesNotToDelete = bookmarkedArticles.filter(el => el.id !== article.id)
 
-    articlesNotToDelete.length > 0 ? localStorage.setItem("bookmarkedArticles", JSON.stringify(articlesNotToDelete)) : localStorage.removeItem("bookmarkedArticles")
+    articlesNotToDelete.length > 0 ? addItemToLocalStorage("bookmarkedArticles", articlesNotToDelete) : localStorage.removeItem("bookmarkedArticles")
   
     dispatch(setDailyArticlesSuccess(articles))
   }

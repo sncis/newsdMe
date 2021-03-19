@@ -16,7 +16,6 @@ describe("HeaderBarComponent", ()=>{
 
 	it("should render without error", ()=>{
 		container = shallow(<HeaderBarContainer onlyLogo={true} />)
-		console.log(container.debug())
 		expect(container.find(HeaderBar).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
 	})

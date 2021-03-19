@@ -2,13 +2,11 @@ import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
 
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 
 import {DashboardComponent} from '../../components/DashboardComponent'
-import { ArticleList } from "../../components/Articles/ArticleList"
 
 jest.mock("../../components/Articles/ArticleList", ()=>"ArticleList")
-// jest.mock("../../components/SavedArticleList")
 
 describe("DashboardComponent", () => {
 	let component;

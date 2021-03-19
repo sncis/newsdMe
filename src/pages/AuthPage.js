@@ -1,12 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-// import { withRouter, Route, Switch } from 'react-router-dom'
-
 import AuthDialogContainer from '../containers/AuthDialogContainer'
 
 import LoginComponent from "../components/Auth/LoginComponent"
 import RegisterComponent from "../components/Auth/RegisterComponent"
-import HeaderBarContainer from '../containers/HeaderBarContainer'
 import PageContainer from '../containers/PageContainer';
 
 export class AuthPage extends React.Component {

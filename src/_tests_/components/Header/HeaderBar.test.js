@@ -14,7 +14,6 @@ describe("HeaderBar", () => {
 	it("should render without errors", () => {
 		const component = shallow(<HeaderBar left={<LogoComponent link=''/>} middle={<Search handelArticleSearch={jest.fn()} />} right={<HeaderAuth />} onlyLogo={false}/>)
 		
-		console.log(component.debug())
 		expect(component.length).toEqual(1)
 		expect(component.find(LogoComponent).length).toEqual(1)
 		expect(component.find(Search).length).toEqual(1)
@@ -22,9 +21,9 @@ describe("HeaderBar", () => {
 
 		expect(console.error).not.toHaveBeenCalled()
 	})
+	
 	it("should render only logo when onlyLogo props is true", () => {
 		const component = shallow(<HeaderBar left={<LogoComponent link=''/>} middle={<Search handelArticleSearch={jest.fn()} />} right={<HeaderAuth />} onlyLogo={true}/>)
-		console.log(component.debug())
 		expect(component.length).toEqual(1)
 		expect(component.find(LogoComponent).length).toEqual(1)
 		expect(component.find('.hidden').length).toEqual(2)

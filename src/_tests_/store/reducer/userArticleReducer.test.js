@@ -36,5 +36,4 @@ describe("userArticleReducer", () =>{
 			errorMsg: "some error"
 		})
 	})
-
 })

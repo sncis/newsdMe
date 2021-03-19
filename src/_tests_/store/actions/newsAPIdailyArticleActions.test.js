@@ -6,7 +6,6 @@ import mockAxios from 'axios'
 import * as actions from "../../../store/actions/newsAPIdailyArticleActions"
 import * as types from "../../../store/types/newsAPIdailyArticleTypes"
 
-// import * as helpers from '../../../store/actions/articleActionHelpers'
 
 const mockStore = configureMockStore([thunk])
 
@@ -15,8 +14,7 @@ describe("newsAPIArticleActions", () => {
 	let dailyArticles
 
 	beforeEach(()=>{
-		// jest.restoreAllMocks()
-		// jest.clearAllMocks()
+		
 		dailyArticles  = require("../../../store/dummyArticles")
 
 		store = mockStore({})

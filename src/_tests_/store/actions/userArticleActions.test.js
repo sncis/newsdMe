@@ -178,23 +178,25 @@ describe("userArticleActions", () => {
 	})
 
 	describe("deleteArticleInDB", () => {
-		beforeEach(() =>{
-			jest.spyOn(global.localStorage, 'getItem').mockImplementationOnce(()=> null)
-		})
-		
 		it('should dispatch removeBookmarkInDailyArticles and getUserArticles when deleted succesfully', async () => {
 			const article = dailyArticles[0]
 			
 			mockAxios.delete.mockImplementationOnce(() => Promise.resolve({response:{ data: "someData"}}))
+			mockAxios.get.mockImplementationOnce(() => Promise.resolve({data: article}))
 			
 			jest.spyOn(helpers, 'replaceArticleInArticlesArray').mockImplementationOnce(()=> dailyArticles)
+			jest.spyOn(helpers, "getItemFromLocalStorage").mockImplementationOnce(()=> null)
 
 			let expectedAction = [
 			{
 				type: SET_DAILY_ARTICLES_SUCCESS,
 				payload: dailyArticles
 			},{	
-				type: types.IS_LOADING_ARTICLES}
+				type: types.IS_LOADING_ARTICLES},
+				{
+					type:types.GET_USER_ARTICLES_SUCCESS,
+					payload: article
+				}
 		]
 
 			await store.dispatch(actions.deleteArticleInDB(article)).then(()=>{
@@ -210,7 +212,6 @@ describe("userArticleActions", () => {
 					message:"error message"
 				}}
 			}))
-			// jest.spyOn(global.localStorage, 'getItem').mockImplementationOnce(()=> null)
 
 			const expectedAction = [
 				{type: types.GET_USER_ARTICLES_ERROR,

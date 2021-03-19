@@ -21,7 +21,6 @@ describe("userReducer", () => {
 			{
 				isLoading: true,
 				loggedIn: false
-
 			}
 		)
 	})
@@ -34,7 +33,6 @@ describe("userReducer", () => {
 				userName: "some user",
 				registerSuccessful: true,
 				loggedIn: false
-
 			}
 		)
 	})
@@ -46,7 +44,6 @@ describe("userReducer", () => {
 				isLoading: false,
 				errorMsg: "register error",
 				loggedIn: false
-
 			}
 		)
 	})
@@ -57,7 +54,6 @@ describe("userReducer", () => {
 			{
 				isLoading: true,
 				loggedIn: false
-
 			}
 		)
 	})
@@ -71,7 +67,6 @@ describe("userReducer", () => {
 				loginSuccessful: true,
 				isLoading: false,
 				loggedIn: true
-
 			}
 		)
 	})
@@ -84,7 +79,6 @@ describe("userReducer", () => {
 				errorMsg: "login error",
 				loginSuccessful: false,
 				loggedIn: false
-
 			}
 		)
 	})
@@ -97,31 +91,3 @@ describe("userReducer", () => {
 		})
 	})
 })
-
-
-
-
-// describe('todos reducer', () => {
-//   it('should return the initial state', () => {
-//     expect(reducer(undefined, {})).toEqual([
-//       {
-//         text: 'Use Redux',
-//         completed: false,
-//         id: 0
-//       }
-//     ])
-//   })
-
-//   it('should handle ADD_TODO', () => {
-//     expect(
-//       reducer([], {
-//         type: types.ADD_TODO,
-//         text: 'Run the tests'
-//       })
-//     ).toEqual([
-//       {
-//         text: 'Run the tests',
-//         completed: false,
-//         id: 0
-//       }
-//     ])

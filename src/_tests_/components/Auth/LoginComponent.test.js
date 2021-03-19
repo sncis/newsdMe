@@ -11,7 +11,6 @@ import { consoleSpyForProptypeError } from '../../../setupTests'
 describe("LoginComponent", () => {
 	let component;
 	let store;
-	// const loginUserMock = jest.spyOn(LoginComponent.prototype, 'loginUser');
 	const loginMock = jest.fn();
 	const mockStore = configureMockStore([thunk])
 	
@@ -60,11 +59,8 @@ describe("LoginComponent", () => {
 
 	it("should dispatch loginUser when button click", () => {
 		const onClickMock = jest.spyOn(component.instance(), 'handelLogin')
-		const button = component.find("button")
 
-		// button.simulate("click", {preventDefault(){}})
 		component.instance().handelLogin({preventDefault(){}});
-		// button.simulate("click", {preventDefault(){}})
 		expect(onClickMock).toHaveBeenCalledTimes(1);
 		expect(store.dispatch).toHaveBeenCalled()
 

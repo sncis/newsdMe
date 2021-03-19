@@ -36,7 +36,7 @@ export class Article extends React.Component {
 					<a className={`${this.props.articleType}_link-to-article`} href={this.props.article.url} target='blank'>
 						
 						<div className={`${this.props.articleType}_thumbnail`}>
-							<img src={dummy} alt="article thumbnail" />
+							<img src={this.props.article.urlToImage} alt="article thumbnail" />
 						</div>
 
 						<h3 className ={`${this.props.articleType}_title`}>{this.props.article.title}</h3>

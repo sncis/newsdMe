@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
 import React from "react";
-import Home from "../../components/Home";
+import Home from "../../components/HomeComponent";
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import ArticleList from "../../components/ArticleList"
+import ArticleList from "../../components/Articles/ArticleList"
 
-jest.mock("../../components/ArticleList")
+jest.mock("../../components/Articles/ArticleList")
 
 
-describe("Home", () => {
+describe("HomeComponent", () => {
   let component;
   let store;
 
@@ -26,10 +26,8 @@ describe("Home", () => {
   })
   it("should render childrens", () => {
 
-    expect(component.find("h1")).toHaveLength(1);
-  
+    expect(component.find("h2")).toHaveLength(1);
     expect(component.find(ArticleList)).toHaveLength(1);
     expect(store.dispatch).toHaveBeenCalled()
-
   });
 });

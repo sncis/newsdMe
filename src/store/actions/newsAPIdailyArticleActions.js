@@ -26,7 +26,6 @@ export const loadDailyArticles = () => {
 			let message = error.response !== undefined ? error.response.data : "could not fetch daily articles"
 			dispatch(setDailyArticlesError(message))
 		}
-	
 	}
 }
 

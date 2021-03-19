@@ -32,8 +32,7 @@ describe("HeaderAuthComponent", ()=>{
 			}})
 
 			component = shallow(<Router><HeaderAuthComponent store={store} 
-			/>
-				</Router>)
+			/></Router>)
 			
 			expect(console.error).toHaveBeenCalled()
 

@@ -9,7 +9,6 @@ export class HomeComponent extends React.Component {
   componentDidMount(){
     this.props.loadDailyArticles()
   }
-  countries = ['de','us','fr']
   render(){
     return (
       <div className="">

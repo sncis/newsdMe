@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-// import { handelArticleSearch } from '../../store/actions/newsApiActions'
+import { handelArticleSearch } from '../../store/actions/newsAPIsearchActions'
 import PropTypes from 'prop-types';
 
 
@@ -30,9 +30,7 @@ Search.propTypes = {
 
 const mapDispatchToProps = dispatch => {
 	return {
-				handelArticleSearch: () => {console.log("search was called")},
-
-		// handelArticleSearch: () => {dispatch(handelArticleSearch())},
+		handelArticleSearch: () => {dispatch(handelArticleSearch())},
 	};
 }
 

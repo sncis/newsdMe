@@ -32,7 +32,7 @@ describe("DashboardComponent", () => {
 		console.log(component.debug())
 		expect(component.length).toEqual(1)
 		expect(component.find("ArticleList").length).toEqual(1)
-		expect(component.find("ArticleList").prop('listType')).toBe('user')
+		expect(component.find("ArticleList").prop('listType')).toBe('userArticle')
 	})
 
 	it("should dispatch articleMethods when componentDidMount", () => {

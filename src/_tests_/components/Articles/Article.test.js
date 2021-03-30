@@ -50,7 +50,7 @@ describe("Article as DailyArticle when logedIn", () =>{
 	consoleSpyForProptypeError()
 
 	beforeEach(() => {
-		const props = setProps(false, true,'daily')
+		const props = setProps(false, true,'newsAPIdailyArticle')
 		store = mockStore({})
 		store.dispatch = jest.fn()
 
@@ -59,13 +59,13 @@ describe("Article as DailyArticle when logedIn", () =>{
 
 	it("should render without errors", () =>{
 		expect(component.length).toEqual(1)
-		expect(component.find('.daily_container').length).toEqual(1)
-		expect(component.find('.daily_link-to-article').length).toEqual(1)
-		expect(component.find('.daily_thumbnail').length).toEqual(1)
-		expect(component.find('.daily_title').length).toEqual(1)
-		expect(component.find('.daily_description').length).toEqual(1)
-		expect(component.find('.daily_source').length).toEqual(1)
-		expect(component.find('.daily_bookmark-container').length).toEqual(1)
+		expect(component.find('.article_container').length).toEqual(1)
+		expect(component.find('.article_link-to-article').length).toEqual(1)
+		expect(component.find('.article_thumbnail').length).toEqual(1)
+		expect(component.find('.article_title').length).toEqual(1)
+		expect(component.find('.article_description').length).toEqual(1)
+		expect(component.find('.article_source').length).toEqual(1)
+		expect(component.find('.article_bookmark-container').length).toEqual(1)
 
 		expect(component.find(BookmarkIcon).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
@@ -74,7 +74,7 @@ describe("Article as DailyArticle when logedIn", () =>{
 	})
 	it('should bookmark article when clicking on bookmarkIcon', () => {
 
-		const bookmark = component.find(".daily_bookmark-container")
+		const bookmark = component.find(".article_bookmark-container")
 
 		const spy = jest.spyOn(component.instance().props, "saveUserArticle")
 
@@ -95,7 +95,7 @@ describe("Article as DailyArticle when logedOut", () =>{
 
 
 	beforeEach(() => {
-		const props = setProps(false, false,'daily')
+		const props = setProps(false, false,'newsAPIdailyArticle')
 
 		store = mockStore({})
 		store.dispatch = jest.fn()
@@ -105,13 +105,13 @@ describe("Article as DailyArticle when logedOut", () =>{
 
 	it("should render without errors and unfilled Bookmark", () =>{
 		expect(component.length).toEqual(1)
-		expect(component.find('.daily_container').length).toEqual(1)
-		expect(component.find('.daily_link-to-article').length).toEqual(1)
-		expect(component.find('.daily_thumbnail').length).toEqual(1)
-		expect(component.find('.daily_title').length).toEqual(1)
-		expect(component.find('.daily_description').length).toEqual(1)
-		expect(component.find('.daily_source').length).toEqual(1)
-		expect(component.find('.daily_bookmark-container').length).toEqual(1)
+		expect(component.find('.article_container').length).toEqual(1)
+		expect(component.find('.article_link-to-article').length).toEqual(1)
+		expect(component.find('.article_thumbnail').length).toEqual(1)
+		expect(component.find('.article_title').length).toEqual(1)
+		expect(component.find('.article_description').length).toEqual(1)
+		expect(component.find('.article_source').length).toEqual(1)
+		expect(component.find('.article_bookmark-container').length).toEqual(1)
 
 		expect(component.find(BookmarkIcon).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
@@ -121,7 +121,7 @@ describe("Article as DailyArticle when logedOut", () =>{
 
 	it('should not bookmark article when clicking on bookmarkIcon', () => {
 	
-		const bookmark = component.find(".daily_bookmark-container")
+		const bookmark = component.find(".article_bookmark-container")
 
 		const spy = jest.spyOn(component.instance().props, "saveUserArticle")
 		const spyHistory = jest.spyOn(component.instance().props.history, "push")
@@ -145,7 +145,7 @@ describe("Article as UserArticle", () => {
 	consoleSpyForProptypeError()
 
 	beforeEach(() => {
-		const props = setProps(true, true,'user')
+		const props = setProps(true, true,'userArticle')
 
 		store = mockStore({})
 		store.dispatch = jest.fn()
@@ -154,13 +154,13 @@ describe("Article as UserArticle", () => {
 
 	it("should render without errors and filled Bookmark", () =>{
 		expect(component.length).toEqual(1)
-		expect(component.find('.user_container').length).toEqual(1)
-		expect(component.find('.user_link-to-article').length).toEqual(1)
-		expect(component.find('.user_thumbnail').length).toEqual(1)
-		expect(component.find('.user_title').length).toEqual(1)
-		expect(component.find('.user_description').length).toEqual(1)
-		expect(component.find('.user_source').length).toEqual(1)
-		expect(component.find('.user_bookmark-container').length).toEqual(1)
+		expect(component.find('.article_container').length).toEqual(1)
+		expect(component.find('.article_link-to-article').length).toEqual(1)
+		expect(component.find('.article_thumbnail').length).toEqual(1)
+		expect(component.find('.article_title').length).toEqual(1)
+		expect(component.find('.article_description').length).toEqual(1)
+		expect(component.find('.article_source').length).toEqual(1)
+		expect(component.find('.article_bookmark-container').length).toEqual(1)
 
 		expect(component.find(BookmarkFillIcon).length).toEqual(1)
 		expect(console.error).not.toHaveBeenCalled()
@@ -168,7 +168,7 @@ describe("Article as UserArticle", () => {
 	})
 
 	it("should unBookmark article", () => {
-		const bookmark = component.find(".user_bookmark-container")
+		const bookmark = component.find(".article_bookmark-container")
 
 		const spy = jest.spyOn(component.instance().props, "removeUserArticle")
 

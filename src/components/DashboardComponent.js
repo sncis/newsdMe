@@ -15,7 +15,7 @@ export class DashboardComponent extends React.Component {
       <div className="">
         <div>
          <h2>Your bookmarked Articles</h2>  
-         <ArticleList listType='user'/>
+         <ArticleList listType='userArticle'/>
        </div>
      </div>
     )

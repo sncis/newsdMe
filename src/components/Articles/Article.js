@@ -31,27 +31,27 @@ export class Article extends React.Component {
 	render(){
 		let source = this.props.article.source.name !== undefined ? this.props.article.source.name : this.props.article.source;
 		return(
-			<div className={`${this.props.articleType}_container`} >
+			<div className="article_container" >
 					
-					<a className={`${this.props.articleType}_link-to-article`} href={this.props.article.url} target='blank'>
+					<a className="article_link-to-article" href={this.props.article.url} target='blank'>
 						
-						<div className={`${this.props.articleType}_thumbnail`}>
+						<div className="article_thumbnail">
 							<img src={this.props.article.urlToImage} alt="article thumbnail" />
 						</div>
 
-						<h3 className ={`${this.props.articleType}_title`}>{this.props.article.title}</h3>
-						<p className={`${this.props.articleType}_description`}>{this.props.article.description}</p>
+						<h3 className ="article_title">{this.props.article.title}</h3>
+						<p className="article_description">{this.props.article.description}</p>
 					</a>
 
 
 					<a href={source} target="blank">
-						<p className={`${this.props.articleType}_source`}>{source}</p>
+						<p className="article_source">{source}</p>
 					</a>
 
 
-					<div className={`${this.props.articleType}_bookmark-container`} onClick={() => this.toogleIsBoomarked(this.props.article)}>
-						{ !this.props.article.isBookmarked && <BookmarkIcon size={16} className={`${this.props.articleType}_bookMark`} /> }
-						{ this.props.article.isBookmarked && <BookmarkFillIcon size={16} className={`${this.props.articleType}_bookMark`} /> }
+					<div className="article_bookmark-container" onClick={() => this.toogleIsBoomarked(this.props.article)}>
+						{ !this.props.article.isBookmarked && <BookmarkIcon size={16} className="article_bookMark" /> }
+						{ this.props.article.isBookmarked && <BookmarkFillIcon size={16} className="article_bookMark" /> }
 					</div>
 			</div>
 		)

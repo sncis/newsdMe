@@ -14,7 +14,7 @@ export class HomeComponent extends React.Component {
       <div className="">
         <div>
          <h2>Top daily Headlines</h2>  
-         <ArticleList listType='daily'/>
+         <ArticleList listType='newsAPIdailyArticle'/>
        </div>
      </div>
     )

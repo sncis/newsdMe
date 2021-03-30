@@ -34,7 +34,7 @@ export const articleSearchSuccesful = (articles) => {
 	}
 }
 
-export const articleSearchError = errorMsg =>{
+export const articleSearchError = errorMsg => {
 	return {
 		type: types.ARTICLE_SEARCH_ERROR,
 		payload: errorMsg

@@ -16,16 +16,12 @@ const header = {
 }
 
 
-
-
-//refactor to extract localStorage behavior ?
 export const getUserArticles = () => {
   return async (dispatch, getState) => {
     dispatch(loadUserArticles())
     const url = `${BASE_URL}articles?username=${getState().userReducer.userName}`
     const token = getItemFromLocalStorage('token', '')
     header.headers["Authorization"]= `Bearer ${token}`
-
     try{
       const response = await axios.get(url, header)
       dispatch(getUserArticlesSuccessful(response.data))
@@ -90,7 +86,6 @@ export const addArticleToUserArticleList = article => {
   }
 }
 
-//used to set a bookmark in daily articles when article is saved
 export const setBookmarkInDailyArticles = (article) => {
   return (dispatch) => {
     addArticleToLocalStorage(article)
@@ -104,14 +99,11 @@ export const setBookmarkInDailyArticles = (article) => {
   }  
 }
 
-
-
 export const removeUserArticle = (article) => {
   return (dispatch) => {
     dispatch(deleteArticleInDB(article))
   }
 }
-
 
 export const deleteArticleInDB = (article) => {
   return async dispatch => {

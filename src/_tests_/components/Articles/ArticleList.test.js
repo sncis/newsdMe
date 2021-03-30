@@ -13,6 +13,7 @@ describe("ArticleList as DailyArticleList", () => {
 	describe("with Articles", ()=>{
 		let store;
 		let component;
+		
 		consoleSpyForProptypeError()
 
 		const initialState = {newsAPIdailyArticleReducer:{
@@ -31,18 +32,18 @@ describe("ArticleList as DailyArticleList", () => {
 		it("should render without errors", () =>{
 			store = mockStore(initialState)
 
-			component= shallow(<ArticleList store={store} listType='daily'/>).dive({context:{store}}).dive()
+			component= shallow(<ArticleList store={store} listType='newsAPIdailyArticle'/>).dive({context:{store}}).dive()
 			expect(component.length).toEqual(1)
 			expect(component.find(Article).length).toEqual(1)
-			expect(component.find(Article).props().articleType).toEqual('daily')
+			expect(component.find(Article).props().articleType).toEqual('newsAPIdailyArticle')
 
 			expect(component.find('.noArticleError').length).toEqual(0)
 			expect(component.find('.loadingMsg').length).toEqual(0)
 			expect(console.error).not.toHaveBeenCalled()
 		})
 		
-		it("should throw error when wrong proptypes are provided", () =>{
-			shallow(<ArticleList store={store} listType={true}/>)
+		it("should throw error when wrong proptypes are provided", () => { 
+			shallow(<ArticleList store={store} />)
 			expect(console.error).toHaveBeenCalledTimes(1)
 		})
 	})
@@ -61,7 +62,7 @@ describe("ArticleList as DailyArticleList", () => {
 			}
 	
 			store = mockStore(state)
-			component = shallow(<ArticleList store={store} listType='daily'/>).dive({context:{store}}).dive()
+			component = shallow(<ArticleList store={store} listType='newsAPIdailyArticle'/>).dive({context:{store}}).dive()
 
 			expect(component.find('.loadingMsg').length).toEqual(1)
 
@@ -78,7 +79,7 @@ describe("ArticleList as DailyArticleList", () => {
 			articles: []}
 		}
 			store = mockStore(state)
-			component = shallow(<ArticleList store={store} listType='daily'/>).dive({context:{store}}).dive()
+			component = shallow(<ArticleList store={store} listType='newsAPIdailyArticle'/>).dive({context:{store}}).dive()
 
 			expect(component.find('.loadingMsg').length).toEqual(0)
 
@@ -110,12 +111,12 @@ describe("ArticleList as userArticleList", ()=>{
 	it("should render without errors", () =>{
 		store = mockStore(initialState)
 
-		component= shallow(<ArticleList store={store} listType='user'/>).dive({context:{store}}).dive()
+		component= shallow(<ArticleList store={store} listType='userArticle'/>).dive({context:{store}}).dive()
 		expect(component.length).toEqual(1)
 		expect(component.find(Article).length).toEqual(1)
 
 		console.log(component.debug())
-		expect(component.find(Article).props().articleType).toEqual('user')
+		expect(component.find(Article).props().articleType).toEqual('userArticle')
 
 		expect(component.find('.noArticleError').length).toEqual(0)
 		expect(component.find('.loadingMsg').length).toEqual(0)

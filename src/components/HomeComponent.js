@@ -4,11 +4,11 @@ import ArticleList from "./Articles/ArticleList"
 import { loadDailyArticles } from '../store/actions/newsAPIdailyArticleActions'
 
 
-
 export class HomeComponent extends React.Component {
   componentDidMount(){
     this.props.loadDailyArticles()
   }
+
   render(){
     return (
       <div className="">

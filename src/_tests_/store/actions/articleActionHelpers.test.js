@@ -23,7 +23,7 @@ describe("helperFunctions", ()=>{
 		const expectedArticles = [{id: 30, title:"daily3 some third article", description: "daily3 some third description", url: "daily3 someUrl", urlToImage: "daily3 url third to image", source:{name: "daily3 source"}, isBookmarked: true},
 		{id: 15, title:"someerercwee article", description: "some description", url: "someUrl", urlToImage: "url to image", source:{name: "name to source"}, isBookmarked: false}]
 
-		expect(helpers.replaceArticleInArticlesArray(article,"dailyArticle")).toEqual(expectedArticles)
+		expect(helpers.replaceArticleInArticlesArray(article,"newsAPIdailyArticleReducer")).toEqual(expectedArticles)
 	})
 
 	it("should replaceArticleInArticlesArray in newsAPISearch", ()=>{
@@ -31,7 +31,7 @@ describe("helperFunctions", ()=>{
 		const expectedArticles = [{id: 30, title:"daily3 some third article", description: "daily3 some third description", url: "daily3 someUrl", urlToImage: "daily3 url third to image", source:{name: "daily3 source"}, isBookmarked: true},
 		{id: 15, title:"someerercwee article", description: "some description", url: "someUrl", urlToImage: "url to image", source:{name: "name to source"}, isBookmarked: false}]
 
-		expect(helpers.replaceArticleInArticlesArray(article,"searchArticle")).toEqual(expectedArticles)
+		expect(helpers.replaceArticleInArticlesArray(article,"newsAPIsearchReducer")).toEqual(expectedArticles)
 	
 	})
 

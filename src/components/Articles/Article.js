@@ -7,9 +7,6 @@ import {BookmarkFillIcon, BookmarkIcon} from '@primer/octicons-react'
 import "../../css/UserArticle.css";
 import "../../css/Article.css";
 
-
-import dummy from "../../assets/img/dummy.jpg";
-
 import { saveUserArticle, removeUserArticle } from "../../store/actions/userArticleActions"
 
 

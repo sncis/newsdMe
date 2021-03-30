@@ -152,6 +152,7 @@ const mapStateToProps = state => {
 }
 
 const RegisterComponent = connect(mapStateToProps, mapDispatchToProps)(RegisterComp);
+
 RegisterComponent.propTypes = {
   registerUser: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,

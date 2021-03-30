@@ -89,7 +89,7 @@ export const addArticleToUserArticleList = article => {
 export const setBookmarkInDailyArticles = (article) => {
   return (dispatch) => {
     addArticleToLocalStorage(article)
-    const articles = replaceArticleInArticlesArray(article, "dailyArticle")
+    const articles = replaceArticleInArticlesArray(article, "newsAPIdailyArticleReducer")
    
     const bookmarkedArticles = getItemFromLocalStorage("bookmarkedArticles",[])
     bookmarkedArticles.push(article)
@@ -126,7 +126,7 @@ export const deleteArticleInDB = (article) => {
 export const removeBookmarkInDailyArticles = article => {
   return (dispatch) => {
     
-    const articles = replaceArticleInArticlesArray(article,"dailyArticle")    
+    const articles = replaceArticleInArticlesArray(article,"newsAPIdailyArticleReducer")    
     console.log("articles from removeBookmark")
     console.log(articles)
     

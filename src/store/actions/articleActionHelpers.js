@@ -9,8 +9,8 @@ export const findIndexByArticleTitle = (title, reducer) =>{
   }
 }
 
-export const replaceArticleInArticlesArray = (article, articleType) =>{
-    let articles = articleType === 'dailyArticle' ? store.getState().newsAPIdailyArticleReducer.articles.slice() : store.getState().newsAPIsearchReducer.articles.slice()
+export const replaceArticleInArticlesArray = (article, reducer) =>{
+  let articles = store.getState()[reducer].articles.slice() 
     const index = articles.findIndex(el => el.title === article.title)
 		articles[index] = article
 		

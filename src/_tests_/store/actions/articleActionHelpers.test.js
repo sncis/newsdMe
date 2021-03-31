@@ -52,7 +52,7 @@ describe("helperFunctions", ()=>{
 		const jsonArticle = JSON.stringify(article)
 		const spy = jest.spyOn(localStorage, 'getItem').mockImplementationOnce().mockReturnValue(jsonArticle)
 
-		const result =	helpers.getItemFromLocalStorage("bookmarkedArticles",[])
+		const result = helpers.getItemFromLocalStorage("bookmarkedArticles",[])
 		expect(spy).toHaveBeenCalled()
 		expect(result).toEqual(article)
 	})

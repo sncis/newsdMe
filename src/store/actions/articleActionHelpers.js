@@ -11,16 +11,15 @@ export const findIndexByArticleTitle = (title, reducer) =>{
 
 export const replaceArticleInArticlesArray = (article, reducer) =>{
   let articles = store.getState()[reducer].articles.slice() 
-    const index = articles.findIndex(el => el.title === article.title)
-		articles[index] = article
-		
-		return articles	
+  const index = articles.findIndex(el => el.title === article.title)
+  let newArticleList = [...articles.slice(0,index), article, ...articles.slice(index+1)]
+  return newArticleList
 }
 
 export const addArticleToLocalStorage = (article) => {
   const bookmarkedArticles = getItemFromLocalStorage("bookmarkedArticles",[])
-  bookmarkedArticles.push(article)
-  addItemToLocalStorage("bookmarkedArticles", bookmarkedArticles) 
+  let newArticles = [...bookmarkedArticles, article]
+  addItemToLocalStorage("bookmarkedArticles", newArticles) 
 }
 
 export const getItemFromLocalStorage = (key, defaultValue) => {

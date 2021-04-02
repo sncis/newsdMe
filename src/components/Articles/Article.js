@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import {BookmarkFillIcon, BookmarkIcon} from '@primer/octicons-react'
+import { getUserLoginSelector } from '../../store/selectors/userSelectors'
 import "../../css/UserArticle.css";
 import "../../css/Article.css";
 
@@ -76,7 +77,7 @@ Article.propTypes = {
 
 const mapStateToProps = state =>{
 	return{
-		isLoggedIn: state.userReducer.loggedIn,
+		isLoggedIn: getUserLoginSelector(state)
 	}
 }
 

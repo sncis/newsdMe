@@ -43,7 +43,9 @@ describe("ArticleList as DailyArticleList", () => {
 		})
 		
 		it("should throw error when wrong proptypes are provided", () => { 
-			shallow(<ArticleList store={store} />)
+			store = mockStore(initialState)
+
+			shallow(<ArticleList store={store} />).dive({context:{store}}).dive()
 			expect(console.error).toHaveBeenCalledTimes(1)
 		})
 	})
@@ -68,6 +70,7 @@ describe("ArticleList as DailyArticleList", () => {
 
 			expect(component.find(Article).length).toEqual(0)
 			expect(component.find('.noArticleError').length).toEqual(0)
+			expect(console.error).not.toHaveBeenCalled()
 
 		})
 

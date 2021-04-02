@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Article from './Article'
 import "../../css/ArticleList.css"
+import { getArticleErrorMsgSelector, getArticlesSelector, isLoadingArticlesSelector } from "../../store/selectors/articleSelectors";
 
 export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 	return(
@@ -19,9 +20,19 @@ export const ArticleList = ({listType, articles, isLoading, errorMsg}) =>{
 	)
 }
 
+
+
+const mapStateToProps = (state, ownProp)=>{
+	return{
+		articles: getArticlesSelector(state,ownProp),
+		isLoading: isLoadingArticlesSelector(state, ownProp),
+		errorMsg: getArticleErrorMsgSelector(state, ownProp)
+	}	
+}
+
 ArticleList.propTypes = {
 	listType : PropTypes.string.isRequired,
-	articles :PropTypes.arrayOf(PropTypes.shape({
+	articles : PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number,
 		title: PropTypes.string,
 		description: PropTypes.string,
@@ -32,16 +43,6 @@ ArticleList.propTypes = {
 	isLoading: PropTypes.bool,
 	errorMsg: PropTypes.string
 }
-
-
-const mapStateToProps = (state, ownProp)=>{
-	return{
-		articles: ownProp.listType ? state[`${ownProp.listType}Reducer`].articles :[],
-		isLoading: ownProp.listType ? state[`${ownProp.listType}Reducer`].isLoading : false,
-		errorMsg: ownProp.listType ? state[`${ownProp.listType}Reducer`].errorMsg : "some error occured"
-	}	
-}
-
 
 
 export default connect(mapStateToProps, null)(ArticleList)

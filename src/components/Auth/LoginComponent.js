@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
 
 import { loginUserAction } from "../../store/actions/userActions"
+import * as selectors from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
 
 export class LoginComp extends Component {
@@ -65,10 +66,10 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
 	return {
-		isLoading: state.userReducer.isLoading,
-		errorMsg: state.userReducer.errorMsg,
-		loginSuccessful : state.userReducer.loginSuccessful,
-		isLoggedIn : state.userReducer.loggedIn
+		isLoading: selectors.isLoadingUserSelector(state),
+		errorMsg: selectors.getErrorMsgSelector(state),
+		loginSuccessful : selectors.getLoginSuccesfulSelector(state),
+		isLoggedIn : selectors.getUserLoginSelector(state)
 	}
 }
 

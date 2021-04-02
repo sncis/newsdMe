@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import { connect } from "react-redux"
+import PropTypes from 'prop-types';
 
 import { logoutAction } from "../../store/actions/userActions"
-import PropTypes from 'prop-types';
+import { getUserLoginSelector } from "../../store/selectors/userSelectors"
 
 
 export const HeaderAuth =(props)=> {
@@ -31,7 +32,7 @@ export const HeaderAuth =(props)=> {
 
 const mapStateToProps = state =>  {
 	return { 
-		isLoggedIn: state.userReducer.loggedIn
+		isLoggedIn: getUserLoginSelector(state)
 	}
 }
 

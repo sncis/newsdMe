@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
 import { registerUserAction } from "../../store/actions/userActions"
+import { isLoadingUserSelector, getErrorMsgSelector,getRegisterSuccessfulSelector } from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
 
 
@@ -145,9 +146,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
   return{
-    isLoading: state.userReducer.isLoading,
-    errorMsg : state.userReducer.errorMsg,
-    registerSuccessful: state.userReducer.registerSuccessful
+    isLoading: isLoadingUserSelector(state),
+    errorMsg : getErrorMsgSelector(state),
+    registerSuccessful: getRegisterSuccessfulSelector(state)
   }
 }
 

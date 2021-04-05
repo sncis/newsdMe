@@ -76,7 +76,7 @@ const mapStateToProps = (state) => {
 const LoginComponent = connect(mapStateToProps, mapDispatchToProps)(LoginComp);
 
 LoginComponent.propTypes = {
-	loginUser: PropTypes.func.isRequired,
+	loginUser: PropTypes.func,
 	isLoading: PropTypes.bool,
 	errorMsg: PropTypes.string,
 	loginSuccessful : PropTypes.bool,

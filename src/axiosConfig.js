@@ -1,22 +1,12 @@
 //using axios default setup for refactoring 
 import axios from 'axios'
 
-const backendInstance = axios.create({
-  baseURL:'http://localhost:8080/',
+export const backendInstance = axios.create({
+  baseURL:'http://localhost:8082/',
+  headers:  {'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': 'http://localhost:3000, http://127.0.0.1:3000',
+  'Accept': 'application/json',
+  'X-Frame-Options': 'DENY'},
+  withCredentials: true,
 });
-
-const token = localStorage.getItem('token') ? localStorage.getItem('token') : null
-
-backendInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
-backendInstance.defaults.headers.post['Content-Type'] = 'application/json'
-backendInstance.defaults.headers.get['Content-Type'] = 'application/json'
-backendInstance.defaults.headers.delete['Content-Type'] = 'application/json'
-
-backendInstance.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-backendInstance.defaults.headers.common['Accept'] = 'application/json'
-
-console.log(backendInstance.defaults.headers)
-
-export default backendInstance;
 

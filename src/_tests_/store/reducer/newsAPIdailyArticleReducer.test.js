@@ -8,6 +8,7 @@ describe("dailyArticleReducer", () =>{
 	const initialState= {
 		isLoading:false,
 		articles: [],
+		errorMsg:''
 	}
 
 
@@ -20,7 +21,9 @@ describe("dailyArticleReducer", () =>{
 		const action = {type: types.IS_LOADING_ARTICLES}
 		expect(newsAPIdailyArticleReducer(undefined,action)).toEqual({
 			isLoading: true,
-			articles: [],
+			articles: [],	
+			errorMsg:''
+
 		})
 	})
 
@@ -29,7 +32,8 @@ describe("dailyArticleReducer", () =>{
 
 		expect(newsAPIdailyArticleReducer(undefined,action)).toEqual({
 			isLoading: false,
-			articles: dummyArticles,	
+			articles: dummyArticles,
+			errorMsg:'',	
 		})
 	})
 

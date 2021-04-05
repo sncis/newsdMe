@@ -1,28 +1,19 @@
 import axios from "axios";
+import { backendInstance } from '../../axiosConfig'
 
 import * as types from "../types/userTypes";
-
-const baseUrl = "http://localhost:8080/";
-
-const header = {
-  headers:{
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'ACCEPT': 'application/json',
-}}
-
 
 /**********Register actions */
 
 export const registerUserAction = (user) => {
   return async (dispatch) => {
-    const url = `${baseUrl}register`    
+    const url = "register"    
     const jsonUser = JSON.stringify(user)
 
     dispatch(registerUserLoading())
     
     try {
-      const response = await axios.post(url, jsonUser, header);
+      const response = await backendInstance.post(url, jsonUser);
       console.log(response);
       dispatch(registerUserSuccess(response.data));
     } catch (error) {
@@ -60,18 +51,16 @@ export const loginUserAction = user => {
 
     dispatch(loginUserLoading())
 
-    const url = `${baseUrl}login`
+    const url = "login"
     const jsonUser = JSON.stringify(user)
 
     try{
-      const response = await axios.post(url, jsonUser,header)
+      const response = await backendInstance.post(url, jsonUser)
       const jwtToken = response.data.jwtToken
-      localStorage.setItem("token", JSON.stringify(jwtToken))
       dispatch(loginUserSuccess(user.userName, jwtToken))
-
     }catch(error){
       console.log(error)
-     let message = error.response.data !== undefined ? error.response.data.message : 'some error occured, please try again!';
+     let message = error.response !== undefined ? error.response.data.message : 'some error occured, please try again!';
       dispatch(loginUserError(message));
     }
 
@@ -101,7 +90,6 @@ export const loginUserError = (msg) => {
 
 
 export const logoutAction = () => {
-  localStorage.removeItem('token')
   return {
     type: types.LOGOUT_USER
   }

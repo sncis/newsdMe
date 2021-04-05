@@ -38,7 +38,7 @@ const mapDispatchToProps = dispatch => {
 const SearchComponent = connect(null, mapDispatchToProps)(Search);
 
 SearchComponent.propTypes = {
-	handelArticleSearch: PropTypes.func.isRequired
+	handelArticleSearch: PropTypes.func
 }
 
 export default SearchComponent

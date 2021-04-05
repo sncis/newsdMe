@@ -111,7 +111,7 @@ describe("RegisterComponent", () => {
 
 	it("should throw error when wrong propTypes are provided", ()=>{
 		
-		shallow(<RegisterComponent store={store} />).dive({ context: { store } }).dive()
+		shallow(<RegisterComponent store={store} registerUser={"some func"}/>).dive({ context: { store } }).dive()
 		expect(console.error).toHaveBeenCalled()
 	})
 })

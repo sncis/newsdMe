@@ -4,30 +4,41 @@ import * as types from '../types/userArticelTypes'
  
 import { setDailyArticlesSuccess } from './newsAPIdailyArticleActions'
 import { replaceArticleInArticlesArray, addArticleToLocalStorage, getItemFromLocalStorage,addItemToLocalStorage } from './articleActionHelpers'
+import { logoutAction } from './userActions'
+import { backendInstance } from "../../axiosConfig"
 
-const BASE_URL = 'http://localhost:8080/'
 
-const header = {
-  headers:{
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Accept': 'application/json',
-  }
-}
+// const BASE_URL = 'http://localhost:8082/'
+
+// const header = {
+//   headers:{
+//     'Content-Type': 'application/json',
+//     'Access-Control-Allow-Origin': 'http://localhost:3000, http://127.0.0.1:3000',
+//     'Accept': 'application/json',
+//     'X-Frame-Options': 'DENY',
+//   }
+// }
+// axios.defaults.withCredentials = true;
 
 
 export const getUserArticles = () => {
   return async (dispatch, getState) => {
     dispatch(loadUserArticles())
-    const url = `${BASE_URL}articles?username=${getState().userReducer.userName}`
-    const token = getItemFromLocalStorage('token', '')
-    header.headers["Authorization"]= `Bearer ${token}`
+    const url = `articles?username=${getState().userReducer.userName}`
+    // console.log(header)
     try{
-      const response = await axios.get(url, header)
+      const response = await backendInstance.get(url)
+      console.log(response)
       dispatch(getUserArticlesSuccessful(response.data))
     }catch(error){
-      let message = error.response !== undefined ? error.response.data.message : "could not fetch saved articles"
-      dispatch(getUserArticlesError(message))
+      console.log(error.response)
+      if(error.response.status === 401){
+        dispatch(logoutAction())
+      }else{
+        let message = error.response !== undefined ? error.response.data.message : "could not fetch saved articles"
+        dispatch(getUserArticlesError(message))
+      }
+     
     }
 
   }
@@ -57,16 +68,16 @@ export const getUserArticlesError = errorMsg => {
 export const saveUserArticle = (article) => {
   return async (dispatch, getState) => {
     const username = getState().userReducer.userName
-    const url = `${BASE_URL}articles?username=${username}`
+    const url = `articles?username=${username}`
     article.source = article.source.name ? article.source.name : article.source
 
     const jsonArticle = JSON.stringify(article)
-    const token = getItemFromLocalStorage('token', '')
+    // const token = getItemFromLocalStorage('token', '')
 
-    header.headers.Authorization = `Bearer ${token}`
+    // header.headers.Authorization = `Bearer ${token}`
 
     try{
-      const response = await axios.post(url, jsonArticle, header)
+      const response = await axios.post(url, jsonArticle)
       dispatch(addArticleToUserArticleList(response.data))
       dispatch(setBookmarkInDailyArticles(response.data))
 
@@ -107,13 +118,9 @@ export const removeUserArticle = (article) => {
 
 export const deleteArticleInDB = (article) => {
   return async dispatch => {
-    const url=`${BASE_URL}articles/article?id=${article.id}`
-    const token = getItemFromLocalStorage('token', '')
-
-    header.headers.Authorization = `Bearer ${token}`
-    
+    const url=`articles/article?id=${article.id}`
     try{
-      await axios.delete(url,header)
+      await axios.delete(url)
       dispatch(removeBookmarkInDailyArticles(article))
       dispatch(getUserArticles())
     }catch(error){

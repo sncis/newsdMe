@@ -40,7 +40,7 @@ describe("userActions", () => {
 		 })
 	})
 
-	it("should dispatch registerUserError", () => {
+	it("should dispatch registerUserError", async () => {
 		const expectedAction = [{
 			type: types.USER_LOADING,
 		},
@@ -53,7 +53,7 @@ describe("userActions", () => {
 			response:{data:{message: "register error"}}
 		}))
 
-		 store.dispatch(userActions.registerUserAction(user)).then(()=>{
+		 await store.dispatch(userActions.registerUserAction(user)).then(()=>{
 			expect(store.getActions()).toEqual(expectedAction);
 		})
 
@@ -68,7 +68,6 @@ describe("userActions", () => {
 			type: types.LOGIN_USER_SUCCESS,
 			payload: {userName: user.userName, jwtToken: "some token"}
 		}]
-		const spy = jest.spyOn(global.localStorage, 'setItem')
 
 		mockAxios.post.mockImplementationOnce(() => 
 			Promise.resolve({data: {jwtToken: "some token"}
@@ -76,7 +75,6 @@ describe("userActions", () => {
 
 		await store.dispatch(userActions.loginUserAction(user)).then(() => {
 			expect(store.getActions()).toEqual(expectedAction)
-			expect(spy).toHaveBeenCalled()
 		})
 
 	})
@@ -89,8 +87,8 @@ describe("userActions", () => {
 			payload: "some error"
 		}]
 
-		mockAxios.post.mockImplementationOnce(() => Promise.reject({
-			response: {data: {message: "some error"}}
+		mockAxios.post.mockImplementationOnce(()=> Promise.reject({
+			response:{data:{message: "some error"}}
 		}))
 		
 		await store.dispatch(userActions.loginUserAction(user)).then(() => {
@@ -108,8 +106,7 @@ describe("userActions", () => {
 		}]
 
 		mockAxios.post.mockImplementationOnce(()=> 
-			Promise.reject({response: {} 
-		}))
+			Promise.reject({}))
 	
 		await store.dispatch(userActions.loginUserAction(user)).then(() => {
 			expect(store.getActions()).toEqual(expectedAction)
@@ -119,10 +116,8 @@ describe("userActions", () => {
 
 	describe("logout", () => {
 		it("should perform logout action", () => {
-			const spy = jest.spyOn(global.localStorage, 'removeItem')
 			store.dispatch(userActions.logoutAction())
 
-			expect(spy).toHaveBeenCalled()
 			expect(store.getActions()).toEqual([{type: types.LOGOUT_USER}])
 		})
 	})	

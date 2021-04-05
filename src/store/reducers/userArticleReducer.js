@@ -7,7 +7,9 @@ import { IS_LOADING_ARTICLES,
 
 const initialState = {
 	isLoading:false,
-	articles: []
+	articles: [],
+	errorMsg:''
+
 }
 const userArticleReducer = (state = initialState, action='') =>{
 	switch(action.type){
@@ -20,7 +22,8 @@ const userArticleReducer = (state = initialState, action='') =>{
 		return {
 			...state,
 			isLoading: false,
-			articles: action.payload
+			articles: action.payload,
+			errorMsg:''
 		}
 		case GET_USER_ARTICLES_ERROR:
 			return{

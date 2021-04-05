@@ -5,6 +5,7 @@ import { IS_LOADING_ARTICLES,
 const initialState = {
 	isLoading:false,
 	articles: [],
+	errorMsg:''
 }
 
 const newsAPIdailyArticleReducer = (state=initialState, action='') => {
@@ -16,7 +17,6 @@ const newsAPIdailyArticleReducer = (state=initialState, action='') => {
 			}
 		
 		case SET_DAILY_ARTICLES_SUCCESS:
-			console.log("called newsAPI reducer in article success")
 			return{
 				...state,
 				isLoading: false,
@@ -26,6 +26,7 @@ const newsAPIdailyArticleReducer = (state=initialState, action='') => {
 			return{
 				...state,
 				errorMsg: action.payload,
+				articles: [],
 				isLoading: false,
 			}
 		default:

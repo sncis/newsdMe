@@ -16,7 +16,7 @@ export class AuthPage extends React.Component {
 
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		this.setState({
 			index: parseInt(this.props.match.params.index)
 		})
@@ -54,7 +54,7 @@ export class AuthPage extends React.Component {
 
 AuthPage.propTypes = {
 	match: PropTypes.shape({
-		params:PropTypes.shape({index: PropTypes.string.isRequired})
+		params:PropTypes.shape({index: PropTypes.string})
 	})
 }
 

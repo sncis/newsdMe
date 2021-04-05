@@ -185,7 +185,6 @@ describe("userArticleActions", () => {
 			mockAxios.get.mockImplementationOnce(() => Promise.resolve({data: article}))
 			
 			jest.spyOn(helpers, 'replaceArticleInArticlesArray').mockImplementationOnce(()=> dailyArticles)
-			jest.spyOn(helpers, "getItemFromLocalStorage").mockImplementationOnce(()=> null)
 
 			let expectedAction = [
 			{

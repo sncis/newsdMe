@@ -6,6 +6,7 @@ import userArticleReducer from '../../../store/reducers/userArticleReducer'
 describe("userArticleReducer", () =>{
 	const initailState= {
 		isLoading:false,
+		errorMsg: "",
 		articles: [],
 	}
 	it("should return initial state", () => {
@@ -16,6 +17,7 @@ describe("userArticleReducer", () =>{
 		const action = {type: types.IS_LOADING_ARTICLES}
 		expect(userArticleReducer(undefined,action)).toEqual({
 			isLoading: true,
+			errorMsg: "",
 			articles: [],
 		})
 	})
@@ -24,6 +26,7 @@ describe("userArticleReducer", () =>{
 
 		expect(userArticleReducer(undefined,action)).toEqual({
 			isLoading:false,
+			errorMsg: "",
 			articles: dummyArticles,
 		})
 	})

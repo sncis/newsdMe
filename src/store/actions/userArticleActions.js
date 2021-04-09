@@ -24,15 +24,18 @@ import { backendInstance } from "../../axiosConfig"
 export const getUserArticles = () => {
   return async (dispatch, getState) => {
     dispatch(loadUserArticles())
+    console.log(backendInstance.headers);
+
     const url = `articles?username=${getState().userReducer.userName}`
-    // console.log(header)
     try{
       const response = await backendInstance.get(url)
       console.log(response)
       dispatch(getUserArticlesSuccessful(response.data))
     }catch(error){
       console.log(error.response)
-      if(error.response.status === 401){
+      let errorCode = error.response !== undefined ? error.response.status : null
+      if(errorCode === 401){
+        console.log(errorCode)
         dispatch(logoutAction())
       }else{
         let message = error.response !== undefined ? error.response.data.message : "could not fetch saved articles"

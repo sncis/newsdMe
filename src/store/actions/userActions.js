@@ -1,4 +1,5 @@
-import axios from "axios";
+import Cookies from 'universal-cookie';
+
 import { backendInstance } from '../../axiosConfig'
 
 import * as types from "../types/userTypes";
@@ -56,8 +57,11 @@ export const loginUserAction = user => {
 
     try{
       const response = await backendInstance.post(url, jsonUser)
-      const jwtToken = response.data.jwtToken
-      dispatch(loginUserSuccess(user.userName, jwtToken))
+      const cookies = new Cookies(response.headers.cookie)
+      console.log(cookies)
+      const csrfToken = cookies.get('XSRF-TOKEN');
+      backendInstance.defaults.headers["XSRF-TOKEN"] = csrfToken
+      dispatch(loginUserSuccess(user.userName))
     }catch(error){
       console.log(error)
      let message = error.response !== undefined ? error.response.data.message : 'some error occured, please try again!';
@@ -90,11 +94,42 @@ export const loginUserError = (msg) => {
 
 
 export const logoutAction = () => {
+  return async dispatch =>{
+    const url = "logout"
+
+    try{
+      await backendInstance.get(url)
+      dispatch(logout())
+    }catch(error){
+      console.log(error)
+    }
+    // await backendInstance.get(url)
+  }
+}
+
+
+export const logout = () => {
   return {
     type: types.LOGOUT_USER
   }
 }
 
+
+// export const logoutAction = ()=>{
+//   return async (dispatch) => {
+   
+//     const url = "logout"
+//     dispatch(logout)
+
+//   try{
+//     const response = await backendInstance.get(url)
+//     console.log(response)
+//   }catch(error){
+//     console.log(error.response)
+  
+//   }
+//   }
+// }
 
 
 

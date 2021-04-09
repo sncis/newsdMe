@@ -11,7 +11,8 @@ import {
 
 const initialState = {
   isLoading: false,
-  loggedIn: false
+  loggedIn: false,
+  errorMsg:'',
 };
 
 const userReducer = (state = initialState, action='') => {
@@ -24,14 +25,17 @@ const userReducer = (state = initialState, action='') => {
     case USER_LOADING:
       return{
         ...state,
-        isLoading: true
+        isLoading: true,
+        errorMsg:'',
+
       }
       case REGISTER_USER_SUCCESS:
       return{
         ...state,
         userName: action.payload.username,
         isLoading: false,
-        registerSuccessful: true
+        registerSuccessful: true,
+        errorMsg:'',
       }
     case REGISTER_USER_ERROR:
     return{
@@ -43,10 +47,11 @@ const userReducer = (state = initialState, action='') => {
       return{
         ...state,
         userName : action.payload.userName,
-        jwtToken: action.payload.jwtToken,
         isLoading: false,
         loginSuccessful: true,
-        loggedIn: true
+        loggedIn: true,
+        errorMsg:'',
+
       }
     case LOGIN_USER_ERROR:
       return{
@@ -59,6 +64,8 @@ const userReducer = (state = initialState, action='') => {
       return{
         ...state,
         loggedIn:false,
+        errorMsg:'',
+
       } 
     case SET_GEOLOCATION:
       return{

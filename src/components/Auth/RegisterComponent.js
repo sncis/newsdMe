@@ -16,6 +16,7 @@ export class RegisterComp extends Component {
       confirmPassword:"",
       email: "",
       isPasswordMatching:true,
+      isPasswordValid: true,
     };
   }
   
@@ -52,16 +53,29 @@ export class RegisterComp extends Component {
       password,
       email
     }
+    this.checkPassword(this.state.password)
+
+
     this.state.confirmPassword === this.state.password ? 
     this.props.registerUser(registerUser) : 
     this.setState({
       isPasswordMatching : false
     });
+
     setTimeout(() =>{
-      this.props.registerSuccessful ? this.props.history.push("/dashboard") : this.props.history.push("/home")
+      console.log(this.state.isPasswordValid)
+
+      // this.props.registerSuccessful ? this.props.history.push("/dashboard") : this.props.history.push("/home")
     }, 2000)
 
   };
+
+  checkPassword = (password) => {
+    this.setState({
+      isPasswordValid: !!password.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+    })
+    // return !!password.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+  }
 
   cancelRegistration = (e) => { 
     e.preventDefault()
@@ -70,7 +84,7 @@ export class RegisterComp extends Component {
       password: "",
       confirmPassword:'',
       email: "",
-      isPasswordMatching:true,
+      isPasswordMatching: true,
     })
     document.getElementById("registrationForm").reset();
       }
@@ -110,7 +124,11 @@ export class RegisterComp extends Component {
                 placeholder="password"
                 onChange={e => this.setPassword(e.target.value)}
               />
+               {/* {!this.state.isPasswordValid  && <p id="passwordValidError">password must contain at least 1 Uppercase, 1 lowercase, 1 special characther and 1 number</p>} */}
+
             </div>
+            {!this.state.isPasswordValid  && <p id="passwordValidError">password must contain at least 1 Uppercase, 1 lowercase, 1 special characther and 1 number</p>}
+
             
             <div className="input-container">
               <label htmlFor="confirmPassword">Confirm Password</label>

@@ -2,6 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';	
 import mockAxios from 'axios';	
 
+
 import * as userActions from "../../../store/actions/userActions"
 import * as types from "../../../store/types/userTypes"
 
@@ -66,14 +67,15 @@ describe("userActions", () => {
 			type: types.USER_LOADING
 			},{
 			type: types.LOGIN_USER_SUCCESS,
-			payload: {userName: user.userName, jwtToken: "some token"}
+			payload: {userName: user.userName}
 		}]
 
 		mockAxios.post.mockImplementationOnce(() => 
-			Promise.resolve({data: {jwtToken: "some token"}
+			Promise.resolve({headers:{cookie:'some cookie'}},{data: {jwtToken: "some token"}
 		}))
 
 		await store.dispatch(userActions.loginUserAction(user)).then(() => {
+			
 			expect(store.getActions()).toEqual(expectedAction)
 		})
 
@@ -115,8 +117,14 @@ describe("userActions", () => {
 	})
 
 	describe("logout", () => {
-		it("should perform logout action", () => {
-			store.dispatch(userActions.logoutAction())
+		it("should perform logout action", async () => {
+			mockAxios.get.mockImplementationOnce(()=> Promise.resolve({
+				response:{}
+			}))
+			const expectedAction=[{
+				type: types.LOGOUT_USER
+			}]
+			await store.dispatch(userActions.logoutAction())
 
 			expect(store.getActions()).toEqual([{type: types.LOGOUT_USER}])
 		})

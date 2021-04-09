@@ -40,3 +40,8 @@
 	margin-top: 30px;
 	font-weight: 700;
 }
+
+#passwordValidError{
+	font-size: 5px;
+	color:red;
+}

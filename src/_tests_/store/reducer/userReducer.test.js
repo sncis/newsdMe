@@ -9,7 +9,8 @@ describe("userReducer", () => {
 
 		expect(userReducer(undefined, action)).toEqual({
 			isLoading:false,
-			loggedIn: false
+			loggedIn: false,
+			errorMsg:''
 
 			}
 		)
@@ -20,7 +21,9 @@ describe("userReducer", () => {
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: true,
-				loggedIn: false
+				loggedIn: false,
+				errorMsg:''
+
 			}
 		)
 	})
@@ -32,7 +35,9 @@ describe("userReducer", () => {
 				isLoading: false,
 				userName: "some user",
 				registerSuccessful: true,
-				loggedIn: false
+				loggedIn: false,			
+				errorMsg:''
+
 			}
 		)
 	})
@@ -53,7 +58,9 @@ describe("userReducer", () => {
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: true,
-				loggedIn: false
+				loggedIn: false,
+				errorMsg:''
+
 			}
 		)
 	})
@@ -63,10 +70,11 @@ describe("userReducer", () => {
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				userName: 'some user',
-				jwtToken: "some token",
 				loginSuccessful: true,
 				isLoading: false,
-				loggedIn: true
+				loggedIn: true,
+				errorMsg:''
+
 			}
 		)
 	})
@@ -87,7 +95,9 @@ describe("userReducer", () => {
 		const action ={type: types.LOGOUT_USER}
 		expect(userReducer(undefined,action)).toEqual({
 			isLoading: false,
-  		loggedIn: false
+  		loggedIn: false,
+			errorMsg:''
+
 		})
 	})
 })

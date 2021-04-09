@@ -60,7 +60,7 @@ export const loginUserAction = user => {
       const cookies = new Cookies(response.headers.cookie)
       console.log(cookies)
       const csrfToken = cookies.get('XSRF-TOKEN');
-      backendInstance.defaults.headers["XSRF-TOKEN"] = csrfToken
+      backendInstance.defaults.headers["X-XSRF-TOKEN"] = csrfToken
       dispatch(loginUserSuccess(user.userName))
     }catch(error){
       console.log(error)

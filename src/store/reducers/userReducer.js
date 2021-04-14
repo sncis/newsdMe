@@ -1,77 +1,60 @@
-import {
-  SET_USER_INFO, 
-  USER_LOADING, 
-  LOGIN_USER_SUCCESS, 
-  LOGIN_USER_ERROR, 
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_ERROR,
-  LOGOUT_USER,
-  SET_GEOLOCATION
-}  from "../types/userTypes";
+import * as types from "../types/userTypes";
 
 const initialState = {
-  isLoading: false,
   loggedIn: false,
-  errorMsg:'',
 };
 
 const userReducer = (state = initialState, action='') => {
   switch (action.type) {
-    case SET_USER_INFO:
+    case types.SET_USER_INFO:
       return {
         ...state,
         articles: action.payload,
       }
-    case USER_LOADING:
+    case types.IS_LOADING:
       return{
         ...state,
         isLoading: true,
         errorMsg:'',
 
       }
-      case REGISTER_USER_SUCCESS:
+      case types.USER_REGISTER_SUCCEEDED:
       return{
         ...state,
-        userName: action.payload.username,
+        username: action.payload.username,
         isLoading: false,
-        registerSuccessful: true,
+        registeredSuccessful: true,
         errorMsg:'',
+        confirmationToken: action.payload.confirmationToken
       }
-    case REGISTER_USER_ERROR:
+    case types.USER_REGISTRATION_FAILED:
     return{
       ...state,
       errorMsg: action.payload,
-      isLoading: false
+      isLoading: false,
+      registeredSuccessful: false,
     }
-    case LOGIN_USER_SUCCESS:
+    case types.DO_CONFIRM_REGISTRATION:
+      return {
+      ...state,
+      confirmationToken:action.payload.token
+    }
+    case types.USER_LOGIN_SUCCEEDED:
       return{
         ...state,
-        userName : action.payload.userName,
+        username : action.payload.username,
         isLoading: false,
-        loginSuccessful: true,
         loggedIn: true,
-        errorMsg:'',
-
+        errorMsg:''
       }
-    case LOGIN_USER_ERROR:
+    case types.USER_LOGIN_FAILED:
       return{
         ...state,
         errorMsg: action.payload,
         isLoading: false,
-        loginSuccessful: false
       }
-    case LOGOUT_USER:
-      return{
-        ...state,
-        loggedIn:false,
-        errorMsg:'',
-
-      } 
-    case SET_GEOLOCATION:
-      return{
-        ...state,
-        geoLocation: action.payload
-      }
+    case types.DO_LOGOUT_USER:
+        return state;
 
     default:
       return state;

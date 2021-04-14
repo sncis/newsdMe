@@ -8,96 +8,86 @@ describe("userReducer", () => {
 		const action = {type:''};
 
 		expect(userReducer(undefined, action)).toEqual({
-			isLoading:false,
 			loggedIn: false,
-			errorMsg:''
-
 			}
 		)
 	})
 
 	it("should handle REGISTER_USER_LOADING", () => {
-		const action = { type: types.USER_LOADING}
+		const action = { type: types.IS_LOADING}
 		expect(userReducer(undefined, action)).toEqual(
 			{
-				isLoading: true,
 				loggedIn: false,
-				errorMsg:''
-
+				isLoading: true,
+				errorMsg:'',
 			}
 		)
 	})
 
-	it("should handle REGISTER_USER_SUCCESS", () => {
-		const action = { type: types.REGISTER_USER_SUCCESS, payload:{username: "some user"}}
+	it("should handle USER_REGISTER_SUCCEEDED", () => {
+		const action = { type: types.USER_REGISTER_SUCCEEDED, payload:{username: "some user", confirmationToken: "some token "}}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: false,
-				userName: "some user",
-				registerSuccessful: true,
-				loggedIn: false,			
-				errorMsg:''
-
+				username: "some user",
+				registeredSuccessful: true,
+				loggedIn: false,
+				errorMsg:'',
+				confirmationToken:"some token "
 			}
 		)
 	})
 
-	it("should handle REGISTER_USER_ERROR", () => {
-		const action = { type: types.REGISTER_USER_ERROR, payload: "register error"}
+	it("should handle USER_REGISTRATION_FAILED", () => {
+		const action = { type: types.USER_REGISTRATION_FAILED, payload: "register error"}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: false,
 				errorMsg: "register error",
-				loggedIn: false
+				loggedIn: false,
+				registeredSuccessful: false,
 			}
 		)
 	})
 
 	it("should handle LOGIN_USER_LOADING", () => {
-		const action = { type: types.USER_LOADING}
+		const action = { type: types.IS_LOADING}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: true,
 				loggedIn: false,
 				errorMsg:''
-
 			}
 		)
 	})
 
-	it("should handle LOGIN_USER_SUCCESS", () => {
-		const action = { type: types.LOGIN_USER_SUCCESS, payload: {userName: "some user", jwtToken: "some token"}}
+	it("should handle USER_LOGIN_SUCCEEDED", () => {
+		const action = { type: types.USER_LOGIN_SUCCEEDED, payload: {username: "some user"}}
 		expect(userReducer(undefined, action)).toEqual(
 			{
-				userName: 'some user',
-				loginSuccessful: true,
+				username: 'some user',
 				isLoading: false,
 				loggedIn: true,
 				errorMsg:''
-
 			}
 		)
 	})
 
-	it("should handle LOGIN_USER_ERROR", () => {
-		const action = { type: types.LOGIN_USER_ERROR, payload: "login error"}
+	it("should handle USER_LOGIN_FAILED", () => {
+		const action = { type: types.USER_LOGIN_FAILED, payload: "login error"}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: false,
 				errorMsg: "login error",
-				loginSuccessful: false,
 				loggedIn: false
 			}
 		)
 	})
 
 	it("should hanlde userLogout", () =>{
-		const action ={type: types.LOGOUT_USER}
+		const action ={type: types.DO_LOGOUT_USER}
 		expect(userReducer(undefined,action)).toEqual({
-			isLoading: false,
-  		loggedIn: false,
-			errorMsg:''
-
+			loggedIn: false
 		})
 	})
 })

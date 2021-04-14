@@ -5,15 +5,15 @@ import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 import store from "../src/store/store/store"
 import "./index.css";
-import { LOGIN_USER_SUCCESS, LOGOUT_USER } from "./store/types/userTypes";
+import { USER_LOGIN_SUCCEEDED, DO_LOGOUT_USER } from "./store/types/userTypes";
 
-store.dispatch({type:LOGIN_USER_SUCCESS, payload: {userName: "someUser"}})
+store.dispatch({type:USER_LOGIN_SUCCEEDED, payload: {userName: "someUser"}})
 
 // const token = localStorage.getItem("token")
 //   if(token !== null){
-//     store.dispatch({type:LOGIN_USER_SUCCESS, payload: {userName: "someUser"}})
+//     store.dispatch({type:USER_LOGIN_SUCCEEDED, payload: {userName: "someUser"}})
 //   }else{
-//     store.dispatch({type:LOGOUT_USER})
+//     store.dispatch({type:DO_LOGOUT_USER})
 //   }
 
 const app = (

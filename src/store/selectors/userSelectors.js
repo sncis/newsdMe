@@ -19,3 +19,7 @@ export const getRegisterSuccessfulSelector = (state) => {
 	return state.userReducer.registerSuccessful
 }
 
+export const getConfirmationTokenSelector =(state) =>{
+	return state.userReducer.confirmationToken
+}
+

@@ -35,7 +35,7 @@ describe("RegisterComponent", () => {
 		const usernameInput = component.find('#username')
 		usernameInput.simulate('change', {target: {value: "someUser"}})
 
-		expect(component.state('userName')).toEqual("someUser")
+		expect(component.state("username")).toEqual("someUser")
 
 	})
 	it("should set password", () => {

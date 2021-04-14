@@ -21,12 +21,18 @@ import { backendInstance } from "../../axiosConfig"
 // axios.defaults.withCredentials = true;
 
 
+//refactor to have one backend instance which handles everything
+//how to throw errors js so that if error occures i throw error or dispatch error function 
+//use selector to get username
+//erroro handling should be done at one part only 
+//check for repetitive code -> make fnctions as small ass possible 
+
 export const getUserArticles = () => {
   return async (dispatch, getState) => {
     dispatch(loadUserArticles())
     console.log(backendInstance.headers);
 
-    const url = `articles?username=${getState().userReducer.userName}`
+    const url = `articles?username=${getState().userReducer.username}`
     try{
       const response = await backendInstance.get(url)
       console.log(response)
@@ -70,8 +76,9 @@ export const getUserArticlesError = errorMsg => {
 
 export const saveUserArticle = (article) => {
   return async (dispatch, getState) => {
-    const username = getState().userReducer.userName
+    const username = getState().userReducer.username
     const url = `articles?username=${username}`
+
     article.source = article.source.name ? article.source.name : article.source
 
     const jsonArticle = JSON.stringify(article)

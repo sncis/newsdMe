@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
-import { registerUserAction } from "../../store/actions/userActions"
-import { isLoadingUserSelector, getErrorMsgSelector,getRegisterSuccessfulSelector } from '../../store/selectors/userSelectors'
+import { registerUserAction,confirmRegistration } from "../../store/actions/userActions"
+import { isLoadingUserSelector, getErrorMsgSelector,getRegisterSuccessfulSelector,getConfirmationTokenSelector } from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
 
 
@@ -11,7 +11,7 @@ export class RegisterComp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
+      username: "",
       password: "",
       confirmPassword:"",
       email: "",
@@ -22,7 +22,7 @@ export class RegisterComp extends Component {
   
   setUsername = name => {
     this.setState({
-      userName: name
+      username: name
     });
   };
 
@@ -47,9 +47,9 @@ export class RegisterComp extends Component {
   submitRegistration = e => {
     e.preventDefault(); 
 
-    const {userName, password, email} = this.state;
+    const {username, password, email} = this.state;
     const registerUser = {
-      userName,
+      username,
       password,
       email
     }
@@ -80,7 +80,7 @@ export class RegisterComp extends Component {
   cancelRegistration = (e) => { 
     e.preventDefault()
     this.setState({
-      userName: "",
+      username: "",
       password: "",
       confirmPassword:'',
       email: "",
@@ -119,7 +119,7 @@ export class RegisterComp extends Component {
               <label htmlFor="password">Password</label>
               <input
                 id="password"
-                type="password"
+                type="text"
                 name="password"
                 placeholder="password"
                 onChange={e => this.setPassword(e.target.value)}
@@ -134,7 +134,7 @@ export class RegisterComp extends Component {
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 id="confPassword"
-                type="password"
+                type="text"
                 name="confirmPassword"
                 placeholder="Confirm password"
                 onChange={e => this.setConfirmPassword(e.target.value)}
@@ -149,6 +149,11 @@ export class RegisterComp extends Component {
         {!this.state.isPasswordMatching  && <div id="passwordMatchingError"><p>password is not matching</p></div>}
         {this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
+        {this.props.confirmationToken && <div onClick={() => this.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration <p>{this.props.confirmationToken}</p></p></div>}
+        <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}>
+          <p>click here to confirm registration </p>
+          <p>cb8c218c-b345-448e-be4b-dbc922665cce</p>
+        </div>
 
       </div>
     );
@@ -157,7 +162,8 @@ export class RegisterComp extends Component {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		registerUser: user => { dispatch(registerUserAction(user)) }
+		registerUser: user => { dispatch(registerUserAction(user)) },
+    confirmRegistration : (token) =>{dispatch(confirmRegistration(token))}
 	}
 }
 
@@ -166,7 +172,8 @@ const mapStateToProps = state => {
   return{
     isLoading: isLoadingUserSelector(state),
     errorMsg : getErrorMsgSelector(state),
-    registerSuccessful: getRegisterSuccessfulSelector(state)
+    registerSuccessful: getRegisterSuccessfulSelector(state),
+    confirmationToken : getConfirmationTokenSelector(state)
   }
 }
 

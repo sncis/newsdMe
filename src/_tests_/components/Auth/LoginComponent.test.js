@@ -16,7 +16,7 @@ describe("LoginComponent", () => {
 	
 	const initialState = {userReducer: {
 		isLoading: false,
-		userName: 'someUser',
+		username: 'someUser',
 		}
 	}
 
@@ -45,7 +45,7 @@ describe("LoginComponent", () => {
 
 		usernameInput.simulate("change", {target: {value:"someUser"}})
 
-		expect(component.state("userName")).toBe("someUser")
+		expect(component.state("username")).toBe("someUser")
 
 	})
 	it("should setPassword", () => {
@@ -99,7 +99,7 @@ describe("LoginComponent", () => {
 
 	it("should throw error when wrong propTypes are provided", () => {
 
-		const store = mockStore({userReducer:{isLoading:true, errorMsg: "some error"}});
+		const store = mockStore({userReducer:{is_loading:true, errorMsg: "some error"}});
 		shallow(<LoginComponent store={store} loginUser={'some'}/>).dive()
 		expect(console.error).toHaveBeenCalled()
 		

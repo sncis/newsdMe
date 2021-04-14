@@ -16,6 +16,7 @@ export const registerUserAction = (user) => {
     try {
       const response = await backendInstance.post(url, jsonUser);
       console.log(response);
+    
       dispatch(registerUserSuccess(response.data));
     } catch (error) {
       let message = error.response !== undefined ?  error.response.data.message : "some error occured, please try again later";
@@ -26,20 +27,40 @@ export const registerUserAction = (user) => {
 
 export const registerUserLoading = () => {
   return {
-    type: types.USER_LOADING
+    type: types.IS_LOADING
   }
 }
 export const registerUserSuccess = (user) => {
   return {
-    type: types.REGISTER_USER_SUCCESS,
-    payload: user.userName
+    type: types.USER_REGISTER_SUCCEEDED,
+    payload: user.username
   }
 }
 
 export const registerUserError =(errorMsg)=>{
   return{
-    type: types.REGISTER_USER_ERROR,
+    type: types.USER_REGISTRATION_FAILED,
     payload: errorMsg
+  }
+}
+
+export const confirmRegistration = (token) =>{
+  return async (dispatch) =>{
+    const url=`confirmUser?token=${token}`
+    try{
+      const response = await backendInstance.get(url)
+      dispatch(confirmRegistrationSuccess(response.data.token))
+      console.log(response)
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
+
+export const confirmRegistrationSuccess =(token)=>{
+  return{
+    action: types.DO_CONFIRM_REGISTRATION,
+    payload: token
   }
 }
 
@@ -61,7 +82,7 @@ export const loginUserAction = user => {
       console.log(cookies)
       const csrfToken = cookies.get('XSRF-TOKEN');
       backendInstance.defaults.headers["X-XSRF-TOKEN"] = csrfToken
-      dispatch(loginUserSuccess(user.userName))
+      dispatch(loginUserSuccess(user.username))
     }catch(error){
       console.log(error)
      let message = error.response !== undefined ? error.response.data.message : 'some error occured, please try again!';
@@ -74,20 +95,20 @@ export const loginUserAction = user => {
 
 export const loginUserLoading = () => {
   return{
-    type: types.USER_LOADING
+    type: types.IS_LOADING
   }
 }
 
 export const loginUserSuccess = (username, jwtToken ) => {
   return{
-    type: types.LOGIN_USER_SUCCESS,
-    payload: {userName: username, jwtToken: jwtToken}
+    type: types.USER_LOGIN_SUCCEEDED,
+    payload: {username: username, jwtToken: jwtToken}
   }
 }
 
 export const loginUserError = (msg) => {
   return{
-    type: types.LOGIN_USER_ERROR,
+    type: types.USER_LOGIN_FAILED,
     payload: msg
   }
 }
@@ -96,12 +117,16 @@ export const loginUserError = (msg) => {
 export const logoutAction = () => {
   return async dispatch =>{
     const url = "logout"
-
     try{
-      await backendInstance.get(url)
+      const response =await backendInstance.get(url)
+      console.log("responsed ata from logout")
+      console.log(response.data)
+
+      console.log(response.data)
       dispatch(logout())
     }catch(error){
       console.log(error)
+      console.log(error.response)
     }
     // await backendInstance.get(url)
   }
@@ -110,7 +135,7 @@ export const logoutAction = () => {
 
 export const logout = () => {
   return {
-    type: types.LOGOUT_USER
+    type: types.DO_LOGOUT_USER
   }
 }
 

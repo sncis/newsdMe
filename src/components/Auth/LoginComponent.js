@@ -11,13 +11,13 @@ export class LoginComp extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-		userName: '',
+		username: '',
 		password: ''
 	}}
 
 	setUsername = (username) => {
 		this.setState({
-			userName: username,
+			username: username,
 		})
 	}
 

@@ -16,7 +16,7 @@ describe("userActions", () => {
 
 	beforeEach(() => {
 		store.clearActions();
-		user = {"userName": "someUser", "password": "somePassword"}
+		user = {"username": "someUser", "password": "somePassword"}
 		mockAxios.mockClear()
 
 	})
@@ -25,15 +25,15 @@ describe("userActions", () => {
 
 	it("should dispatch registerUserSucess",  async ()  => {
 		const expectedAction = [{
-			type: types.USER_LOADING,
+			type: types.IS_LOADING,
 		},
 		{
-			type: types.REGISTER_USER_SUCCESS,
+			type: types.USER_REGISTER_SUCCEEDED,
 			payload: "someUsername"
 		}]
 
 		mockAxios.post.mockImplementationOnce(() => Promise.resolve({
-			data:{userName: "someUsername"}
+			data:{username: "someUsername"}
 		}));
 
 		await store.dispatch(userActions.registerUserAction(user)).then(() =>{
@@ -43,10 +43,10 @@ describe("userActions", () => {
 
 	it("should dispatch registerUserError", async () => {
 		const expectedAction = [{
-			type: types.USER_LOADING,
+			type: types.IS_LOADING,
 		},
 		{
-			type: types.REGISTER_USER_ERROR,
+			type: types.USER_REGISTRATION_FAILED,
 			payload: "register error"
 		}]
 
@@ -64,10 +64,10 @@ describe("userActions", () => {
 	describe("loginUserAction", () => {
 	it("should dispatch loginUserSuccess", async () =>{
 		const expectedAction =[{
-			type: types.USER_LOADING
+			type: types.IS_LOADING
 			},{
-			type: types.LOGIN_USER_SUCCESS,
-			payload: {userName: user.userName}
+			type: types.USER_LOGIN_SUCCEEDED,
+			payload: {username: user.username}
 		}]
 
 		mockAxios.post.mockImplementationOnce(() => 
@@ -83,9 +83,9 @@ describe("userActions", () => {
 
 	it("should dispatch loginUserError", async () =>{
 		const expectedAction =[{
-			type: types.USER_LOADING
+			type: types.IS_LOADING
 			},{
-			type: types.LOGIN_USER_ERROR,
+			type: types.USER_LOGIN_FAILED,
 			payload: "some error"
 		}]
 
@@ -101,9 +101,9 @@ describe("userActions", () => {
 
 	it("should dispatch loginUserError and return pre-defined error string when no response message from server", async () =>{
 		const expectedAction =[{
-			type: types.USER_LOADING
+			type: types.IS_LOADING
 			},{
-			type: types.LOGIN_USER_ERROR,
+			type: types.USER_LOGIN_FAILED,
 			payload: "some error occured, please try again!"
 		}]
 
@@ -122,11 +122,11 @@ describe("userActions", () => {
 				response:{}
 			}))
 			const expectedAction=[{
-				type: types.LOGOUT_USER
+				type: types.DO_LOGOUT_USER
 			}]
 			await store.dispatch(userActions.logoutAction())
 
-			expect(store.getActions()).toEqual([{type: types.LOGOUT_USER}])
+			expect(store.getActions()).toEqual([{type: types.DO_LOGOUT_USER}])
 		})
 	})	
 })

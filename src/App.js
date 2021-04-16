@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
 import AuthPage from "./pages/AuthPage";
 import DashboardPage from './pages/DashboardPage'
+import { getUserLoginSelector } from "./store/selectors/userSelectors"
 
 export function App({isLoggedIn}) {
   return (
@@ -24,7 +25,7 @@ export function App({isLoggedIn}) {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: state.userReducer.loggedIn
+    isLoggedIn: getUserLoginSelector(state)
   }
 }
 

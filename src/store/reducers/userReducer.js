@@ -6,11 +6,6 @@ const initialState = {
 
 const userReducer = (state = initialState, action='') => {
   switch (action.type) {
-    case types.SET_USER_INFO:
-      return {
-        ...state,
-        articles: action.payload,
-      }
     case types.IS_LOADING:
       return{
         ...state,

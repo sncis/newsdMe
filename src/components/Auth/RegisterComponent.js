@@ -151,8 +151,6 @@ export class RegisterComp extends Component {
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
         {this.props.confirmationToken && <div onClick={() => this.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration <p>{this.props.confirmationToken}</p></p></div>}
         <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}>
-          <p>click here to confirm registration </p>
-          <p>cb8c218c-b345-448e-be4b-dbc922665cce</p>
         </div>
 
       </div>

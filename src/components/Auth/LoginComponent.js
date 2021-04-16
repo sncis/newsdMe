@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
 
-import { loginUserAction } from "../../store/actions/userActions"
+import { loginUserAction, getRegister } from "../../store/actions/userActions"
 import * as selectors from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
 
@@ -28,8 +28,9 @@ export class LoginComp extends Component {
 	}
 
 	handelLogin = (e)=> {
-		e.preventDefault();
-		this.props.loginUser(this.state);
+		e.preventDefault()
+		this.props.testLogin(this.state)
+		// this.props.loginUser(this.state);
 	}
 
 	render() {
@@ -60,7 +61,8 @@ export class LoginComp extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-	loginUser: user =>  {dispatch(loginUserAction(user)) }
+		loginUser: user =>  {dispatch(loginUserAction(user))},
+		testLogin: (user) => {dispatch(getRegister(user))}
 	}
 }
 

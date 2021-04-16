@@ -3,27 +3,66 @@ import Cookies from 'universal-cookie';
 import { backendInstance } from '../../axiosConfig'
 
 import * as types from "../types/userTypes";
+// import backendApiFetcher from "../apiHelpers/backendApiFetcher";
 
 /**********Register actions */
 
-export const registerUserAction = (user) => {
-  return async (dispatch) => {
-    const url = "register"    
-    const jsonUser = JSON.stringify(user)
+export const getRegister = (user) =>
+  async (dispatch, getState, {backendFetcher}) => {
 
+    const options = {
+      url: "auth/register",
+      method: "post",
+      data: JSON.stringify(user)
+    }
+    try{
+      const response = await backendFetcher(options)
+      console.log("response from backend")
+      console.log(response)
+
+    }catch(error){
+      console.log(error)
+    }
+
+}
+
+export const registerUserAction = (user) =>
+  async (dispatch, getState, {backendFetcher}) => {
     dispatch(registerUserLoading())
-    
-    try {
-      const response = await backendInstance.post(url, jsonUser);
-      console.log(response);
-    
-      dispatch(registerUserSuccess(response.data));
-    } catch (error) {
-      let message = error.response !== undefined ?  error.response.data.message : "some error occured, please try again later";
-      dispatch(registerUserError(message));
+    const options = {
+      url: "auth/register",
+      method: "post",
+      data: JSON.stringify(user)
+    }
+    try{
+      const response = await backendFetcher(options)
+      console.log(response.data.token)
+      // dispatch(registerUserSuccess(response.data.token))
+    }catch(error){
+      console.log(error.message)
+      dispatch(registerUserError(error.message));
     }
   }
-}
+
+
+// export const registerUserAction = (user) => {
+//   return async (dispatch) => {
+//     const url = "auth/register"
+//     const jsonUser = JSON.stringify(user)
+//
+//     dispatch(registerUserLoading())
+//
+//     try {
+//       const response = await backendInstance.post(url, jsonUser);
+//       console.log(response);
+//
+//       dispatch(registerUserSuccess(response.data));
+//     } catch (error) {
+//       let message = error.response !== undefined ?  error.response.data.message : "some error occured, please try again later";
+//       dispatch(registerUserError(message));
+//     }
+//   }
+// }
 
 export const registerUserLoading = () => {
   return {
@@ -73,7 +112,7 @@ export const loginUserAction = user => {
 
     dispatch(loginUserLoading())
 
-    const url = "login"
+    const url = "auth/login"
     const jsonUser = JSON.stringify(user)
 
     try{
@@ -139,6 +178,18 @@ export const logout = () => {
   }
 }
 
+export const doLogout = () => {
+  return dispatch => {
+    try{
+      window.sessionStorage.clear()
+      dispatch(logout())
+    }catch(error){
+      console.log("error from doLogout")
+      console.log(error)
+    }
+  }
+
+}
 
 // export const logoutAction = ()=>{
 //   return async (dispatch) => {

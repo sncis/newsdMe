@@ -7,14 +7,8 @@ import store from "../src/store/store/store"
 import "./index.css";
 import { USER_LOGIN_SUCCEEDED, DO_LOGOUT_USER } from "./store/types/userTypes";
 
-store.dispatch({type:USER_LOGIN_SUCCEEDED, payload: {userName: "someUser"}})
+// store.dispatch({type:USER_LOGIN_SUCCEEDED, payload: {username: "someUser"}})
 
-// const token = localStorage.getItem("token")
-//   if(token !== null){
-//     store.dispatch({type:USER_LOGIN_SUCCEEDED, payload: {userName: "someUser"}})
-//   }else{
-//     store.dispatch({type:DO_LOGOUT_USER})
-//   }
 
 const app = (
   <Provider store={store}>

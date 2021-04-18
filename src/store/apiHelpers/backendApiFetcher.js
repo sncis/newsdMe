@@ -1,11 +1,17 @@
 import axios from 'axios'
+import {consoleSpyForProptypeError} from "../../setupTests";
+import Cookies from "universal-cookie";
 
 
 // onAuthFalure is a function which we take as an argument to backendApiFetcher(onAuthFailure) and return our
-export default onAuthFailure => (options) => {
+const backendApiFetcher = onAuthFailure => (options) => {
   console.log(options)
 
-  const backendInstance = axios.create({
+  let setHeader = (header,token)=>{
+    backendInstance.headers[header] = token
+  }
+
+  let backendInstance = axios.create({
     baseURL: 'http://localhost:8082/',
     headers: {
       'Accept': 'application/json, text/plain',
@@ -17,9 +23,20 @@ export default onAuthFailure => (options) => {
     withCredentials: true,
   })
 
+  // set header(header,token){
+  //   console.log(header)
+  //   console.log(token)
+  //
+  //   console.log(backendInstance.headers)
+  //
+  // }
+
   return (
       backendInstance.request({url: `${options.url}`,data: options.data})
           .then(response => {
+            const cookies = new Cookies(response.headers.cookie)
+            const csrfToken = cookies.get('XSRF-TOKEN');
+            backendInstance.headers['XSRF-TOKEN'] = csrfToken
             if(response.statusCode === 401){
               throw Error('rejected')
             }
@@ -33,4 +50,8 @@ export default onAuthFailure => (options) => {
             throw Error("something went wrong")
       })
   )
+
 }
+
+
+export default backendApiFetcher

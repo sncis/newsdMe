@@ -10,7 +10,11 @@ import * as helpers from "../../../store/actions/articleActionHelpers"
 
 const mockStore = configureMockStore([thunk])
 
-
+// const configureMockStoreWithExtraArg = (fetcher)=> configureMockStore([thunk.withExtraArgument(fetcher)]);
+//
+// describe("userArticleActions", () => {
+//
+// })
 describe("userArticleActions", () => {
 	let store;
 

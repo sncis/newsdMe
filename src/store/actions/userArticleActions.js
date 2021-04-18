@@ -4,7 +4,7 @@ import * as types from '../types/userArticelTypes'
  
 import { setDailyArticlesSuccess } from './newsAPIdailyArticleActions'
 import { replaceArticleInArticlesArray, addArticleToLocalStorage, getItemFromLocalStorage,addItemToLocalStorage } from './articleActionHelpers'
-import { logoutAction } from './userActions'
+import { logoutAction } from './userActions/loginActions'
 import { backendInstance } from "../../axiosConfig"
 
 
@@ -30,7 +30,7 @@ import { backendInstance } from "../../axiosConfig"
 export const getUserArticles = () => {
   return async (dispatch, getState) => {
     dispatch(loadUserArticles())
-    console.log(backendInstance.headers);
+    // console.log(backendInstance.headers);
 
     const url = `articles?username=${getState().userReducer.username}`
     try{

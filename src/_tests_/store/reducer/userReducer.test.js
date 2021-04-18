@@ -30,7 +30,7 @@ describe("userReducer", () => {
 			{
 				isLoading: false,
 				username: "some user",
-				registeredSuccessful: true,
+				registered: true,
 				loggedIn: false,
 				errorMsg:'',
 				confirmationToken:"some token "
@@ -45,10 +45,32 @@ describe("userReducer", () => {
 				isLoading: false,
 				errorMsg: "register error",
 				loggedIn: false,
-				registeredSuccessful: false,
+				registered: false,
 			}
 		)
 	})
+
+
+	it("should handle CONFIRM_REGISTRATION_SUCCEEDED", () => {
+		const action = {type: types.CONFIRM_REGISTRATION_SUCCEEDED}
+		expect(userReducer(undefined,action)).toEqual({
+			isLoading:false,
+			loggedIn:false,
+			registered: true,
+		})
+	})
+
+	it("should handle CONFIRM_REGISTRATION_FAILED", () => {
+		const action = {type: types.CONFIRM_REGISTRATION_FAILED, payload: "registration error"}
+		expect(userReducer(undefined,action)).toEqual({
+			isLoading:false,
+			loggedIn:false,
+			errorMsg:"registration error",
+			registered: false,
+		})
+	})
+
+
 
 	it("should handle LOGIN_USER_LOADING", () => {
 		const action = { type: types.IS_LOADING}

@@ -11,14 +11,13 @@ const userReducer = (state = initialState, action='') => {
         ...state,
         isLoading: true,
         errorMsg:'',
-
       }
       case types.USER_REGISTER_SUCCEEDED:
       return{
         ...state,
         username: action.payload.username,
         isLoading: false,
-        registeredSuccessful: true,
+        registered: true,
         errorMsg:'',
         confirmationToken: action.payload.confirmationToken
       }
@@ -27,13 +26,21 @@ const userReducer = (state = initialState, action='') => {
       ...state,
       errorMsg: action.payload,
       isLoading: false,
-      registeredSuccessful: false,
+      registered: false,
     }
-    case types.DO_CONFIRM_REGISTRATION:
+    case types.CONFIRM_REGISTRATION_SUCCEEDED:
       return {
       ...state,
-      confirmationToken:action.payload.token
+        isLoading:false,
+        registered: true,
     }
+    case types.CONFIRM_REGISTRATION_FAILED:
+      return{
+        ...state,
+        isLoading:false,
+        registered:false,
+        errorMsg: action.payload
+      }
     case types.USER_LOGIN_SUCCEEDED:
       return{
         ...state,

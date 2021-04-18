@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 
-import { registerUserAction,confirmRegistration } from "../../store/actions/userActions"
+import { registerUserAction,confirmRegistration } from "../../store/actions/userActions/registrationActions"
 import { isLoadingUserSelector, getErrorMsgSelector,getRegisterSuccessfulSelector,getConfirmationTokenSelector } from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
 
@@ -149,7 +149,7 @@ export class RegisterComp extends Component {
         {!this.state.isPasswordMatching  && <div id="passwordMatchingError"><p>password is not matching</p></div>}
         {this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
-        {this.props.confirmationToken && <div onClick={() => this.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration <p>{this.props.confirmationToken}</p></p></div>}
+        {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration <p>{this.props.confirmationToken}</p></p></div>}
         <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}>
         </div>
 

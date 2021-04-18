@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
 
-import { loginUserAction, getRegister } from "../../store/actions/userActions"
+import { loginUserAction } from "../../store/actions/userActions/loginActions"
 import * as selectors from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
 
@@ -29,8 +29,8 @@ export class LoginComp extends Component {
 
 	handelLogin = (e)=> {
 		e.preventDefault()
-		this.props.testLogin(this.state)
-		// this.props.loginUser(this.state);
+		// this.props.testLogin(this.state)
+		this.props.loginUser(this.state);
 	}
 
 	render() {

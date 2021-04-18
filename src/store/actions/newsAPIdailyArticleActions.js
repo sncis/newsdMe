@@ -23,10 +23,10 @@ export const loadDailyArticles = () => {
 			const response = await axios.get(url)
 			console.log("errorrr in response from newsAPI")
 			console.log(response)
-			// dispatch(bookmarkBookmarkedArticlesInAPIResponse(response.data.articles))
+			// dispatch(bookmarkBookmarkedArticlesInAPIResponse(response.status))
 		}catch(error) {
-			let message = error.response !== undefined ? error.response.data : "could not fetch daily articles"
-			dispatch(setDailyArticlesError(message))
+			let message = error.message !== undefined ? error.response.data : "could not fetch daily articles"
+			// dispatch(setDailyArticlesError(message))
 		}
 	}
 }

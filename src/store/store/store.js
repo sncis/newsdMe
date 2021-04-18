@@ -10,7 +10,7 @@ import { doLogout } from "../actions/userActions/loginActions"
 
 const store = createStore(rootReducer,
     applyMiddleware(thunk.withExtraArgument(
-        {backendFetcher: backendApiFetcher(() =>{
+        {backendFetcher: backendApiFetcher(() => {
             store.dispatch(doLogout())
             // console.log(error)
         }

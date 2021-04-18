@@ -12,7 +12,8 @@ const backendApiFetcher = onAuthFailure => (options) => {
   }
 
   let backendInstance = axios.create({
-    baseURL: 'http://localhost:8082/',
+    // baseURL: 'http://localhost:8082/',
+    baseUrl: 'https://newsdbackend.herokuapp.com/',
     headers: {
       'Accept': 'application/json, text/plain',
       'Access-Control-Allow-Origin': 'http://localhost:3000/',

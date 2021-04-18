@@ -14,8 +14,9 @@ describe("HeaderAuthComponent", ()=>{
 	let component;
 
 	describe("when user is not loggedIn", ()=> {
-		consoleSpyForProptypeError()
-		 
+
+			consoleSpyForProptypeError()
+
 		it("should render without errors", ()=>{
 			component = shallow(<HeaderAuth isLoggedIn={false} logout={jest.fn()} />)
 
@@ -28,10 +29,13 @@ describe("HeaderAuthComponent", ()=>{
 
 		it('should throw error when wrong proptypes are provided', ()=>{
 			const store = mockStore({logout: '',userReducer:{
-				loggedIn: ""
-			}})
 
-			component = shallow(<Router><HeaderAuthComponent store={store} 
+			}})
+			const props = {
+				isLoggedIn: ''
+			}
+
+			component = shallow(<Router><HeaderAuthComponent store={store} {...props}
 			/></Router>)
 			
 			expect(console.error).toHaveBeenCalled()

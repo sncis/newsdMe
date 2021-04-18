@@ -62,7 +62,6 @@ export class LoginComp extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		loginUser: user =>  {dispatch(loginUserAction(user))},
-		testLogin: (user) => {dispatch(getRegister(user))}
 	}
 }
 

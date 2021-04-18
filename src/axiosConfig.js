@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 export const backendInstance = axios.create({
-  baseURL:'http://localhost:8082/',
+  baseURL:'https://newsdbackend.herokuapp.com/',
   headers:  {
     'Accept': 'application/json, text/plain',
     'Content-Type': 'application/json;charset=UTF-8',

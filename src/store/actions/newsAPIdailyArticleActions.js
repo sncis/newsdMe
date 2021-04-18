@@ -21,7 +21,9 @@ export const loadDailyArticles = () => {
 		const url = `${BASE_URL}top-headlines?country=de&apiKey=${NEWS_API_KEY}`
 		try {
 			const response = await axios.get(url)
-			dispatch(bookmarkBookmarkedArticlesInAPIResponse(response.data.articles))
+			console.log("errorrr in response from newsAPI")
+			console.log(response)
+			// dispatch(bookmarkBookmarkedArticlesInAPIResponse(response.data.articles))
 		}catch(error) {
 			let message = error.response !== undefined ? error.response.data : "could not fetch daily articles"
 			dispatch(setDailyArticlesError(message))

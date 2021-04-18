@@ -2,6 +2,9 @@
   "name": "newsd",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@primer/octicons-react": "^11.3.0",
     "axios": "^0.21.1",
@@ -28,8 +31,6 @@
       "react-app/jest"
     ]
   },
-
-
   "browserslist": {
     "production": [
       ">0.2%",

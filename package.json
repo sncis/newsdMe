@@ -1,6 +1,6 @@
 {
   "name": "newsd",
-  "version": "0.1.0",
+  "version": "1.13.1",
   "private": true,
   "dependencies": {
     "@primer/octicons-react": "^11.3.0",
@@ -44,6 +44,9 @@
     "axios-mock-adapter": "^1.19.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^7.24.0",
+    "eslint-plugin-jest": "^24.3.5",
+    "jest": "^26.6.3",
     "redux-mock-store": "^1.5.4"
   }
 }

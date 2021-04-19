@@ -149,9 +149,9 @@ export class RegisterComp extends Component {
         {!this.state.isPasswordMatching  && <div id="passwordMatchingError"><p>password is not matching</p></div>}
         {this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
-        {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration <p>{this.props.confirmationToken}</p></p></div>}
-        <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}>
-        </div>
+        {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration </p><
+          p>{this.props.confirmationToken}</p></div>}
+
 
       </div>
     );

@@ -28,7 +28,7 @@ export const saveUserArticle = article =>
     const options = {
       url: `articles?username=${getUsernameSelector(getState())}`,
       method: "post",
-      article: JSON.stringify(article)
+      data: JSON.stringify(article)
     }
     try {
       const response = await backendFetcher(options)

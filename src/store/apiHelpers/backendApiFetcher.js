@@ -11,9 +11,9 @@ const backendApiFetcher = onAuthFailure => (options) => {
   //   backendInstance.headers[header] = token
   // }
 
-  let backendInstance = axios.create({
-    // baseURL: 'http://localhost:8082/',
-    baseUrl: 'https://newsdbackend.herokuapp.com/',
+  const backendInstance = axios.create({
+    baseURL: 'http://localhost:8082/',
+    // baseUrl: 'https://newsdbackend.herokuapp.com/',
     headers: {
       'Accept': 'application/json, text/plain',
       // 'Access-Control-Allow-Origin': 'http://localhost:3000/',
@@ -35,19 +35,24 @@ const backendApiFetcher = onAuthFailure => (options) => {
   return (
       backendInstance.request({url: `${options.url}`,data: options.data})
           .then(response => {
+            console.log("respones from baceknd")
+            console.log(response)
             const cookies = new Cookies(response.headers.cookie)
             const csrfToken = cookies.get('XSRF-TOKEN');
-            backendInstance.headers['XSRF-TOKEN'] = csrfToken
+            backendInstance.defaults.headers['XSRF-TOKEN'] = csrfToken
             if(response.statusCode === 401){
               throw Error('rejected')
+            }else{
+              return response
             }
-            return response
+
           }).catch(error => {
             if(error.message === "rejected"){
 
               onAuthFailure(); // method which is passed is called
               return
             }
+            console.log(error)
             throw Error("something went wrong")
       })
   )

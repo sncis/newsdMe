@@ -8,7 +8,7 @@ export const loginUserAction = user =>
      dispatch(loginUserLoading())
 
      const options = {
-      url: "auth/login",
+      url: "/auth/login",
       method: "post",
       data: JSON.stringify(user)
     }
@@ -45,7 +45,7 @@ export const loginUserError = (msg) => {
 export const logoutAction = () =>
    async (dispatch,getState, {backendFetcher})=> {
      const options ={
-       url: "auth/logout"
+       url: "/auth/logout"
      }
 
     try{

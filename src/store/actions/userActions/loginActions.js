@@ -49,15 +49,17 @@ export const logoutAction = () =>
      }
 
     try{
-      const response =await backendFetcher(options)
-      console.log("responsed ata from logout")
-      console.log(response.data)
+      await backendFetcher(options)
 
-      console.log(response.data)
-      dispatch(logout())
+
     }catch(error){
-      console.log(error)
-      console.log(error.response)
+      // console.log(error)
+      console.warn(error.message)
+    }finally {
+      window.sessionStorage.clear()
+
+      dispatch(logout())
+
     }
 }
 
@@ -69,33 +71,17 @@ export const logout = () => {
   }
 }
 
-export const doLogout = () => {
-  return dispatch => {
-    try{
-      window.sessionStorage.clear()
-      dispatch(logout())
-    }catch(error){
-      console.log("error from doLogout")
-      console.log(error)
-    }
-  }
-
-}
-
-// export const logoutAction = ()=>{
-//   return async (dispatch) => {
-   
-//     const url = "logout"
-//     dispatch(logout)
-
-//   try{
-//     const response = await backendInstance.get(url)
-//     console.log(response)
-//   }catch(error){
-//     console.log(error.response)
-  
+// export const doLogout = () => {
+//   return dispatch => {
+//     try{
+//       window.sessionStorage.clear()
+//       dispatch(logout())
+//     }catch(error){
+//       console.log("error from doLogout")
+//       console.log(error)
+//     }
 //   }
-//   }
+
 // }
 
 

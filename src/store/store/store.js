@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../reducers/rootReducer";
 import thunk from "redux-thunk";
 import backendApiFetcher from "../apiHelpers/backendApiFetcher";
-import { doLogout } from "../actions/userActions/loginActions"
+import { logoutAction } from "../actions/userActions/loginActions"
 
 // const store = createStore(rootReducer, applyMiddleware(thunk));
 
@@ -11,7 +11,7 @@ import { doLogout } from "../actions/userActions/loginActions"
 const store = createStore(rootReducer,
     applyMiddleware(thunk.withExtraArgument(
         {backendFetcher: backendApiFetcher(() => {
-            store.dispatch(doLogout())
+            store.dispatch(logoutAction())
             // console.log(error)
         }
           )}

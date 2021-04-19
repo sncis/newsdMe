@@ -62,7 +62,7 @@ describe("loginActions", () => {
 		})
 	})
 
-	it("should perform logout",  () => {
+	it("should perform logout",  async() => {
 		const backendFetcher = {
 			backendFetcher: () => Promise.resolve({status:"ok"}),
 		}
@@ -72,8 +72,29 @@ describe("loginActions", () => {
 		const expectedActions=[{
 			type: types.DO_LOGOUT_USER
 		}]
-		store.dispatch(actions.doLogout())
+		await store.dispatch(actions.logoutAction())
 		expect(store.getActions()).toEqual(expectedActions)
 
 	})
+
+// 	it("should catch error when logout failed", async()=>{
+// 		const backendFetcher = {
+// 			backendFetcher: () => Promise.reject({message:"some error"}),
+// 		}
+// 		const mockStore = configureMockStoreWithArg(backendFetcher)
+// 		store = mockStore()
+//
+// 		await store.dispatch(actions.logoutAction())
+//
+// 		const expectedActions=[{
+// 			type: types.DO_LOGOUT_USER
+// 		}]
+// 		expect(store.getActions()).toEqual(expectedActions)
+//
+// 		const consoleSpy = jest.spyOn(global.window.sessionStorage, 'clear')
+//
+// 		expect(consoleSpy).toHaveBeenCalled()
+// 		// expect(console.warn).toHaveBeenCalledWith("some error")
+//
+// 	})
 })

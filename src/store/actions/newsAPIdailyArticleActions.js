@@ -3,6 +3,7 @@ import { NEWS_API_KEY } from '../../keys';
 
 import * as types from "../types/newsAPIdailyArticleTypes"
 import { getItemFromLocalStorage } from './articleActionHelpers'
+import newsApiFetcher from "../apiHelpers/newsApiFetcher";
 
 
 const BASE_URL = "https://newsapi.org/v2/"
@@ -13,23 +14,37 @@ export const isLoadingApiArticles =()=>{
 	}
 }
 
-export const loadDailyArticles = () => {
-	return async dispatch => {
-		dispatch(isLoadingApiArticles())
-		
-		// dispatch(bookmarkResponse(dummyArticles))
-		const url = `${BASE_URL}top-headlines?country=de&apiKey=${NEWS_API_KEY}`
-		try {
-			const response = await axios.get(url)
-			console.log("errorrr in response from newsAPI")
-			console.log(response)
-			// dispatch(bookmarkBookmarkedArticlesInAPIResponse(response.status))
-		}catch(error) {
-			let message = error.message !== undefined ? error.response.data : "could not fetch daily articles"
-			// dispatch(setDailyArticlesError(message))
-		}
-	}
-}
+// export const loadNewsArticles = ()=> {
+// 	return async dispatch => {
+// 		const options ={
+// 			url: "latest_headlines",
+// 			params: {"lang": "de"}
+// 		}
+// 		try{
+// 			const response = await newsApiFetcher(options)
+// 		}catch(error){
+// 			console.log(error)
+// 		}
+// 	}
+// }
+
+// export const loadDailyArticles = () => {
+// 	return async dispatch => {
+// 		dispatch(isLoadingApiArticles())
+//
+// 		// dispatch(bookmarkResponse(dummyArticles))
+// 		const url = `${BASE_URL}top-headlines?country=de&apiKey=${NEWS_API_KEY}`
+// 		try {
+// 			const response = await axios.get(url)
+// 			console.log("errorrr in response from newsAPI")
+// 			console.log(response)
+// 			// dispatch(bookmarkBookmarkedArticlesInAPIResponse(response.status))
+// 		}catch(error) {
+// 			let message = error.message !== undefined ? error.response.data : "could not fetch daily articles"
+// 			// dispatch(setDailyArticlesError(message))
+// 		}
+// 	}
+// }
 
 export const bookmarkBookmarkedArticlesInAPIResponse = (dailyArticles) => {
 	return dispatch =>{
@@ -63,3 +78,4 @@ export const setDailyArticlesError = (message) => {
 		payload: message
 	}
 }
+

@@ -3,9 +3,13 @@ import thunk from 'redux-thunk';
 import mockAxios from 'axios'
 
 
-import * as actions from "../../../store/actions/newsAPIdailyArticleActions"
+import * as OLDACTIONS from "../../../store/actions/newsAPIdailyArticleActions"
 import * as types from "../../../store/types/newsAPIdailyArticleTypes"
+import newsApiFetcher from "../../../store/apiHelpers/newsApiFetcher";
+import {testArticles} from "../../testArticles";
+import * as actions from "../../../store/actions/articleActions/newsApiActions"
 
+jest.mock("../../../store/apiHelpers/newsApiFetcher")
 
 const mockStore = configureMockStore([thunk])
 
@@ -25,37 +29,35 @@ describe("newsAPIArticleActions", () => {
 
 	describe("loadDailyArticles", () => {
 		it("should dispatch isLoadingDailyArticles and setDailyArticleswhen", async ()=>{
-	
-			mockAxios.get.mockImplementationOnce(() => 
-				Promise.resolve({data:{articles:dailyArticles.dailyArticles}}
-			))
-			jest.spyOn(global.localStorage, "getItem")
+
+			newsApiFetcher.mockImplementationOnce(()=> Promise.resolve({
+				data:{articles:testArticles}
+			}))
+			// jest.spyOn(global.localStorage, "getItem")
 
 			let expectedAction=[{
 					type: types.IS_LOADING_ARTICLES
 				},{
-					type: types.SET_DAILY_ARTICLES_SUCCESS,
-					payload: dailyArticles.dailyArticles
+					type: types.FETCH_ARTICLES_SUCCEEDED,
+					payload: testArticles
 			}]
 
-			await store.dispatch(actions.loadDailyArticles()).then(() => {
+			await store.dispatch(actions.fetchArticles()).then(() => {
 				expect(store.getActions()).toEqual(expectedAction)
 			})
 		})
 
 		it("should dispatch setDailyArticlesError", async () =>{
-			mockAxios.get.mockImplementationOnce(() => 
+			newsApiFetcher.mockImplementationOnce(() =>
 			Promise.reject({
-				response:{
-					data:"some error"
-				}
+				message: "some error"
 			}))
 
-			await store.dispatch(actions.loadDailyArticles()).then(()=>{
+			await store.dispatch(actions.fetchArticles()).then(()=>{
 				let expectedAction =[{
 					type: types.IS_LOADING_ARTICLES
 				},{
-					type: types.SET_DAILY_ARTICLES_ERROR,
+					type: types.FETCH_ARTICLES_FAILED,
 					payload: "some error"
 				}]
 
@@ -81,7 +83,7 @@ describe("newsAPIArticleActions", () => {
 				payload: expectedArticles
 			}]
 
-			store.dispatch(actions.bookmarkBookmarkedArticlesInAPIResponse(dailyArticles.dailyArticles))
+			store.dispatch(OLDACTIONS.bookmarkBookmarkedArticlesInAPIResponse(dailyArticles.dailyArticles))
 			expect(store.getActions()).toEqual(expectedAction)
 			expect(spy).toHaveBeenCalled()
 		})
@@ -95,7 +97,7 @@ describe("newsAPIArticleActions", () => {
 				payload: dailyArticles.dailyArticles
 			}]
 
-			store.dispatch(actions.bookmarkBookmarkedArticlesInAPIResponse(dailyArticles.dailyArticles))
+			store.dispatch(OLDACTIONS.bookmarkBookmarkedArticlesInAPIResponse(dailyArticles.dailyArticles))
 
 			expect(store.getActions()).toEqual(expectedAction)
 			expect(spy).toHaveBeenCalled()

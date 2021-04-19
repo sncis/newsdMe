@@ -9,27 +9,36 @@ import { Article } from '../../../components/Articles/Article';
 
 const mockStore = configureMockStore([thunk])
 
-const dummyArticle = {id: 30, 
-	title:"daily3 some third article", 
-	description: "daily3 some third description", 
-	url: "daily3 someUrl", 
-	urlToImage: "daily3 url third to image", 
-	source: {
-		name:"daily3 source",
-	}, 
-	isBookmarked: false
+const dummyArticle = {author: null,
+			clean_url: "tagesspiegel.de",
+			country: "DE",
+			language: "de",
+			link: "https://www.tagesspiegel.de/politik/atomgespraeche-in-wien-was-fuer-einen-deal-mit-dem-iran-spricht-und-was-dagegen/27108042.html",
+			published_date: "2021-04-18 16:47:42",
+			rank: "2124",
+			rights: "tagesspiegel.de",
+			summary: "Die Zeit wird knapp. Das sagt zumindest Irans Außenminister Dschawad Sarif und dringt auf eine rasche Lösung bei den Wiener Gesprächen zur Wiederbelebung des Atomabkommens.Sarif befürwortet die Vereinbarung mit dem Westen, aber er braucht rasche Erfolge. Denn die Hardliner in Teheran fordern den Abbruch der Verhandlungen. Und bald wird ein neuer Präsident gewählt. Innenpolitische Differenzen auf der iranischen Seite sind nur eines der Probleme bei den Gesprächen, die nach ersten Beratungen nun auf Expertenebene fortgesetzt werden sollen.",
+			title: "Was für einen Deal mit dem Iran spricht",
+			topic: "politics",
+			_id: "a566a5dca65e7e53184b138813ae43ca",
+	"isBookmarked":false
+
 }
 
 const setProps = (isBookmarked, isLoggedIn, articleType) => {
-	const article = {id: 30, 
-		title:"daily3 some third article", 
-		description: "daily3 some third description", 
-		url: "daily3 someUrl", 
-		urlToImage: "daily3 url third to image", 
-		source: {
-			name:"daily3 source",
-		}, 
-		isBookmarked: isBookmarked
+	const article = {author: null,
+				clean_url: "tagesspiegel.de",
+				country: "DE",
+				language: "de",
+				link: "https://www.tagesspiegel.de/politik/atomgespraeche-in-wien-was-fuer-einen-deal-mit-dem-iran-spricht-und-was-dagegen/27108042.html",
+				published_date: "2021-04-18 16:47:42",
+				rank: "2124",
+				rights: "tagesspiegel.de",
+				summary: "Die Zeit wird knapp. Das sagt zumindest Irans Außenminister Dschawad Sarif und dringt auf eine rasche Lösung bei den Wiener Gesprächen zur Wiederbelebung des Atomabkommens.Sarif befürwortet die Vereinbarung mit dem Westen, aber er braucht rasche Erfolge. Denn die Hardliner in Teheran fordern den Abbruch der Verhandlungen. Und bald wird ein neuer Präsident gewählt. Innenpolitische Differenzen auf der iranischen Seite sind nur eines der Probleme bei den Gesprächen, die nach ersten Beratungen nun auf Expertenebene fortgesetzt werden sollen.",
+				title: "Was für einen Deal mit dem Iran spricht",
+				topic: "politics",
+				_id: "a566a5dca65e7e53184b138813ae43ca",
+		"isBookmarked":isBookmarked
 	}
 
 	const props = {
@@ -50,7 +59,7 @@ describe("Article as DailyArticle when logedIn", () =>{
 	consoleSpyForProptypeError()
 
 	beforeEach(() => {
-		const props = setProps(false, true,'newsAPIdailyArticle')
+		const props = setProps(false, true,'newsApiArticleReducer')
 		store = mockStore({})
 		store.dispatch = jest.fn()
 
@@ -78,7 +87,7 @@ describe("Article as DailyArticle when logedIn", () =>{
 
 		const spy = jest.spyOn(component.instance().props, "saveUserArticle")
 
-		expect(component.instance().props.article["isBookmarked"]).toEqual(false)	
+		expect(component.instance().props.article["isBookmarked"]).toEqual(false)
 
 		bookmark.simulate('click', {dummyArticle})
 
@@ -95,7 +104,8 @@ describe("Article as DailyArticle when logedOut", () =>{
 
 
 	beforeEach(() => {
-		const props = setProps(false, false,'newsAPIdailyArticle')
+		const props = setProps(false, false,'newsApiArticleReducer' +
+				'')
 
 		store = mockStore({})
 		store.dispatch = jest.fn()

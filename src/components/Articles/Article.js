@@ -27,23 +27,23 @@ export class Article extends React.Component {
 	}
 
 	render(){
-		let source = this.props.article.source.name !== undefined ? this.props.article.source.name : this.props.article.source;
+		// let source = this.props.article.source.name !== undefined ? this.props.article.source.name : this.props.article.source;
 		return(
 			<div className="article_container" >
 					
-					<a className="article_link-to-article" href={this.props.article.url} target='blank'>
+					<a className="article_link-to-article" href={this.props.article.link} target='blank'>
 						
 						<div className="article_thumbnail">
-							<img src={this.props.article.urlToImage} alt="article thumbnail" />
+							<img src={this.props.article.link} alt="article thumbnail" />
 						</div>
 
 						<h3 className ="article_title">{this.props.article.title}</h3>
-						<p className="article_description">{this.props.article.description}</p>
+						<p className="article_description">{this.props.article.summary}</p>
 					</a>
 
 
-					<a href={source} target="blank">
-						<p className="article_source">{source}</p>
+					<a href={this.props.article.rights} target="blank">
+						<p className="article_source">{this.props.article.rights}</p>
 					</a>
 
 

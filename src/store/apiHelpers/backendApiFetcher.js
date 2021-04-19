@@ -7,16 +7,16 @@ import Cookies from "universal-cookie";
 const backendApiFetcher = onAuthFailure => (options) => {
   console.log(options)
 
-  let setHeader = (header,token)=>{
-    backendInstance.headers[header] = token
-  }
+  // let setHeader = (header,token)=>{
+  //   backendInstance.headers[header] = token
+  // }
 
   let backendInstance = axios.create({
     // baseURL: 'http://localhost:8082/',
     baseUrl: 'https://newsdbackend.herokuapp.com/',
     headers: {
       'Accept': 'application/json, text/plain',
-      'Access-Control-Allow-Origin': 'http://localhost:3000/',
+      // 'Access-Control-Allow-Origin': 'http://localhost:3000/',
       'Content-Type': 'application/json;charset=UTF-8',
       'X-Frame-Options': 'DENY'
     },

@@ -41,7 +41,9 @@ describe('newsApiActions', () => {
         expect(store.getActions()).toEqual(expectedActions)
       })
     })
-    it("should dispatch Fetch Article Failed", async () => {
+
+
+    it("should dispatch FETCH_ARTICLES_FAILED", async () => {
       newsApiFetcher.mockImplementationOnce(()=> Promise.reject({message: "some error"}))
 
       let expectedActions =[{

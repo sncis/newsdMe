@@ -14,8 +14,12 @@ import { saveUserArticle, removeUserArticle } from "../../store/actions/userArti
 export class Article extends React.Component {
 	toogleIsBoomarked = (article) => {
 		if(this.props.isLoggedIn){
+			console.log("##############")
+			console.log(article.isBookmarked)
 			if(!article.isBookmarked){
 				article['isBookmarked'] = true;
+				console.log(article.isBookmarked)
+
 				this.props.saveUserArticle(article)
 			}else{
 				article['isBookmarked'] = false;

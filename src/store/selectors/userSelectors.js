@@ -23,3 +23,7 @@ export const getConfirmationTokenSelector =(state) =>{
 	return state.userReducer.confirmationToken
 }
 
+export const getUsernameSelector = state => {
+	return state.userReducer.username
+}
+

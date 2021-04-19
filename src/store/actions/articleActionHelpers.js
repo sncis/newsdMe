@@ -1,4 +1,5 @@
 import store from '../store/store'
+import {getDefaultNormalizer} from "@testing-library/dom";
 
 export const findIndexByArticleTitle = (title, reducer) =>{
   return (getState) => {
@@ -8,10 +9,10 @@ export const findIndexByArticleTitle = (title, reducer) =>{
   }
 }
 
-export const replaceArticleInArticlesArray = (article, reducer) =>{
-  let articles = store.getState()[reducer].articles.slice() 
-  const index = articles.findIndex(el => el.title === article.title)
-  let newArticleList = [...articles.slice(0,index), article, ...articles.slice(index+1)]
+export const replaceArticleInArticlesArray = (article, articleArray) =>{
+  const index = articleArray.findIndex(el => el.id === article.id)
+  let newArticleList = [...articleArray.slice(0,index), article, ...articleArray.slice(index+1)]
+
   return newArticleList
 }
 
@@ -22,49 +23,22 @@ export const addArticleToLocalStorage = (article) => {
 }
 
 export const getItemFromLocalStorage = (key, defaultValue) => {
-  console.log("get item from local storage called")
-  try{
-    if(localStorage.getItem(key) !== null){
-      return JSON.parse(localStorage.getItem(key)) 
-    }
-    else{
+
+  const articles = localStorage.getItem(key)
+  if(articles !== null ){
+    try{
+      let item = JSON.parse(localStorage.getItem(key))
+      return item
+    }catch(error){
+      console.log(error)
       return defaultValue
     }
-  }catch(error){
-    console.log(error)
+  }else{
     return defaultValue
   }
+
 }
 
 export const addItemToLocalStorage = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value))
 }
-
-// export const articleHelpers = {
-//   replaceArticleInArray : (article, reducer) => {
-//     let articles = store.getState()[reducer].articles.slice() 
-//     const index = articles.findIndex(el => el.title === article.title)
-//     let newArticleList = [...articles.slice(0,index), article, ...articles.slice(index+1)]
-//     return newArticleList
-//   }
-// }
-
-// export const localStorageHelpers = {
-//   getItem: (key, defaultValue) => {
-//     try{
-//       if(localStorage.getItem(key) !== null){
-//         return JSON.parse(localStorage.getItem(key)) 
-//       }
-//       else{
-//         return defaultValue
-//       }
-//     }catch(error){
-//       console.log(error)
-//       return defaultValue
-//     }
-//   },
-
-//   setItem: (key,value) =>{
-//     localStorage.setItem(key, JSON.stringify(value))
-//   }
-// }

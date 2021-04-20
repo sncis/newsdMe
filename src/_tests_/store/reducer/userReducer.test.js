@@ -106,8 +106,9 @@ describe("userReducer", () => {
 		)
 	})
 
-	it("should hanlde userLogout", () =>{
+	it("should handle userLogout", () =>{
 		const action ={type: types.DO_LOGOUT_USER}
+		console.log(userReducer())
 		expect(userReducer(undefined,action)).toEqual({
 			loggedIn: false
 		})

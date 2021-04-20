@@ -50,16 +50,13 @@ export const logoutAction = () =>
 
     try{
       await backendFetcher(options)
-
-
-    }catch(error){
-      // console.log(error)
-      console.warn(error.message)
-    }finally {
+      console.log("logout called")
       window.sessionStorage.clear()
-
+      window.localStorage.clear()
       dispatch(logout())
 
+    }catch(error){
+      console.warn(error.message)
     }
 }
 

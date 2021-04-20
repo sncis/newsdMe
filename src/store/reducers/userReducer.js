@@ -56,7 +56,9 @@ const userReducer = (state = initialState, action='') => {
         isLoading: false,
       }
     case types.DO_LOGOUT_USER:
-        return state;
+      return{
+        loggedIn: false,
+      }
 
     default:
       return state;

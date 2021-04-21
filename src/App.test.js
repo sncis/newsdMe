@@ -18,7 +18,7 @@ describe("App", () => {
     expect(component.length).toEqual(1)
     expect(component.find(Route).length).toEqual(2)
     expect(component.find(Switch).length).toEqual(1)
-    expect(component.find(ProtectedRoute).length).toEqual(1)
+    expect(component.find(ProtectedRoute).length).toEqual(2)
   })
 
   it("routes / to HomePage", () => {

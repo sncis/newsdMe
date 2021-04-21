@@ -24,7 +24,7 @@ export const HeaderAuth =(props)=> {
 			}
 			{
 				props.isLoggedIn &&
-				<button className="logout-btn" onClick={() => props.logout()}>Logout</button> 
+				<Link to="/" className="logout-btn" onClick={() => props.logout()}>Logout</Link>
 			}
 		</div>
 	)	

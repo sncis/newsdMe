@@ -45,7 +45,7 @@ export class LoginComp extends Component {
 
 					<div className="input-container">
 						<label htmlFor="password">Password</label>
-						<input placeholder="enter password" name="password" id="password" onChange={event => this.setPassword(event.target.value)} />
+						<input type="password" placeholder="enter password" name="password" id="password" onChange={event => this.setPassword(event.target.value)} />
 					</div>
 				
 					<button type="submit" onClick={this.handelLogin}>Login</button>

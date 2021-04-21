@@ -8,15 +8,18 @@ import HomePage from './pages/HomePage'
 import AuthPage from "./pages/AuthPage";
 import DashboardPage from './pages/DashboardPage'
 import { getUserLoginSelector } from "./store/selectors/userSelectors"
+import { getAdminSelector } from "./store/selectors/backendDataSelector"
+import AdminPage from "./pages/AdminPage";
 
-export function App({isLoggedIn}) {
+export function App({isLoggedIn, isAdmin}) {
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path="/auth/:index" render={(props)=>(<AuthPage {...props}/>)}/>
-          <ProtectedRoute path='/dashboard' component={DashboardPage} isLoggedIn={isLoggedIn}/>
+          <ProtectedRoute path='/dashboard' component={DashboardPage} isLoggedIn={isLoggedIn} isAuthorised={isLoggedIn} redirectPath='/auth/1'/>
+          <ProtectedRoute path='/admin' component={AdminPage} isLoggedIn={isLoggedIn} isAuthorised={isAdmin} redirectPath='/dashboard'/>
         </Switch>
       </BrowserRouter>
     </div>
@@ -25,7 +28,8 @@ export function App({isLoggedIn}) {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: getUserLoginSelector(state)
+    isLoggedIn: getUserLoginSelector(state),
+    isAdmin: getAdminSelector(state),
   }
 }
 

@@ -8,13 +8,16 @@ import { Route, Redirect } from "react-router-dom"
 //render needs props therfore we are passing them to it 
 //you ahve to pass a pathname to the redirect and a state so that it knows from where it comes from 
 
-function ProtectedRoute({isLoggedIn: loggedIn, component: Component, ...rest }){
-	return ( 
+function ProtectedRoute({isLoggedIn: loggedIn, isAuthorised, redirectPath : path, component: Component, ...rest }){
+	return (
 		<Route {...rest} render={(props) => {
-			if(loggedIn) {
+			// {rest.forEach(el => console.log(el))}
+		console.log(isAuthorised)
+			if(loggedIn && isAuthorised) {
 				return <Component />
 			}else {
-				return <Redirect to={{ pathname :"/", state: {from : props.location }}} />
+
+				return <Redirect to={{ pathname :path , state: {from : props.location }}} />
 			}
 		}} />
 

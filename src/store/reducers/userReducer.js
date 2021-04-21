@@ -2,6 +2,7 @@ import * as types from "../types/userTypes";
 
 const initialState = {
   loggedIn: false,
+  isAdmin:false,
 };
 
 const userReducer = (state = initialState, action='') => {
@@ -11,6 +12,7 @@ const userReducer = (state = initialState, action='') => {
         ...state,
         isLoading: true,
         errorMsg:'',
+        isAdmin:false,
       }
       case types.USER_REGISTER_SUCCEEDED:
       return{
@@ -58,8 +60,20 @@ const userReducer = (state = initialState, action='') => {
     case types.DO_LOGOUT_USER:
       return{
         loggedIn: false,
+        isAdmin:false,
       }
-
+    case types.DO_ADMIN_FAILED:
+      return{
+        ...state,
+        isAdmin: false,
+        errorMsg: action.payload,
+      }
+    case types.DO_ADMIN_SUCCEEDED:
+      return{
+        ...state,
+        backendText: action.payload,
+        isAdmin: true,
+      }
     default:
       return state;
   }

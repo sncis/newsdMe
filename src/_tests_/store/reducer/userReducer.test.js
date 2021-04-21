@@ -9,6 +9,7 @@ describe("userReducer", () => {
 
 		expect(userReducer(undefined, action)).toEqual({
 			loggedIn: false,
+			isAdmin: false
 			}
 		)
 	})
@@ -20,12 +21,13 @@ describe("userReducer", () => {
 				loggedIn: false,
 				isLoading: true,
 				errorMsg:'',
+				isAdmin:false,
 			}
 		)
 	})
 
 	it("should handle USER_REGISTER_SUCCEEDED", () => {
-		const action = { type: types.USER_REGISTER_SUCCEEDED, payload:{username: "some user", confirmationToken: "some token "}}
+		const action = { type: types.USER_REGISTER_SUCCEEDED, payload:{username: "some user", confirmationToken: "some token"}}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				isLoading: false,
@@ -33,7 +35,8 @@ describe("userReducer", () => {
 				registered: true,
 				loggedIn: false,
 				errorMsg:'',
-				confirmationToken:"some token "
+				confirmationToken:"some token",
+				isAdmin:false,
 			}
 		)
 	})
@@ -46,6 +49,7 @@ describe("userReducer", () => {
 				errorMsg: "register error",
 				loggedIn: false,
 				registered: false,
+				isAdmin:false,
 			}
 		)
 	})
@@ -57,6 +61,7 @@ describe("userReducer", () => {
 			isLoading:false,
 			loggedIn:false,
 			registered: true,
+			isAdmin:false,
 		})
 	})
 
@@ -67,6 +72,7 @@ describe("userReducer", () => {
 			loggedIn:false,
 			errorMsg:"registration error",
 			registered: false,
+			isAdmin:false,
 		})
 	})
 
@@ -78,7 +84,8 @@ describe("userReducer", () => {
 			{
 				isLoading: true,
 				loggedIn: false,
-				errorMsg:''
+				errorMsg:'',
+				isAdmin:false,
 			}
 		)
 	})
@@ -90,7 +97,8 @@ describe("userReducer", () => {
 				username: 'some user',
 				isLoading: false,
 				loggedIn: true,
-				errorMsg:''
+				errorMsg:'',
+				isAdmin:false,
 			}
 		)
 	})
@@ -101,7 +109,8 @@ describe("userReducer", () => {
 			{
 				isLoading: false,
 				errorMsg: "login error",
-				loggedIn: false
+				loggedIn: false,
+				isAdmin:false,
 			}
 		)
 	})
@@ -110,7 +119,8 @@ describe("userReducer", () => {
 		const action ={type: types.DO_LOGOUT_USER}
 		console.log(userReducer())
 		expect(userReducer(undefined,action)).toEqual({
-			loggedIn: false
+			loggedIn: false,
+			isAdmin:false,
 		})
 	})
 })

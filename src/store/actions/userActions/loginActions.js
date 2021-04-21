@@ -68,6 +68,37 @@ export const logout = () => {
   }
 }
 
+export const goToAdminSide = () =>
+    async (dispatch,getState, {backendFetcher}) => {
+      const options = {
+        url:'/articles/admin',
+        method:'get'
+      }
+      try{
+        const response = await backendFetcher(options)
+        dispatch(goAdminSucceeded(response.data))
+      }catch(error){
+        console.log("errroror froma din backend ")
+        console.log(error.message)
+        dispatch(goAdminFailed(error.message))
+      }
+    }
+
+export const goAdminSucceeded = (msgText) =>{
+  return{
+    type: types.DO_ADMIN_SUCCEEDED,
+    payload: msgText
+  }
+}
+
+export const goAdminFailed = (errorMsg) =>{
+  return{
+    type: types.DO_ADMIN_FAILED,
+    payload: errorMsg
+
+  }
+}
+
 // export const doLogout = () => {
 //   return dispatch => {
 //     try{

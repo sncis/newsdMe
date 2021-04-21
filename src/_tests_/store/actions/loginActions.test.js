@@ -6,6 +6,7 @@ import mockAxios from 'axios';
 import * as actions from "../../../store/actions/userActions/loginActions"
 import * as types from "../../../store/types/userTypes"
 import thunk from "redux-thunk";
+import {goToAdminSide} from "../../../store/actions/userActions/loginActions";
 
 
 const configureMockStoreWithArg = (backendFetcher) => configureMockStore([thunk.withExtraArgument(backendFetcher)]);
@@ -75,6 +76,36 @@ describe("loginActions", () => {
 		await store.dispatch(actions.logoutAction())
 		expect(store.getActions()).toEqual(expectedActions)
 
+	})
+
+	it("should go to Admin side if user is admin", async() =>{
+		const backendFetcher = {
+			backendFetcher: () => Promise.resolve({data:"its an admin"}),
+		}
+		const mockStore = configureMockStoreWithArg(backendFetcher)
+		store = mockStore()
+		const expectedActions =[{
+			type: types.DO_ADMIN_SUCCEEDED,
+			payload: "its an admin"
+		}]
+		await store.dispatch(actions.goToAdminSide())
+
+		expect(store.getActions()).toEqual(expectedActions)
+	})
+
+	it("should should not go to AdminSide if user is normal user", async() =>{
+		const backendFetcher = {
+			backendFetcher: () => Promise.reject({message:"sorry you are not allowed"}),
+		}
+		const mockStore = configureMockStoreWithArg(backendFetcher)
+		store = mockStore()
+		const expectedActions =[{
+			type: types.DO_ADMIN_FAILED,
+			payload: "sorry you are not allowed"
+		}]
+		await store.dispatch(actions.goToAdminSide())
+
+		expect(store.getActions()).toEqual(expectedActions)
 	})
 
 // 	it("should catch error when logout failed", async()=>{

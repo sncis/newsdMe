@@ -119,7 +119,7 @@ export class RegisterComp extends Component {
               <label htmlFor="password">Password</label>
               <input
                 id="password"
-                type="text"
+                type="password"
                 name="password"
                 placeholder="password"
                 onChange={e => this.setPassword(e.target.value)}
@@ -134,7 +134,7 @@ export class RegisterComp extends Component {
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 id="confPassword"
-                type="text"
+                type="password"
                 name="confirmPassword"
                 placeholder="Confirm password"
                 onChange={e => this.setConfirmPassword(e.target.value)}

@@ -12,25 +12,17 @@ const backendApiFetcher = onAuthFailure => (options) => {
   // }
 
   const backendInstance = axios.create({
-    baseURL: 'http://localhost:8082/',
+    baseURL: `${process.env.REACT_APP_BACKEND_BASE_URL}`,
+    // baseURL: 'http://localhost:8082/',
     // baseUrl: 'https://newsdbackend.herokuapp.com/',
     headers: {
       'Accept': 'application/json, text/plain',
-      // 'Access-Control-Allow-Origin': 'http://localhost:3000/',
       'Content-Type': 'application/json;charset=UTF-8',
       'X-Frame-Options': 'DENY'
     },
     method: options.method,
     withCredentials: true,
   })
-
-  // set header(header,token){
-  //   console.log(header)
-  //   console.log(token)
-  //
-  //   console.log(backendInstance.headers)
-  //
-  // }
 
   return (
       backendInstance.request({url: `${options.url}`,data: options.data})
@@ -41,6 +33,7 @@ const backendApiFetcher = onAuthFailure => (options) => {
             const csrfToken = cookies.get('XSRF-TOKEN');
             backendInstance.defaults.headers['XSRF-TOKEN'] = csrfToken
             if(response.statusCode === 401){
+              console.log(response.statusText)
               throw Error('rejected')
             }else{
               return response

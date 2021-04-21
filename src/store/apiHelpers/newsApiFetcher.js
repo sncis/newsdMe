@@ -3,12 +3,14 @@ import axios from 'axios'
 
 const newsApiFetcher = (options) => {
   console.log(options)
+  console.log(process.env)
+  console.log(process.env.REACT_APP_NEWSCRATCHER_BASE_URL)
 
   const newsInstance = axios.create({
-    baseURL: "https://newscatcher.p.rapidapi.com/v1",
+    baseURL: process.env.REACT_APP_NEWSCRATCHER_BASE_URL,
     method: 'get',
     headers:{
-     "x-rapidapi-key" : "f973fc276cmsha0a573cbf1f0d4cp1f8c8ejsn1a933594d20c",
+     "x-rapidapi-key" : process.env.REACT_APP_NEWSCRATCHER_API_KEY,
       "x-rapidapi-host": "newscatcher.p.rapidapi.com",
       "useQueryString":true,
       "Accept": 'application/json',

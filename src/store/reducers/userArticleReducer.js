@@ -1,15 +1,15 @@
-import { IS_LOADING_ARTICLES,
+import {
+	IS_LOADING_ARTICLES,
 	GET_USER_ARTICLES_ERROR,
 	GET_USER_ARTICLES_SUCCESS,
-	ADD_ARTICLE_TO_USER_ARTICLELIST,
+	ADD_ARTICLE_TO_USER_ARTICLELIST, GO_ADMIN_SUCCEEDE, GO_ADMIN_FAILED,
 } from "../types/userArticelTypes"
 
 
 const initialState = {
 	isLoading:false,
 	articles: [],
-	errorMsg:''
-
+	errorMsg:'',
 }
 const userArticleReducer = (state = initialState, action='') =>{
 	switch(action.type){
@@ -38,6 +38,7 @@ const userArticleReducer = (state = initialState, action='') =>{
 				isLoading:false,
 				articles: [...state.articles, action.payload]
 			}
+
 		default:
 			return state;
 	}

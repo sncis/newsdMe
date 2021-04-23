@@ -6,7 +6,7 @@ import * as types from "../../../store/types/userArticelTypes"
 import { SET_DAILY_ARTICLES_SUCCESS } from  "../../../store/types/newsAPIdailyArticleTypes"
 import { dummyArticles,dailyArticles } from '../../../store/dummyArticles';
 import mockAxios from 'axios'
-import * as helpers from "../../../store/actions/articleActionHelpers"
+import * as helpers from "../../../store/actions/actionHelpers/articleActionHelpers"
 import {testArticles} from "../../testArticles";
 import { FETCH_ARTICLES_SUCCEEDED } from "../../../store/types/newsAPIdailyArticleTypes"
 import newsApiArticleReducer from "../../../store/reducers/newsApiArticleReducer";

@@ -3,6 +3,7 @@ import * as types from "../types/userTypes";
 const initialState = {
   loggedIn: false,
   isAdmin:false,
+  confirmed: false,
 };
 
 const userReducer = (state = initialState, action='') => {
@@ -35,13 +36,16 @@ const userReducer = (state = initialState, action='') => {
       ...state,
         isLoading:false,
         registered: true,
+        confirmed: true,
     }
     case types.CONFIRM_REGISTRATION_FAILED:
       return{
         ...state,
         isLoading:false,
-        registered:false,
-        errorMsg: action.payload
+        registered: true,
+        confirmed: false,
+        errorMsg: action.payload,
+
       }
     case types.USER_LOGIN_SUCCEEDED:
       return{
@@ -49,13 +53,17 @@ const userReducer = (state = initialState, action='') => {
         username : action.payload.username,
         isLoading: false,
         loggedIn: true,
-        errorMsg:''
+        errorMsg:'',
+        confirmed: true,
+
       }
     case types.USER_LOGIN_FAILED:
       return{
         ...state,
         errorMsg: action.payload,
         isLoading: false,
+        confirmed: false,
+
       }
     case types.DO_LOGOUT_USER:
       return{

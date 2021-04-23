@@ -7,14 +7,8 @@ import Cookies from "universal-cookie";
 const backendApiFetcher = onAuthFailure => (options) => {
   console.log(options)
 
-  // let setHeader = (header,token)=>{
-  //   backendInstance.headers[header] = token
-  // }
-
   const backendInstance = axios.create({
     baseURL: `${process.env.REACT_APP_BACKEND_BASE_URL}`,
-    // baseURL: 'http://localhost:8082/',
-    // baseUrl: 'https://newsdbackend.herokuapp.com/',
     headers: {
       'Accept': 'application/json, text/plain',
       'Content-Type': 'application/json;charset=UTF-8',
@@ -27,26 +21,32 @@ const backendApiFetcher = onAuthFailure => (options) => {
   return (
       backendInstance.request({url: `${options.url}`,data: options.data})
           .then(response => {
-            console.log("respones from baceknd")
-            console.log(response)
-            const cookies = new Cookies(response.headers.cookie)
+            const cookies = new Cookies(response.headers.cookie);
             const csrfToken = cookies.get('XSRF-TOKEN');
             backendInstance.defaults.headers['XSRF-TOKEN'] = csrfToken
-            if(response.statusCode === 401){
-              console.log(response.statusText)
-              throw Error('rejected')
-            }else{
-              return response
-            }
+
+            return response
 
           }).catch(error => {
-            if(error.message === "rejected"){
-
-              onAuthFailure(); // method which is passed is called
-              return
+            if(error.response.status === 401 ||error.response.status === 403 ){
+              console.log(error.response.message.data.message)
+              onAuthFailure();
+              throw Error("Wrong username or password")
             }
-            console.log(error)
-            throw Error("something went wrong")
+            if(error.response.status === 400){
+              console.log(error.response.data.message)
+
+              onAuthFailure();
+              throw Error(error.response.data.message)
+
+            }
+            if(error.response.status === 500) {
+              console.log(error.response.message.data.message)
+              throw Error("Ups something went wrong please try again later")
+            }else{
+              throw Error(error.response.message.data.message)
+            }
+
       })
   )
 

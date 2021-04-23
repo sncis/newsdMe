@@ -10,6 +10,8 @@ import DashboardPage from './pages/DashboardPage'
 import { getUserLoginSelector } from "./store/selectors/userSelectors"
 import { getAdminSelector } from "./store/selectors/backendDataSelector"
 import AdminPage from "./pages/AdminPage";
+import {ConfirmationComponent} from "./components/Auth/ConfirmationComponent";
+import RegistrationConfirmationPage from "./pages/RegistrationConfirmationPage";
 
 export function App({isLoggedIn, isAdmin}) {
   return (
@@ -18,6 +20,8 @@ export function App({isLoggedIn, isAdmin}) {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path="/auth/:index" render={(props)=>(<AuthPage {...props}/>)}/>
+          <Route path="/confirm/:index" render={(props) => (<RegistrationConfirmationPage {...props}/>)} />
+
           <ProtectedRoute path='/dashboard' component={DashboardPage} isLoggedIn={isLoggedIn} isAuthorised={isLoggedIn} redirectPath='/auth/1'/>
           <ProtectedRoute path='/admin' component={AdminPage} isLoggedIn={isLoggedIn} isAuthorised={isAdmin} redirectPath='/dashboard'/>
         </Switch>

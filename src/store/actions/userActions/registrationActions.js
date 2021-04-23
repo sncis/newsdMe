@@ -62,6 +62,10 @@ export const registerUserFailed =(errorMsg)=>{
 }
 
 export const confirmRegistration = (token) =>
+   //  console.log("***********************")
+   // console.log("registration confirmation button clicked ")
+   //  console.log("***********************")
+
     async (dispatch, getState, { backendFetcher }) => {
       dispatch(doConfirmRegistration())
 

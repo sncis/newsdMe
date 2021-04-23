@@ -1,98 +1,104 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import {Redirect, withRouter} from 'react-router'
 import PropTypes from 'prop-types';
 
 import { registerUserAction,confirmRegistration } from "../../store/actions/userActions/registrationActions"
-import { isLoadingUserSelector, getErrorMsgSelector,getRegisterSuccessfulSelector,getConfirmationTokenSelector } from '../../store/selectors/userSelectors'
+import { isLoadingUserSelector, getErrorMsgSelector,getRegisteredSelector,getConfirmationTokenSelector,getRegistrationSuccessSelector } from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
 
+import {emailValidator, passwordValidator, usernameValidator} from "../../validators/validators";
 
+const initialState = {
+  username: "",
+  password: "",
+  confirmPassword:"",
+  email: "",
+  isPasswordMatching: true,
+  emailError:'',
+  passwordError:'',
+  usernameError:"",
+  matchingError: ''
+}
 export class RegisterComp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      confirmPassword:"",
-      email: "",
-      isPasswordMatching:true,
-      isPasswordValid: true,
+      initialState
     };
   }
   
-  setUsername = name => {
-    this.setState({
-      username: name
-    });
-  };
+  // setUsername = name => {
+  //   this.setState({
+  //     username: name
+  //   });
+  // };
+  //
+  // setPassword = pass => {
+  //   this.setState({
+  //     password: pass
+  //   });
+  // };
+  //
+  // setConfirmPassword = confPassword => {
+  //   this.setState({
+  //     confirmPassword: confPassword
+  //   })
+  // }
+  //
+  // setEmail = mail => {
+  //   this.setState({
+  //     email: mail
+  //   });
+  // };
 
-  setPassword = pass => {
+  handleChange = event =>{
+    console.log(this.state)
+    const isCheckbox = event.target.type === 'checkbox'
     this.setState({
-      password: pass
-    });
-  };
-
-  setConfirmPassword = confPassword => {
-    this.setState({
-      confirmPassword: confPassword
+      [event.target.name]: isCheckbox ? event.target.checked : event.target.value
     })
   }
-
-  setEmail = mail => {
-    this.setState({
-      email: mail
-    });
-  };
 
   submitRegistration = e => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const {username, password, email} = this.state;
-    const registerUser = {
-      username,
-      password,
-      email
+    const registerUser = {username,password,email}
+
+    const isFormValid = this.validateForm()
+
+    if(isFormValid){
+      this.props.registerUser(registerUser)
+      this.setState(initialState)
     }
-    this.checkPassword(this.state.password)
-
-
-    this.state.confirmPassword === this.state.password ? 
-    this.props.registerUser(registerUser) : 
-    this.setState({
-      isPasswordMatching : false
-    });
-
-    setTimeout(() =>{
-      console.log(this.state.isPasswordValid)
-
-      // this.props.registerSuccessful ? this.props.history.push("/dashboard") : this.props.history.push("/home")
-    }, 2000)
 
   };
 
-  checkPassword = (password) => {
-    this.setState({
-      isPasswordValid: !!password.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
-    })
-    // return !!password.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
-  }
+  validateForm = () => {
 
-  cancelRegistration = (e) => { 
-    e.preventDefault()
-    this.setState({
-      username: "",
-      password: "",
-      confirmPassword:'',
-      email: "",
-      isPasswordMatching: true,
-    })
-    document.getElementById("registrationForm").reset();
-      }
+    let usernameError =  usernameValidator(this.state.username) ? '': 'only chars and numbers are allowed'
+
+    let passwordError = passwordValidator(this.state.password) ? '': "invalide password"
+
+    let emailError = emailValidator(this.state.email) ? '': "invalid email"
+
+    let matchingError = this.state.password === this.state.confirmPassword ? '': "passwords are not matching"
+
+    if(usernameError || passwordError || emailError){
+      this.setState(({usernameError, passwordError, emailError}))
+      return false
+    }if(matchingError){
+      this.setState({matchingError})
+      return false
+    }
+    return true
+  }
 
   render() {
     return (
       <div>
-        <form id="registrationForm" className='auth-form'>
+        <form id="registrationForm" className='auth-form' onSubmit={this.submitRegistration}>
             <div className="input-container">
               <label htmlFor="username">Username</label>
               <input
@@ -100,10 +106,12 @@ export class RegisterComp extends Component {
                 type="text"
                 placeholder="enter username"
                 name="username"
-                onChange={e => this.setUsername(e.target.value)}
+                value={this.state.username || ''}
+                onChange={this.handleChange}
               />
+              {this.state.usernameError && <div className="errorMsg">{this.state.usernameError }</div>}
             </div>
-        
+
             <div className="input-container">
               <label htmlFor="email">Email</label>
               <input
@@ -111,8 +119,11 @@ export class RegisterComp extends Component {
                 type="email"
                 name="email"
                 placeholder="enter Email"
-                onChange={e => this.setEmail(e.target.value)}
+                value={this.state.email || ''}
+                onChange={this.handleChange}
               />
+              {this.state.emailError && <div className="errorMsg">{this.state.emailError}</div>}
+
             </div>
             
             <div className="input-container">  
@@ -122,12 +133,13 @@ export class RegisterComp extends Component {
                 type="password"
                 name="password"
                 placeholder="password"
-                onChange={e => this.setPassword(e.target.value)}
+                value={this.state.password || ''}
+                onChange={this.handleChange}
               />
-               {/* {!this.state.isPasswordValid  && <p id="passwordValidError">password must contain at least 1 Uppercase, 1 lowercase, 1 special characther and 1 number</p>} */}
-
+              <div className="passwordInfo">Use 8 or more characters with a mix of letters, numbers & symbols
+              </div>
+              {this.state.passwordError && <div className="errorMsg">{this.state.passwordError}</div>}
             </div>
-            {!this.state.isPasswordValid  && <p id="passwordValidError">password must contain at least 1 Uppercase, 1 lowercase, 1 special characther and 1 number</p>}
 
             
             <div className="input-container">
@@ -137,20 +149,22 @@ export class RegisterComp extends Component {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm password"
-                onChange={e => this.setConfirmPassword(e.target.value)}
+                value={this.state.confirmPassword || ''}
+                onChange={this.handleChange}
               />
             </div>
             <button 
-              id="cancelRegisterBtn"
-              type="reset"
-              onClick={this.submitRegistration}>Register</button>
+              id="submit-btn"
+              type="submit"
+              >Register</button>
         </form>
 
-        {!this.state.isPasswordMatching  && <div id="passwordMatchingError"><p>password is not matching</p></div>}
-        {this.props.isLoading && <div><p id="loadingMsg">state from reducx is loading </p></div>}
-        {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
+        {this.state.matchingError && <div id="passwordMatchingError"><p>{this.state.matchingError}</p></div>}
+        {this.props.registrationErrorMsg && <div><p id="#registrationErrorMsg">{this.props.registrationErrorMsg}</p></div>}
         {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration </p><
           p>{this.props.confirmationToken}</p></div>}
+
+        {this.props.isRegistrationSuccess && <Redirect to="/confirm/1" />}
 
 
       </div>
@@ -169,19 +183,21 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = state => {
   return{
     isLoading: isLoadingUserSelector(state),
-    errorMsg : getErrorMsgSelector(state),
-    registerSuccessful: getRegisterSuccessfulSelector(state),
-    confirmationToken : getConfirmationTokenSelector(state)
+    registrationErrorMsg : getErrorMsgSelector(state),
+    registerSuccessful: getRegisteredSelector(state),
+    confirmationToken : getConfirmationTokenSelector(state),
+    isRegistrationSuccess: getRegistrationSuccessSelector(state),
+
   }
 }
 
-const RegisterComponent = connect(mapStateToProps, mapDispatchToProps)(RegisterComp);
+const RegisterComponent = withRouter(connect(mapStateToProps, mapDispatchToProps)(RegisterComp));
 
 RegisterComponent.propTypes = {
   registerUser: PropTypes.func,
   isLoading: PropTypes.bool,
-  errorMsg: PropTypes.string,
-  registerSuccessful: PropTypes.bool
+  registrationErrorMsg: PropTypes.string,
+  isRegistrationSuccess: PropTypes.bool
 }
 
 export default RegisterComponent

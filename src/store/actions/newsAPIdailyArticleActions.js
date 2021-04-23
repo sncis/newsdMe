@@ -2,7 +2,7 @@ import axios from 'axios';
 import { NEWS_API_KEY } from '../../keys';
 
 import * as types from "../types/newsAPIdailyArticleTypes"
-import { getItemFromLocalStorage } from './articleActionHelpers'
+import { getItemFromLocalStorage } from './actionHelpers/articleActionHelpers'
 import newsApiFetcher from "../apiHelpers/newsApiFetcher";
 
 

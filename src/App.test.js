@@ -16,7 +16,7 @@ describe("App", () => {
 
   it("should renter whout errors", () => {
     expect(component.length).toEqual(1)
-    expect(component.find(Route).length).toEqual(2)
+    expect(component.find(Route).length).toEqual(3)
     expect(component.find(Switch).length).toEqual(1)
     expect(component.find(ProtectedRoute).length).toEqual(2)
   })

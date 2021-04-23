@@ -4,6 +4,7 @@ import AuthDialogContainer from '../containers/AuthDialogContainer'
 
 import LoginComponent from "../components/Auth/LoginComponent"
 import RegisterComponent from "../components/Auth/RegisterComponent"
+import ConfirmationComponent from '../components/Auth/ConfirmationComponent'
 import PageContainer from '../containers/PageContainer';
 
 export class AuthPage extends React.Component {
@@ -18,7 +19,8 @@ export class AuthPage extends React.Component {
 
 	componentDidMount(){
 		this.setState({
-			index: parseInt(this.props.match.params.index)
+			index: parseInt(this.props.match.params.index),
+			token: this.props.match.params.token ? parseInt(this.props.match.params.token):''
 		})
 	}
 
@@ -43,6 +45,13 @@ export class AuthPage extends React.Component {
 						<div className="auth-headline"><p>Already have an Account? <span id='loginLink' onClick={()=>this.toggleAuth(1)}>Login</span></p></div>
 						<RegisterComponent />
 					</AuthDialogContainer>
+					}
+
+					{this.state.index === 3 &&
+					<AuthDialogContainer title="ConfirmRegistration">
+							<div className="auth-headline"><p>Resent confirmation Token? <span id='loginLink'>click here</span></p></div>
+							<ConfirmationComponent />
+						</AuthDialogContainer>
 					}
 			</PageContainer>
      

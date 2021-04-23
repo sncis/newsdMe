@@ -1,4 +1,5 @@
 import * as types from "../../types/userTypes";
+import {deleteCookies} from "../actionHelpers/actionUtils";
 
 
 /**********login actions *******************/
@@ -47,17 +48,11 @@ export const logoutAction = () =>
      const options ={
        url: "/auth/logout"
      }
-
-    try{
-      await backendFetcher(options)
-      console.log("logout called")
+      deleteCookies()
       window.sessionStorage.clear()
       window.localStorage.clear()
       dispatch(logout())
-
-    }catch(error){
-      console.warn(error.message)
-    }
+      await backendFetcher(options)
 }
 
 

@@ -16,7 +16,6 @@ describe("LoginComponent", () => {
 	
 	const initialState = {userReducer: {
 		isLoading: false,
-		username: 'someUser',
 		}
 	}
 
@@ -40,29 +39,34 @@ describe("LoginComponent", () => {
 
 	})
 
-	it("should setUsername", () => {
-		const usernameInput = component.find("#username")
 
-		usernameInput.simulate("change", {target: {value:"someUser"}})
-
-		expect(component.state("username")).toBe("someUser")
-
-	})
-	it("should setPassword", () => {
-		const usernameInput = component.find("#password")
-
-		usernameInput.simulate("change", {target: {value:"somePass"}})
-
-		expect(component.state("password")).toBe("somePass")
-
-	})
-
-	it("should dispatch loginUser when button click", () => {
+	it("should dispatch loginUser when FormInput is valid", () => {
 		const onClickMock = jest.spyOn(component.instance(), 'handelLogin')
+		component.setState({
+			username:"someValidUser",
+			password:"SomeValidPass1234!"
+		})
 
 		component.instance().handelLogin({preventDefault(){}});
 		expect(onClickMock).toHaveBeenCalledTimes(1);
-		expect(store.dispatch).toHaveBeenCalled()
+		expect(store.dispatch).toHaveBeenCalled();
+		expect(component.find(".validationError").length).toEqual(0)
+
+
+	})
+	it("should not dispatch loginUser when FormInput is invalid and show validation error", () => {
+		const onClickMock = jest.spyOn(component.instance(), 'handelLogin')
+		component.setState({
+			username:"someValidUser",
+			password:"SomeVa!",
+		})
+
+		component.instance().handelLogin({preventDefault(){}});
+		expect(onClickMock).toHaveBeenCalledTimes(1);
+		expect(store.dispatch).not.toHaveBeenCalled()
+		expect(component.find(".validationError").length).toEqual(1)
+		expect(component.find(".validationError").text()).toEqual("please provide valid input")
+
 
 	})
 

@@ -9,8 +9,10 @@ describe("userReducer", () => {
 
 		expect(userReducer(undefined, action)).toEqual({
 			loggedIn: false,
-			isAdmin: false
-			}
+			isAdmin: false,
+			confirmed: false,
+
+				}
 		)
 	})
 
@@ -22,6 +24,8 @@ describe("userReducer", () => {
 				isLoading: true,
 				errorMsg:'',
 				isAdmin:false,
+				confirmed: false,
+
 			}
 		)
 	})
@@ -37,6 +41,8 @@ describe("userReducer", () => {
 				errorMsg:'',
 				confirmationToken:"some token",
 				isAdmin:false,
+				confirmed: false,
+
 			}
 		)
 	})
@@ -50,6 +56,8 @@ describe("userReducer", () => {
 				loggedIn: false,
 				registered: false,
 				isAdmin:false,
+				confirmed: false,
+
 			}
 		)
 	})
@@ -62,6 +70,8 @@ describe("userReducer", () => {
 			loggedIn:false,
 			registered: true,
 			isAdmin:false,
+			confirmed: true,
+
 		})
 	})
 
@@ -71,8 +81,10 @@ describe("userReducer", () => {
 			isLoading:false,
 			loggedIn:false,
 			errorMsg:"registration error",
-			registered: false,
+			registered: true,
 			isAdmin:false,
+			confirmed: false,
+
 		})
 	})
 
@@ -86,6 +98,7 @@ describe("userReducer", () => {
 				loggedIn: false,
 				errorMsg:'',
 				isAdmin:false,
+				confirmed: false
 			}
 		)
 	})
@@ -99,6 +112,8 @@ describe("userReducer", () => {
 				loggedIn: true,
 				errorMsg:'',
 				isAdmin:false,
+				confirmed: true,
+
 			}
 		)
 	})
@@ -111,6 +126,8 @@ describe("userReducer", () => {
 				errorMsg: "login error",
 				loggedIn: false,
 				isAdmin:false,
+				confirmed: false,
+
 			}
 		)
 	})

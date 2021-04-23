@@ -15,15 +15,25 @@ export const getLoginSuccesfulSelector = (state) => {
 }
 
 
-export const getRegisterSuccessfulSelector = (state) => {
-	return state.userReducer.registerSuccessful
+export const getRegisteredSelector = (state) => {
+	console.log("registerd caled")
+	return state.userReducer.registered
 }
 
 export const getConfirmationTokenSelector =(state) =>{
 	return state.userReducer.confirmationToken
 }
 
+export const getConfirmedSelector =(state) =>{
+	return state.userReducer.confirmed
+}
+
+
 export const getUsernameSelector = state => {
 	return state.userReducer.username
 }
 
+
+export const getRegistrationSuccessSelector=(state)=>{
+	return state.userReducer.registered
+}

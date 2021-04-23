@@ -1,4 +1,4 @@
-import store from '../store/store'
+import store from '../../store/store'
 import {getDefaultNormalizer} from "@testing-library/dom";
 
 export const findIndexByArticleTitle = (title, reducer) =>{

@@ -9,6 +9,7 @@ import "../../css/UserArticle.css";
 import "../../css/Article.css";
 
 import { saveUserArticle, removeUserArticle } from "../../store/actions/userArticleActions"
+import {cleanUrlValidator, urlValidator} from "../../validators/validators";
 
 
 export class Article extends React.Component {
@@ -35,7 +36,7 @@ export class Article extends React.Component {
 		return(
 			<div className="article_container" >
 					
-					<a className="article_link-to-article" href={this.props.article.link} target='blank'>
+					<a className="article_link-to-article" href={urlValidator(this.props.article.link)? this.props.article.link : ""} target='blank'>
 						
 						<div className="article_thumbnail">
 							<img src={this.props.article.link} alt="article thumbnail" />
@@ -46,8 +47,8 @@ export class Article extends React.Component {
 					</a>
 
 
-					<a href={this.props.article.rights} target="blank">
-						<p className="article_source">{this.props.article.rights}</p>
+					<a href={urlValidator(this.props.article.link)? this.props.article.link : ""} target="blank">
+						<p className="article_source">{cleanUrlValidator(this.props.article.clean_url) ? this.props.article.clean_url : ""}</p>
 					</a>
 
 

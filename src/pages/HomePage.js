@@ -9,7 +9,7 @@ export const HomePage =({backendErrorMsg}) => {
 	return(
 		<PageContainer onlyLogo ={false}>
 			<Link to="/dashboard">Dashboard</Link>
-			{backendErrorMsg && <p>{backendErrorMsg}</p>}
+			<div>{backendErrorMsg && <p>{backendErrorMsg}</p>}</div>
 
 			<HomeComponent />		
 		</PageContainer>

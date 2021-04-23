@@ -45,3 +45,8 @@
 	font-size: 5px;
 	color:red;
 }
+
+.confirmation-text-container {
+	align-self: center;
+	width: 80%;
+}

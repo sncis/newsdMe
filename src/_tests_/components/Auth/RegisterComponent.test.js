@@ -1,117 +1,120 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from "redux-thunk";
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 
 import { consoleSpyForProptypeError } from '../../../setupTests'
 
-import { shallow } from "enzyme";
-import RegisterComponent from '../../../components/Auth/RegisterComponent';
+import { shallow, mount } from "enzyme";
+import { RegisterComp } from '../../../components/Auth/RegisterComponent';
 
 
 describe("RegisterComponent", () => {
 	let component;
-	let store;
 
-	const mockStore = configureMockStore([thunk])
 	const registerMock = jest.fn()
 
 	consoleSpyForProptypeError()
 
 	beforeEach(() => {
-		
-		store = mockStore({userReducer:{}});
-		store.dispatch = jest.fn()
-		component = shallow(<RegisterComponent store={store} registerUser={registerMock}/>).dive({ context: { store } }).dive()
+		component = shallow(<RegisterComp registerUser={registerMock} />)
 	})
 
 	it("should render without errors", () => {
+
 		expect(component.length).toEqual(1)
 		expect(component.find("input").length).toEqual(4)
 		expect(component.find('button').length).toEqual(1)
 		
 		expect(console.error).not.toHaveBeenCalled()
 	})
-	it("should set username", () => {
-		const usernameInput = component.find('#username')
-		usernameInput.simulate('change', {target: {value: "someUser"}})
 
-		expect(component.state("username")).toEqual("someUser")
+	it("should dispatch registration if form is valid", () => {
+		component.setState({
+			username: "someUser",
+			password: "someUser1234!",
+			confirmPassword:"someUser1234!",
+			email: "some@email.com",
+		})
+		// console.log(component.debug())
 
-	})
-	it("should set password", () => {
-		const passwordInput = component.find('#password')
-		passwordInput.simulate('change', {target: {value: "somePass"}})
-
-		expect(component.state('password')).toEqual("somePass")
-	})
-	it("should set confirmPassword", () => {
-		const confirmPasswordInput = component.find('#confPassword')
-		confirmPasswordInput.simulate('change', {target: {value: "confirmPass"}})
-
-		expect(component.state('confirmPassword')).toEqual("confirmPass")
-	})
-	it("should set email", () => {
-		const confirmPasswordInput = component.find('#email')
-		confirmPasswordInput.simulate('change', {target: {value: "someEmail"}})
-
-		expect(component.state('email')).toEqual("someEmail")
-	})
-	it("should submit form when submitButton clicked", () => {
-		const onClickMock = jest.spyOn(component.instance(),"submitRegistration")
-		component.setState({password: "somePass", confirmPassword:"somePass"})
+		const onRegistrationSpy = jest.spyOn(component.instance(), 'submitRegistration')
 
 		component.instance().submitRegistration({preventDefault(){}});
-		expect(onClickMock).toHaveBeenCalledTimes(1)
+
+		expect(onRegistrationSpy).toHaveBeenCalledTimes(1);
+
+		expect(component.find(".errorMsg").length).toEqual(0)
+
 	})
-	it("should show errorMsg when submitBtn clicked and password don't match", () => {
-		component.setState({password: "somePass", confirmPassword:"someOtherPass"})
-		
-		const onClickMock = jest.spyOn(component.instance(),"submitRegistration")
-		const registerSpy = jest.spyOn(store, 'dispatch')
+
+	it("should not dispatch registration if password is invalid", () => {
+		component.setState({
+			username: "someUser",
+			password: "someUs4",
+			confirmPassword:"someUser1234!",
+			email: "some@email.com",
+		})
+
+		const onRegistrationSpy = jest.spyOn(component.instance(), 'submitRegistration')
 
 		component.instance().submitRegistration({preventDefault(){}});
-		expect(onClickMock).toHaveBeenCalledTimes(1)
-		expect(component.find('#passwordMatchingError').length).toEqual(1)
 
-		expect(registerSpy).not.toHaveBeenCalled()
+		expect(onRegistrationSpy).toHaveBeenCalledTimes(1);
+
+		expect(component.find(".errorMsg").length).toEqual(1)
+
 	})
+
+	it("should not dispatch registration if email is invalid", () => {
+		component.setState({
+			username: "someUser",
+			password: "someUs4!2",
+			confirmPassword:"someUser1234!",
+			email: "someemail.com",
+		})
+
+		const onRegistrationSpy = jest.spyOn(component.instance(), 'submitRegistration')
+
+		component.instance().submitRegistration({preventDefault(){}});
+
+		expect(onRegistrationSpy).toHaveBeenCalledTimes(1);
+
+		expect(component.find(".errorMsg").length).toEqual(1)
+
+	})
+	it("should not dispatch registration if passwords are not matching", () => {
+		component.setState({
+			username: "someUser",
+			password: "someUs4!2",
+			confirmPassword:"someUser1234!",
+			email: "some@email.com",
+		})
+
+		const onRegistrationSpy = jest.spyOn(component.instance(), 'submitRegistration')
+
+		component.instance().submitRegistration({preventDefault(){}});
+
+		expect(onRegistrationSpy).toHaveBeenCalledTimes(1);
+
+		expect(component.find("#passwordMatchingError").length).toEqual(1)
+
+	})
+
+
 })
 
-describe("RegisterComponent", () => {
-	let component;
-	let store;
+describe("RegisterComp", () => {
 
-	const mockStore = configureMockStore([thunk])
-	consoleSpyForProptypeError()
-
-
-	beforeEach(() => {
-		store = mockStore({userReducer: {isLoading:true, errorMsg: "some error"}});
-		component = shallow(<RegisterComponent store={store} registerUser={jest.fn()}/>).dive({ context: { store } }).dive();
-	})
-
-	it("should render loadingMsg", () => {
-		expect(component.instance().props.isLoading).toEqual(true)
-		expect(component.find("#loadingMsg").length).toEqual(1)
-		
-		
-	})
 	it("should render errorMsg", () => {
-		expect(component.instance().props.errorMsg).toEqual("some error")
-		expect(component.find("#errorMsg").length).toEqual(1)
+		const component = shallow(<RegisterComp isLoading={true} registerUser={jest.fn()} registrationErrorMsg="some error"/>);
+
+		console.log(component.debug())
+
+		expect(component.instance().props.registrationErrorMsg).toEqual("some error")
+
+		// expect(component.find("#registrationErrorMsg").length).toEqual(1)
 	
-	})
-})
-
-describe("RegisterComponent", () => {
-	const mockStore = configureMockStore([thunk])
-	const store =	 mockStore({userReducer: {isLoading:false, errorMsg: "some error"}});
-
-	consoleSpyForProptypeError()
-
-	it("should throw error when wrong propTypes are provided", ()=>{
-		
-		shallow(<RegisterComponent store={store} registerUser={"some func"}/>).dive({ context: { store } }).dive()
-		expect(console.error).toHaveBeenCalled()
 	})
 })

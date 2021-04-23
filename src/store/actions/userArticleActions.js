@@ -1,5 +1,5 @@
 import * as types from '../types/userArticelTypes'
-import { replaceArticleInArticlesArray, addArticleToLocalStorage, getItemFromLocalStorage,addItemToLocalStorage } from './articleActionHelpers'
+import { replaceArticleInArticlesArray, addArticleToLocalStorage, getItemFromLocalStorage,addItemToLocalStorage } from './actionHelpers/articleActionHelpers'
 import {getUsernameSelector} from "../selectors/userSelectors";
 import {fetchArticlesSucceeded} from "./articleActions/newsApiActions";
 import {getArticlesSelector} from "../selectors/articleSelectors";

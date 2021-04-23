@@ -15,6 +15,7 @@ const newsApiFetcher = (options) => {
       "useQueryString":true,
       "Accept": 'application/json',
       'Content-Type': 'application/json,text/html,text/json',
+
     }
   })
 

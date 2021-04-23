@@ -1,4 +1,4 @@
-import * as helpers from "../../../store/actions/articleActionHelpers"
+import * as helpers from "../../../store/actions/actionHelpers/articleActionHelpers"
 
 import {testArticles} from "../../testArticles";
 

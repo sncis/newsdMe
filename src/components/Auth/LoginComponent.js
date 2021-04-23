@@ -6,31 +6,48 @@ import { Redirect } from 'react-router-dom';
 import { loginUserAction } from "../../store/actions/userActions/loginActions"
 import * as selectors from '../../store/selectors/userSelectors'
 import "../../css/AuthForm.css"
+import {passwordValidator, usernameValidator} from "../../validators/validators";
 
 export class LoginComp extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-		username: '',
-		password: ''
+			username: '',
+			password: '',
+			validationError:'',
 	}}
 
-	setUsername = (username) => {
+
+	handleChange = event =>{
+		console.log(this.state)
+		const isCheckbox = event.target.type === 'checkbox'
 		this.setState({
-			username: username,
+			[event.target.name]: isCheckbox ? event.target.checked : event.target.value
 		})
 	}
 
-	setPassword = (password) => {
-		this.setState({
-			password:password
-		})
+	validateForm = ()=>{
+		if(!usernameValidator(this.state.username) || !passwordValidator(this.state.password)){
+			this.setState({
+				validationError: "please provide valid input"
+			})
+			return false
+		}
+		return true
 	}
 
 	handelLogin = (e)=> {
 		e.preventDefault()
-		// this.props.testLogin(this.state)
-		this.props.loginUser(this.state);
+		let isValide = this.validateForm()
+		console.log("login called")
+		if(isValide){
+
+			const {username, password } = this.state
+			const loginUser = {username, password}
+			this.props.loginUser(loginUser);
+
+		}
+		// this.props.loginUser(this.state);
 	}
 
 	render() {
@@ -40,14 +57,14 @@ export class LoginComp extends Component {
 				<form className='auth-form'>
 					<div className="input-container">
 						<label htmlFor="username">Username</label>
-						<input placeholder="enter username" name="username" id ="username" onChange={event => this.setUsername(event.target.value)} />
+						<input placeholder="enter username" name="username" id ="username" value={this.state.username} onChange={this.handleChange} />
 					</div>
 
 					<div className="input-container">
 						<label htmlFor="password">Password</label>
-						<input type="password" placeholder="enter password" name="password" id="password" onChange={event => this.setPassword(event.target.value)} />
+						<input type="password" placeholder="enter password" name="password" id="password" value ={this.state.password} onChange={this.handleChange} />
 					</div>
-				
+					{this.state.validationError && <div className="validationError">{this.state.validationError}</div>}
 					<button type="submit" onClick={this.handelLogin}>Login</button>
 				</form>
 				{this.props.isLoading && <div><p id="loadingMsg">Loading </p></div>}

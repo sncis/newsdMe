@@ -4,6 +4,17 @@
   "clean_urls": false,
   "routes": {
     "/**": "index.html"
+  },
+  "https-only": true,
+  "headers": {"/**": {
+    "X-Frame-Options": "deny",
+    "X-Content-Type-Options": "nosniff",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Content-Security-Policy": "default-src 'self' https://newsdbackend.herokuapp.com ; script-src 'self' ; img-src 'self' https://newscatcher.p.rapidapi.com; manifest-src 'self'; style-src 'self' ",
+    "Permission-Policy": "camera 'none'; autoplay 'none'; battery 'none'; display-capture 'self'; document-domain 'none; execution-while-not-rendered 'self';execution-while-out-of-viewport 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self';layout-animations 'none'; legacy-image-formats 'none'; magnetometer 'self'; microphone 'none';midi 'none'; navigation-override 'none'; oversized-images 'none'; payment 'none'; picture-in-picture 'none'; publickey-credentials-get 'none';sync-xhr 'self'; usb 'none'; vr 'none'; wake-lock 'none'; screen-wake-lock 'none'; web-share 'self'; xr-spatial-tracking 'none'",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  }
+
   }
 }
 

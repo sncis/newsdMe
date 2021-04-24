@@ -27,30 +27,6 @@ export class RegisterComp extends Component {
       initialState
     };
   }
-  
-  // setUsername = name => {
-  //   this.setState({
-  //     username: name
-  //   });
-  // };
-  //
-  // setPassword = pass => {
-  //   this.setState({
-  //     password: pass
-  //   });
-  // };
-  //
-  // setConfirmPassword = confPassword => {
-  //   this.setState({
-  //     confirmPassword: confPassword
-  //   })
-  // }
-  //
-  // setEmail = mail => {
-  //   this.setState({
-  //     email: mail
-  //   });
-  // };
 
   handleChange = event =>{
     console.log(this.state)
@@ -126,19 +102,24 @@ export class RegisterComp extends Component {
 
             </div>
             
-            <div className="input-container">  
+            <div className="input-container password-container">
               <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="password"
-                value={this.state.password || ''}
-                onChange={this.handleChange}
-              />
-              <div className="passwordInfo">Use 8 or more characters with a mix of letters, numbers & symbols
+              <div>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    value={this.state.password || ''}
+                    onChange={this.handleChange}
+                />
+                <div className="passwordInfo"><p>Use 8 or more characters with a mix of letters, numbers & symbols</p>
+
+                </div>
+
               </div>
-              {this.state.passwordError && <div className="errorMsg">{this.state.passwordError}</div>}
+
+            {this.state.passwordError && <div className="errorMsg">{this.state.passwordError}</div>}
             </div>
 
             

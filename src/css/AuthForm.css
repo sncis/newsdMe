@@ -50,3 +50,15 @@
 	align-self: center;
 	width: 80%;
 }
+
+.passwordInfo >p {
+	display: block;
+	font-size: 0.7em;
+	text-align: center;
+	margin: 0px;
+
+}
+
+.input-container .password-container {
+	maring-top: 10px;
+}

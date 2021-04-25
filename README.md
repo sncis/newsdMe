@@ -4,14 +4,13 @@
 > This was on perpuse to make it simple to use the funcktionalities without creating own apik key etc.:)
 
 
-A Live version of the project hosted on Heroku can be seen here --> [NewsdMe](https://newsdme.herokuapp.com/)
 A simple news Website to get an overview of daily updated articles form all around the word. After registration users can store and bookmark articles for a later read. 
 This Repository contains the frontend for the NewsdMe WebApplication. It is a stand alone application and can also be used without the backend which is contained in this [Git Repo](https://github.com/snzew/newsdAuthentication). 
 The backend is needed for user Registration and Authentication as well as for all actions an autenticated user can perform.
 In addition this project is used to shows some implemented measurments taken against common WebAppplication vulnerabilities. At the end of this Document a security sections explains the implemented measurements and shows which mesurements could be taken to secure the webapplication even more. The security measures refer only to the Frotend. Backend measures are lsited seperatly in the [Newsauthentication](https://github.com/snzew/newsdAuthentication) README file.
 
 
-  
+A Live version of the project hosted on Heroku can be seen here --> [NewsdMe](https://newsdme.herokuapp.com/)  
 
 # Getting Started
 NewsdMe is a `ReactJs App` generated with creat-react-app and uses yarn to manage dependencies.

@@ -1,9 +1,14 @@
 # newsd
 
-A Live version of the project can be seen here --> [NewsdMe](https://newsdme.herokuapp.com/)
+> For the sake of simplicity I left the repository private and populated some credentials.
+> This was on perpuse to make it simple to use the funcktionalities without creating own apik key etc.:)
+
+
+A Live version of the project hosted on Heroku can be seen here --> [NewsdMe](https://newsdme.herokuapp.com/)
 A simple news Website to get an overview of daily updated articles form all around the word. After registration users can store and bookmark articles for a later read. 
-This Repo contains the frontrnd for the NewsdMe Webapplication. It is a stand alone application and can be also used without the backend wich is contained in this [Repo]("link"). The backend is need for user registration and Authentication as well as for all actions an autenticated user can perform.
-In addition this project is used to demonstrate how to secure a Webapp created with ReactJs. At the end of this Document a security sections explains the implemented measurements agains common webapp security vulnerabilities. 
+This Repository contains the frontend for the NewsdMe WebApplication. It is a stand alone application and can also be used without the backend which is contained in this [Git Repo](https://github.com/snzew/newsdAuthentication). 
+The backend is needed for user Registration and Authentication as well as for all actions an autenticated user can perform.
+In addition this project is used to shows some implemented measurments taken against common WebAppplication vulnerabilities. At the end of this Document a security sections explains the implemented measurements and shows which mesurements could be taken to secure the webapplication even more. The security measures refer only to the Frotend. Backend measures are lsited seperatly in the [Newsauthentication](https://github.com/snzew/newsdAuthentication) README file.
 
 
   
@@ -14,6 +19,8 @@ The articles displayde on the Homepage are fetched from Newscratcher for which y
 
 To run the app localy with https a self-signed certificate would be needed. You can also disable https which will be explained later in the Environement configurations section. 
 
+
+
 ## Prerequisites
 
 Before you begin make sure to met the following requirements.
@@ -21,64 +28,83 @@ Before you begin make sure to met the following requirements.
 * having Node v14.x installed on your machine 
 * you have a latest verstion of yarn/npm installed on your system. (I recommend to use yarn)
 
+
 ## Running NewsdMe localy
 To runn NewsdMe follow these steps:
+
 (all commands are for Linux/macOs, for Windows please look up the corresponding commands by yourself) 
 
+
+
 ## Environement configurations
-### Disabling https
-HTTPS ins enabled by default. To disable HTTPS disable go to the .env.development.local file in the root directory of the project and disable the following three lines.
+
+### Disabling HTTPS
+HTTPS ins enabled by default. To disable HTTPS disable go to the `.env.development.local` file in the root directory of the project and disable the following three lines.
 ```
 HTTPS=true
-SSL_CRT_FILE=/path/to/certificate/file/
-SSL_KEY_FILE=/to/yout/certificate/key/file
+SSL_CRT_FILE=*/path/to/certificate/file/*
+SSL_KEY_FILE=*/to/yout/certificate/key/file*
 ```
 
-...go to your static.json file in your root directory and set https-only to false:
+...go to your `static.json` file in your root directory and set https-only to false:
 
 ```
  "https-only": false,
 ```
 
-### Enabling https (enabled by default) 
+
+### Enabling HTTPS (enabled by default) 
 To use HTTPS locally you need a self-signed SSL-sertificate for development purposes. 
 If you dont have already a self-signed certificate you can easly create one with [mkCert](https://github.com/FiloSottile/mkcert).
-Once having a certificate replace the SSL_CERT_FILE and SSL_CERT_KEY variables in the env.development.local with the path to your certifcate.
 
-To only allow HTTPS connection go to your static.json file in the root directory and set https-only to true:
+Once having a certificate replace the SSL_CERT_FILE and SSL_CERT_KEY variables in the `env.development.local` with the path to your certifcate.
+
+To only allow HTTPS connection go to your `static.json` file in the root directory and set https-only to true:
 
 ```
  "https-only": true,
 ```
+
+
+
 ### Using your onwn newscratcher API Key 
-To fetch articles from newscratcher you need to generate a Api Key and place it in the .env.development.local file.
+To fetch articles from newscratcher you need to generate a Api Key and place it in the `.env.development.local` file.
 
 ```
 REACT_APP_NEWSCRATCHER_API_KEY=<YOUR_API_KEY>
 ```
 
+
+
 ## Running the app
+
 ### Installing dependencies
+
 From the root directory, run :
 
 ```
-yarn install
+$ yarn install
 ```
+
 
 ### Starting NewsdMe
+
 To start the app run:
 ```
-yarn start
+$ yarn start
 ```
+After starting the App you can open the app in the broser under [https://localhost:3000/] for secure apps or [http://localhost:3000/]
 
 ### Testing NewsdMe
+
 To test the app run:
 ```
-yarn test
+$ yarn test
 ```
 
 ## Security Implementation
 To secure a Webapp certain security measurements can be taken. Not all of the possible measurements are listed here but the following list will give an overview of implemented security features for common webapp vulerabilities.
+
 
 ### List of implemented security features 
 

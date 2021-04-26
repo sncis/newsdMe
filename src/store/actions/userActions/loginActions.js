@@ -17,8 +17,8 @@ export const loginUserAction = user =>
        await backendFetcher(options)
         dispatch(loginUserSucceeded(user.username))
     }catch(error){
-      dispatch(loginUserError(error.message));
-
+       console.log("login error")
+      dispatch(loginUserError("Wrong username or password"));
     }
 }
 
@@ -37,25 +37,22 @@ export const loginUserSucceeded = (username, jwtToken ) => {
 }
 
 export const loginUserError = (msg) => {
+  console.log(msg)
   return{
     type: types.USER_LOGIN_FAILED,
     payload: msg
   }
 }
 
-export const logoutAction = () =>
-   async (dispatch,getState, {backendFetcher})=> {
-     const options ={
-       url: "/auth/logout",
-       method:"get"
-     }
-      deleteCookies()
-      window.sessionStorage.clear()
-      window.localStorage.clear()
-      dispatch(logout())
-      await backendFetcher(options)
-}
+export const logoutAction = () => {
+  return dispatch => {
+    deleteCookies()
+    window.sessionStorage.clear()
+    window.localStorage.clear()
+    dispatch(logout())
 
+  }
+}
 
 
 export const logout = () => {
@@ -74,7 +71,6 @@ export const goToAdminSide = () =>
         const response = await backendFetcher(options)
         dispatch(goAdminSucceeded(response.data))
       }catch(error){
-        console.log("errroror froma din backend ")
         console.log(error.message)
         dispatch(goAdminFailed(error.message))
       }

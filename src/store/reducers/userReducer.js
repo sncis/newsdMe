@@ -55,7 +55,6 @@ const userReducer = (state = initialState, action='') => {
         loggedIn: true,
         errorMsg:'',
         confirmed: true,
-
       }
     case types.USER_LOGIN_FAILED:
       return{

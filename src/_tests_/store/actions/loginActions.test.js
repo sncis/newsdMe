@@ -55,7 +55,7 @@ describe("loginActions", () => {
 			type: types.IS_LOADING
 		},{
 			type: types.USER_LOGIN_FAILED,
-			payload: "some error"
+			payload: "Wrong username or password"
 		}]
 
 		await store.dispatch(actions.loginUserAction(user)).then(()=>{

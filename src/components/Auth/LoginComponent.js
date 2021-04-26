@@ -38,10 +38,12 @@ export class LoginComp extends Component {
 
 	handelLogin = (e)=> {
 		e.preventDefault()
-		let isValide = this.validateForm()
 		console.log("login called")
+		let isValide = this.validateForm()
 		if(isValide){
-
+			this.setState({
+				validationError: ""
+			})
 			const {username, password } = this.state
 			const loginUser = {username, password}
 			this.props.loginUser(loginUser);
@@ -54,7 +56,7 @@ export class LoginComp extends Component {
 		return(
 			<div> 
 				{this.props.isLoggedIn && <Redirect to='/dashboard'/>}
-				<form className='auth-form'>
+				<form className='auth-form' onSubmit={this.handelLogin}>
 					<div className="input-container">
 						<label htmlFor="username">Username</label>
 						<input placeholder="enter username" name="username" id ="username" value={this.state.username} onChange={this.handleChange} />
@@ -65,7 +67,7 @@ export class LoginComp extends Component {
 						<input type="password" placeholder="enter password" name="password" id="password" value ={this.state.password} onChange={this.handleChange} />
 					</div>
 					{this.state.validationError && <div className="validationError">{this.state.validationError}</div>}
-					<button type="submit" onClick={this.handelLogin}>Login</button>
+					<button type="submit">Login</button>
 				</form>
 				{this.props.isLoading && <div><p id="loadingMsg">Loading </p></div>}
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}

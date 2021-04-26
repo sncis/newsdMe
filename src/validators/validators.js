@@ -6,7 +6,7 @@ export const emailValidator = (email) => {
 
 export const passwordValidator = (password) => {
   return !password ? false :
-  !!password.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+  !!password.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,25}$")
 }
 
 export const usernameValidator = username => {
@@ -15,7 +15,7 @@ export const usernameValidator = username => {
   return !username ? false : !!username.match(regex)
 }
 export const cleanUrlValidator = cleanUrl => {
-  const regex = "^(?=[A-Za-z0-9]{,20}.)([a-z]{2,4})$"
+  const regex = "^([A-Za-z0-9]{1,20}\.)([a-z]{2,4})$"
   return !cleanUrl ? false : !!cleanUrl.match(regex)
 }
 

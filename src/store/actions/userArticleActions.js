@@ -16,7 +16,6 @@ export const getUserArticles = () =>
       }
       try{
         const response = await backendFetcher(options)
-        console.log(response)
         dispatch(getUserArticlesSucceeded(response.data))
       }catch(error){
         dispatch(getUserArticlesError(error.message))

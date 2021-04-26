@@ -46,7 +46,8 @@ export const loginUserError = (msg) => {
 export const logoutAction = () =>
    async (dispatch,getState, {backendFetcher})=> {
      const options ={
-       url: "/auth/logout"
+       url: "/auth/logout",
+       method:"get"
      }
       deleteCookies()
       window.sessionStorage.clear()

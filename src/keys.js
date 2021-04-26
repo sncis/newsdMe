@@ -1,3 +1,5 @@
 export const GOOGLE_API_KEY = "AIzaSyAF4jqsHsGqIbCDoc8OynDM1Ud25glD9d4"
 
 export const NEWS_API_KEY="36776756a01547adaf2720c386009d00"
+
+export const NEWSCRATCHER_API_KEY='f973fc276cmsha0a573cbf1f0d4cp1f8c8ejsn1a933594d20c'

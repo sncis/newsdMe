@@ -70,8 +70,7 @@ export const confirmRegistration = (token) =>
       dispatch(doConfirmRegistration())
 
       const options = {
-        url: `auth/confirmUser?token=${token}`,
-
+        url: `auth/confirm?token=${token}`,
         method: "get"}
 
       try{

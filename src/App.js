@@ -23,7 +23,7 @@ export function App({isLoggedIn, isAdmin}) {
           <Route path="/confirm/:index" render={(props) => (<RegistrationConfirmationPage {...props}/>)} />
 
           <ProtectedRoute path='/dashboard' component={DashboardPage} isLoggedIn={isLoggedIn} isAuthorised={isLoggedIn} redirectPath='/auth/1'/>
-          <ProtectedRoute path='/admin' component={AdminPage} isLoggedIn={isLoggedIn} isAuthorised={isAdmin} redirectPath='/dashboard'/>
+          <ProtectedRoute path='/admin' component={AdminPage} isLoggedIn={isLoggedIn} isAuthorised={isAdmin} redirectPath='/auth/1'/>
         </Switch>
       </BrowserRouter>
     </div>

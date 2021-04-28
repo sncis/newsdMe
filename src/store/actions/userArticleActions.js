@@ -11,7 +11,7 @@ export const getUserArticles = () =>
 
       dispatch(loadUserArticles())
       const options ={
-        url: `articles?username=${getUsernameSelector(getState())}`,
+        url: "articles",
         method: 'get'
       }
       try{
@@ -25,7 +25,7 @@ export const getUserArticles = () =>
 export const saveUserArticle = article =>
   async(dispatch,getState,{backendFetcher})=> {
     const options = {
-      url: `articles?username=${getUsernameSelector(getState())}`,
+      url: "articles",
       method: "post",
       data: JSON.stringify(article)
     }

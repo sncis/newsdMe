@@ -99,7 +99,7 @@ export const deleteArticleInDB  = (article)=>
   async (dispatch, getState, {backendFetcher}) => {
 
     const options = {
-      url: `articles/article?id=${article.id}`,
+      url: `articles/article?id=${article._id}`,
       method: 'delete'
     }
 

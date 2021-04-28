@@ -8,11 +8,7 @@ export const loginUserAction = user =>
    async (dispatch, getState, {backendFetcher}) => {
      dispatch(loginUserLoading())
 
-     const options = {
-      url: "/auth/login",
-      method: "post",
-      data: JSON.stringify(user)
-    }
+     const options = {url: "/auth/login",method: "post",data: JSON.stringify(user)}
     try{
        await backendFetcher(options)
         dispatch(loginUserSucceeded(user.username))
@@ -48,11 +44,11 @@ export const logoutAction = () => {
   return dispatch => {
     deleteCookies()
     window.sessionStorage.clear()
-    window.localStorage.clear()
     dispatch(logout())
 
   }
 }
+
 
 
 export const logout = () => {

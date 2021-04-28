@@ -16,14 +16,14 @@ export class Article extends React.Component {
 	toogleIsBoomarked = (article) => {
 		if(this.props.isLoggedIn){
 			console.log("##############")
-			console.log(article.isBookmarked)
-			if(!article.isBookmarked){
-				article['isBookmarked'] = true;
-				console.log(article.isBookmarked)
+			console.log(article.bookmarked)
+			if(!article.bookmarked){
+				article['bookmarked'] = true;
+				console.log(article.bookmarked)
 
 				this.props.saveUserArticle(article)
 			}else{
-				article['isBookmarked'] = false;
+				article['bookmarked'] = false;
 				this.props.removeUserArticle(article)
 			}
 		}else {
@@ -32,7 +32,6 @@ export class Article extends React.Component {
 	}
 
 	render(){
-		// let source = this.props.article.source.name !== undefined ? this.props.article.source.name : this.props.article.source;
 		return(
 			<div className="article_container" >
 					
@@ -53,8 +52,8 @@ export class Article extends React.Component {
 
 
 					<div className="article_bookmark-container" onClick={() => this.toogleIsBoomarked(this.props.article)}>
-						{ !this.props.article.isBookmarked && <BookmarkIcon size={16} className="article_bookMark" /> }
-						{ this.props.article.isBookmarked && <BookmarkFillIcon size={16} className="article_bookMark" /> }
+						{ !this.props.article.bookmarked && <BookmarkIcon size={16} className="article_bookMark" /> }
+						{ this.props.article.bookmarked && <BookmarkFillIcon size={16} className="article_bookMark" /> }
 					</div>
 			</div>
 		)
@@ -69,7 +68,7 @@ Article.propTypes = {
 		description: PropTypes.string,
 		url: PropTypes.string,
 		source : PropTypes.any,
-		isBookmarked: PropTypes.bool,
+		bookmarked: PropTypes.bool,
 
 	}),
 	removeUserArticle: PropTypes.func,

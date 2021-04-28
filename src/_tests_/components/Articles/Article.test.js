@@ -21,7 +21,7 @@ const dummyArticle = {author: null,
 			title: "Was für einen Deal mit dem Iran spricht",
 			topic: "politics",
 			_id: "a566a5dca65e7e53184b138813ae43ca",
-	"isBookmarked":false
+	bookmarked:false
 
 }
 
@@ -38,7 +38,7 @@ const setProps = (isBookmarked, isLoggedIn, articleType) => {
 				title: "Was für einen Deal mit dem Iran spricht",
 				topic: "politics",
 				_id: "a566a5dca65e7e53184b138813ae43ca",
-		"isBookmarked":isBookmarked
+		bookmarked:isBookmarked
 	}
 
 	const props = {
@@ -87,12 +87,12 @@ describe("Article as DailyArticle when logedIn", () =>{
 
 		const spy = jest.spyOn(component.instance().props, "saveUserArticle")
 
-		expect(component.instance().props.article["isBookmarked"]).toEqual(false)
+		expect(component.instance().props.article["bookmarked"]).toEqual(false)
 
 		bookmark.simulate('click', {dummyArticle})
 
 		expect(spy).toHaveBeenCalledTimes(1)
-		expect(component.instance().props.article["isBookmarked"]).toEqual(true)	
+		expect(component.instance().props.article["bookmarked"]).toEqual(true)
 	})
 	
 })
@@ -137,13 +137,13 @@ describe("Article as DailyArticle when logedOut", () =>{
 		const spyHistory = jest.spyOn(component.instance().props.history, "push")
 
 
-		expect(component.instance().props.article["isBookmarked"]).toEqual(false)	
+		expect(component.instance().props.article["bookmarked"]).toEqual(false)
 
 		bookmark.simulate('click', {dummyArticle})
 
 		expect(spy).toHaveBeenCalledTimes(0)
 		expect(spyHistory).toHaveBeenCalledWith('/auth/1')
-		expect(component.instance().props.article["isBookmarked"]).toEqual(false)	
+		expect(component.instance().props.article["bookmarked"]).toEqual(false)
 	})
 	
 })
@@ -182,12 +182,12 @@ describe("Article as UserArticle", () => {
 
 		const spy = jest.spyOn(component.instance().props, "removeUserArticle")
 
-		expect(component.instance().props.article["isBookmarked"]).toEqual(true)	
+		expect(component.instance().props.article["bookmarked"]).toEqual(true)
 
 		bookmark.simulate('click', {dummyArticle})
 
 		expect(spy).toHaveBeenCalledTimes(1)
-		expect(component.instance().props.article["isBookmarked"]).toEqual(false)	
+		expect(component.instance().props.article["bookmarked"]).toEqual(false)
 	
 	})
 })

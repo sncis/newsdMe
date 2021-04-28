@@ -20,6 +20,8 @@ export class ConfirmationComponent extends React.Component {
 
   componentDidMount(){
     const token = new URLSearchParams(this.props.location.search).get('token');
+    console.log("*****************")
+    console.log(token)
     this.setState({
       index: parseInt(this.props.match.params.index),
       token: token
@@ -41,7 +43,7 @@ export class ConfirmationComponent extends React.Component {
             {this.state.index === 2 && <div className="confirmation-text-container">
             <p>Yeayyy Your almost in!</p>
               <p>click button below to confirm your registration</p>
-              <button onClick={this.props.confirmUser}>Confirm</button>
+              <button onClick={() =>this.props.confirmUser(this.state.token)}>Confirm</button>
             </div>}
 
             {this.props.isConfirmationSuccess && <Redirect to="/"/>}
@@ -56,7 +58,7 @@ export class ConfirmationComponent extends React.Component {
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    confirmUser: () => dispatch(confirmRegistration(this.state.token))
+    confirmUser: (token) => dispatch(confirmRegistration(token))
   }
 
 }

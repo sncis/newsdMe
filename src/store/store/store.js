@@ -12,7 +12,6 @@ const store = createStore(rootReducer,
     applyMiddleware(thunk.withExtraArgument(
         {backendFetcher: backendApiFetcher(() => {
             store.dispatch(logoutAction())
-            // console.log(error)
         }
           )}
         )

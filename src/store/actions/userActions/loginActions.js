@@ -40,13 +40,18 @@ export const loginUserError = (msg) => {
   }
 }
 
-export const logoutAction = () => {
-  return dispatch => {
-    deleteCookies()
+export const logoutAction = () =>
+  async (dispatch, getState, {backendFetcher}) => {
+    const options={
+      url:"/auth/logout",
+      method: "post",
+    }
+    await backendFetcher(options).then(response => console.log(response)).catch(error => console.log(error))
+
+    deleteCookies();
     window.sessionStorage.clear()
     dispatch(logout())
 
-  }
 }
 
 

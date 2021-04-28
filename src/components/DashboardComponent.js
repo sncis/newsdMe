@@ -14,6 +14,7 @@ export class DashboardComponent extends React.Component {
     this.props.loadUserArticles()
   }
 
+
   render(){
     return (
       <div className="">

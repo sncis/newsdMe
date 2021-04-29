@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import {BookmarkFillIcon, BookmarkIcon} from '@primer/octicons-react'
 import { getUserLoginSelector } from '../../store/selectors/userSelectors'
+import dummy from "../../assets/img/dummy.jpg"
 import "../../css/UserArticle.css";
 import "../../css/Article.css";
 
@@ -38,7 +39,7 @@ export class Article extends React.Component {
 					<a className="article_link-to-article" href={urlValidator(this.props.article.link)? this.props.article.link : ""} target='blank'>
 						
 						<div className="article_thumbnail">
-							<img src={this.props.article.link} alt="article thumbnail" />
+							<img src={dummy} alt="article thumbnail" />
 						</div>
 
 						<h3 className ="article_title">{this.props.article.title}</h3>

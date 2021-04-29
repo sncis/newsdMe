@@ -13,8 +13,8 @@ const newsApiFetcher = (options) => {
      "x-rapidapi-key" : process.env.REACT_APP_NEWSCRATCHER_API_KEY,
       "x-rapidapi-host": "newscatcher.p.rapidapi.com",
       "useQueryString":true,
-      "Accept": 'application/json',
-      'Content-Type': 'application/json,text/html,text/json',
+      "Accept": 'application/json; text/html',
+      'Content-Type': 'application/json',
 
     }
   })

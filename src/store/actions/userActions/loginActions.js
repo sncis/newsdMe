@@ -1,13 +1,14 @@
 import * as types from "../../types/userTypes";
-import {deleteCookies} from "../actionHelpers/actionUtils";
+import {deleteCookies, deletecsrfToken} from "../actionHelpers/actionUtils";
 
 
 /**********login actions *******************/
 
 export const loginUserAction = user =>
    async (dispatch, getState, {backendFetcher}) => {
-     dispatch(loginUserLoading())
 
+     dispatch(loginUserLoading())
+     await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e))
      const options = {url: "/auth/login",method: "post",data: JSON.stringify(user)}
     try{
        await backendFetcher(options)
@@ -43,11 +44,15 @@ export const loginUserError = (msg) => {
 export const logoutAction = () =>
   async (dispatch, getState, {backendFetcher}) => {
     const options={
-      url:"/auth/logout",
+      url:"/logout",
       method: "post",
     }
-    await backendFetcher(options).then(response => console.log(response)).catch(error => console.log(error))
-
+    try{
+      await backendFetcher(options)
+    }catch(error){
+      console.log(error)
+      return;
+    }
     deleteCookies();
     window.sessionStorage.clear()
     dispatch(logout())
@@ -65,7 +70,7 @@ export const logout = () => {
 export const goToAdminSide = () =>
     async (dispatch,getState, {backendFetcher}) => {
       const options = {
-        url:'/articles/admin',
+        url:'/admin',
         method:'get'
       }
       try{

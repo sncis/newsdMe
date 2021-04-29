@@ -29,6 +29,8 @@ export const getRegister = (user) =>
 export const registerUserAction = (user) =>
   async (dispatch, getState, {backendFetcher}) => {
     dispatch(registerUserLoading())
+    await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e))
+
     const options = {url: "/auth/register", method: "post",data: JSON.stringify(user)}
 
     try{
@@ -70,7 +72,7 @@ export const confirmRegistration = (token) =>
       dispatch(doConfirmRegistration())
 
       const options = {
-        url: `auth/confirm?token=${token}`,
+        url: `/auth/confirm?token=${token}`,
         method: "get"}
 
       try{

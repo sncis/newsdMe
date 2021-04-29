@@ -11,7 +11,7 @@ export const getUserArticles = () =>
 
       dispatch(loadUserArticles())
       const options ={
-        url: "articles",
+        url: "/articles",
         method: 'get'
       }
       try{
@@ -25,7 +25,7 @@ export const getUserArticles = () =>
 export const saveUserArticle = article =>
   async(dispatch,getState,{backendFetcher})=> {
     const options = {
-      url: "articles",
+      url: "/articles",
       method: "post",
       data: JSON.stringify(article)
     }
@@ -99,7 +99,7 @@ export const deleteArticleInDB  = (article)=>
   async (dispatch, getState, {backendFetcher}) => {
 
     const options = {
-      url: `articles/article?id=${article._id}`,
+      url: `/articles/article?id=${article._id}`,
       method: 'delete'
     }
 

@@ -5,9 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 import store from "../src/store/store/store"
 import "./index.css";
-import { USER_LOGIN_SUCCEEDED, DO_LOGOUT_USER } from "./store/types/userTypes";
 
-// store.dispatch({type:USER_LOGIN_SUCCEEDED, payload: {username: "someUser"}})
 
 
 const app = (

@@ -14,7 +14,7 @@ const userReducer = (state = initialState, action='') => {
         isLoading: true,
         errorMsg:'',
         isAdmin:false,
-      }
+      };
       case types.USER_REGISTER_SUCCEEDED:
       return{
         ...state,
@@ -23,21 +23,22 @@ const userReducer = (state = initialState, action='') => {
         registered: true,
         errorMsg:'',
         confirmationToken: action.payload.confirmationToken
-      }
+      };
     case types.USER_REGISTRATION_FAILED:
     return{
       ...state,
       errorMsg: action.payload,
       isLoading: false,
       registered: false,
-    }
+    };
     case types.CONFIRM_REGISTRATION_SUCCEEDED:
       return {
       ...state,
         isLoading:false,
         registered: true,
+        errorMsg:'',
         confirmed: true,
-    }
+    };
     case types.CONFIRM_REGISTRATION_FAILED:
       return{
         ...state,
@@ -46,7 +47,7 @@ const userReducer = (state = initialState, action='') => {
         confirmed: false,
         errorMsg: action.payload,
 
-      }
+      };
     case types.USER_LOGIN_SUCCEEDED:
       return{
         ...state,
@@ -55,7 +56,7 @@ const userReducer = (state = initialState, action='') => {
         loggedIn: true,
         errorMsg:'',
         confirmed: true,
-      }
+      };
     case types.USER_LOGIN_FAILED:
       return{
         ...state,
@@ -63,24 +64,24 @@ const userReducer = (state = initialState, action='') => {
         isLoading: false,
         confirmed: false,
 
-      }
+      };
     case types.DO_LOGOUT_USER:
       return{
         loggedIn: false,
         isAdmin:false,
-      }
+      };
     case types.DO_ADMIN_FAILED:
       return{
         ...state,
         isAdmin: false,
         errorMsg: action.payload,
-      }
+      };
     case types.DO_ADMIN_SUCCEEDED:
       return{
         ...state,
         backendText: action.payload,
         isAdmin: true,
-      }
+      };
     default:
       return state;
   }

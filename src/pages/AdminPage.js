@@ -9,7 +9,7 @@ export class AdminPage extends React.Component{
     return(
         <div>
           <h2>Hello Admin</h2>
-          <p>{this.props.backendText}</p>
+          <p>{this.props.backendText()}</p>
         </div>
     )
   }
@@ -17,7 +17,7 @@ export class AdminPage extends React.Component{
 
 const mapStateToProps = state =>{
   return {
-    backendText : getBackendTextSelector(state)
+    backendText : () => getBackendTextSelector(state)
   }
 }
 

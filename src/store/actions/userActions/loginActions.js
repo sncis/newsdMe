@@ -1,14 +1,15 @@
 import * as types from "../../types/userTypes";
-import {deleteCookies, deletecsrfToken} from "../actionHelpers/actionUtils";
+import { deleteCookies } from "../actionHelpers/actionUtils";
 
 
-/**********login actions *******************/
+/********** login actions *******************/
 
 export const loginUserAction = user =>
    async (dispatch, getState, {backendFetcher}) => {
-
      dispatch(loginUserLoading())
+
      await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e))
+
      const options = {url: "/auth/login",method: "post",data: JSON.stringify(user)}
     try{
        await backendFetcher(options)
@@ -17,21 +18,21 @@ export const loginUserAction = user =>
        console.log("login error")
       dispatch(loginUserError("Wrong username or password"));
     }
-}
+};
 
 
 export const loginUserLoading = () => {
   return{
     type: types.IS_LOADING
   }
-}
+};
 
 export const loginUserSucceeded = (username, jwtToken ) => {
   return{
     type: types.USER_LOGIN_SUCCEEDED,
     payload: {username: username, jwtToken: jwtToken}
   }
-}
+};
 
 export const loginUserError = (msg) => {
   console.log(msg)
@@ -39,7 +40,7 @@ export const loginUserError = (msg) => {
     type: types.USER_LOGIN_FAILED,
     payload: msg
   }
-}
+};
 
 export const logoutAction = () =>
   async (dispatch, getState, {backendFetcher}) => {
@@ -57,7 +58,7 @@ export const logoutAction = () =>
     window.sessionStorage.clear()
     dispatch(logout())
 
-}
+};
 
 
 
@@ -65,22 +66,22 @@ export const logout = () => {
   return {
     type: types.DO_LOGOUT_USER
   }
-}
+};
 
 export const goToAdminSide = () =>
-    async (dispatch,getState, {backendFetcher}) => {
-      const options = {
-        url:'/admin',
-        method:'get'
-      }
-      try{
-        const response = await backendFetcher(options)
-        dispatch(goAdminSucceeded(response.data))
-      }catch(error){
-        console.log(error.message)
-        dispatch(goAdminFailed(error.message))
-      }
+  async (dispatch,getState, {backendFetcher}) => {
+    const options = {
+      url:'/admin',
+      method:'get'
     }
+    try{
+      const response = await backendFetcher(options)
+      dispatch(goAdminSucceeded(response.data))
+    }catch(error){
+      console.log(error.message)
+      dispatch(goAdminFailed(error.message))
+    }
+  };
 
 export const goAdminSucceeded = (msgText) =>{
   return{
@@ -95,22 +96,7 @@ export const goAdminFailed = (errorMsg) =>{
     payload: errorMsg
 
   }
-}
-
-// export const doLogout = () => {
-//   return dispatch => {
-//     try{
-//       window.sessionStorage.clear()
-//       dispatch(logout())
-//     }catch(error){
-//       console.log("error from doLogout")
-//       console.log(error)
-//     }
-//   }
-
-// }
-
-
+};
 
 /**********Geolocation actions */
 

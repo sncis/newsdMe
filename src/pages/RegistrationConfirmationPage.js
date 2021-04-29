@@ -1,16 +1,13 @@
 import React from "react";
 import PageContainer from "../containers/PageContainer";
 import AuthDialogContainer from "../containers/AuthDialogContainer";
-import LoginComponent from "../components/Auth/LoginComponent";
-import RegisterComponent from "../components/Auth/RegisterComponent";
 import ConfirmationComponent from "../components/Auth/ConfirmationComponent";
 import PropTypes from "prop-types";
-// import "../../css/AuthForm.css"
 
 export class RegistrationConfirmationPage extends React.Component {
 
   constructor(props){
-    super(props)
+    super(props);
     this.state={
       index: 1
     }
@@ -27,11 +24,8 @@ export class RegistrationConfirmationPage extends React.Component {
 
   render(){
     return(
-
         <PageContainer onlyLogo={true}>
-
         <AuthDialogContainer title="Confirm Registration">
-          {/*<div className="auth-headline"><p>Resent confirmation Token? <span id='loginLink'>click here</span></p></div>*/}
            <ConfirmationComponent />
            </AuthDialogContainer>
         </PageContainer>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import ArticleList from "./Articles/ArticleList"
-import { loadDailyArticles ,loadNewsArticles} from '../store/actions/newsAPIdailyArticleActions'
 import { fetchArticles } from "../store/actions/articleActions/newsApiActions"
 
 export class HomeComponent extends React.Component {
@@ -25,7 +24,6 @@ export class HomeComponent extends React.Component {
 const mapDispatchToProps = dispatch => {
   return{
     loadDailyArticles: () => dispatch(fetchArticles())
-    // loadDailyArticles: () => dispatch(loadDailyArticles())
   }
 }
 

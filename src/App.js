@@ -10,7 +10,6 @@ import DashboardPage from './pages/DashboardPage'
 import { getUserLoginSelector } from "./store/selectors/userSelectors"
 import { getAdminSelector } from "./store/selectors/backendDataSelector"
 import AdminPage from "./pages/AdminPage";
-import {ConfirmationComponent} from "./components/Auth/ConfirmationComponent";
 import RegistrationConfirmationPage from "./pages/RegistrationConfirmationPage";
 
 export function App({isLoggedIn, isAdmin}) {

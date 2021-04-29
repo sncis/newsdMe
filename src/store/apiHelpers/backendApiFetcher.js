@@ -1,4 +1,3 @@
-import axios from 'axios'
 import Cookies from "universal-cookie";
 import backendAxiosInstance from "./backendAxiosInstance";
 
@@ -6,11 +5,21 @@ import backendAxiosInstance from "./backendAxiosInstance";
 const backendApiFetcher = onAuthFailure => async(options) => {
 
   try{
-    return await backendAxiosInstance.request({
+    const response =  await backendAxiosInstance.request({
       url: options.url,
       method: options.method,
-      data:options.data
+      data: options.data
     })
+    console.log("%%%%%%%%%%%%%%")
+
+    console.log(response)
+    const csrfToken = Cookies.get('XSRF_TOKEN')
+    // const cookie = new Cookies().set('XSRF_TOKEN',csrfToken, {httpOnly:true, sameSite:true})
+    //
+    // console.log("%%%%%%%%%%%%%%")
+    // console.log(csrfToken)
+    // backendAxiosInstance.setHeader('X-XSRF-TOKEN', cookie)
+    // return response
 
   } catch (error){
     if(error.response.status === 401){

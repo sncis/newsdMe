@@ -62,3 +62,20 @@
 .input-container .password-container {
 	maring-top: 10px;
 }
+
+.resendTokenEmail {
+	border-radius: 5px;
+	margin-left: 10px;
+	border-color: rgba(0, 0, 0,0.2);
+	border-width: thin;
+	height: 2em;
+	width: 50vw;
+}
+
+.hidden{
+	display: none
+}
+
+.show{
+	display: block
+}

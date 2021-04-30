@@ -11,15 +11,15 @@ const backendApiFetcher = onAuthFailure => async(options) => {
       data: options.data
     })
     console.log("%%%%%%%%%%%%%%")
-
-    console.log(response)
-    const csrfToken = Cookies.get('XSRF_TOKEN')
-    // const cookie = new Cookies().set('XSRF_TOKEN',csrfToken, {httpOnly:true, sameSite:true})
+    //
+    // console.log(response)
+    // const csrfToken = Cookies.get('XSRF_TOKEN')
+    // // const cookie = new Cookies().set('XSRF_TOKEN',csrfToken, {httpOnly:true, sameSite:true})
     //
     // console.log("%%%%%%%%%%%%%%")
     // console.log(csrfToken)
     // backendAxiosInstance.setHeader('X-XSRF-TOKEN', cookie)
-    // return response
+    return response
 
   } catch (error){
     if(error.response.status === 401){

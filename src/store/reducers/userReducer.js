@@ -82,6 +82,12 @@ const userReducer = (state = initialState, action='') => {
         backendText: action.payload,
         isAdmin: true,
       };
+    case types.RESEND_REGISTRATIONTOKEN_SUCCEEDED || types.RESEND_REGISTRATIONTOKEN_FAILED:
+     return {
+      ...state,
+       resendTokenMsg: action.payload
+    };
+
     default:
       return state;
   }

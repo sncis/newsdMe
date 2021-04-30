@@ -116,23 +116,23 @@ To secure a Webapp certain security measurements can be taken. Not all of the po
 #### Application / Presentation Layer Security 
 * User Registration with Email confirmation link
 * Password Policy 
-* Username and Passwork login (no 2 Factor Authentication yet) 
+* Username and Password login (no 2 Factor Authentication yet) 
 * Custom Form validators for Registration and Login Form to make sure user input is valid and not malicious
 * Protected routes based on authentication and role based authentication
 * Custom validators to valid Data fetched from Newscatcher API and backend before rendering into the DOM 
 * Generic Error Messages
 
-### Ohter measurements 
-* using Environement Variables for sensitive Keys and Information
+### Other measurements 
+* using Environment Variables for sensitive Keys and Information
 * only using up-to date and not vulnerable third party packages 
 
 
-### List of measurements which could improve security even more 
+### Some other measurements could be  
 * 2 Factor Authentication 
 * more sophisticated validators
 * credentials recovery 
 * possibility to change username and password
-* protecting confirmation route
 * protecting against network flooding attacks 
-* protecting against brute force attacks
-* restrict login attempts
+* implementing a Firewall 
+
+

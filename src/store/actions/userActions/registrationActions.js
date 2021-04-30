@@ -77,4 +77,56 @@ export const confirmRegistrationFailed = msg => {
   }
 };
 
+export const resendConfirmationToken = email =>
+  async (dispatch, getState , {backendFetcher}) => {
+  const options ={
+    url: "/auth/resendConfirmationToken",
+    method:"post",
+    data: email
+  };
+  try{
+
+    await backendFetcher(options);
+
+    dispatch(resendConfirmationTokenSucceeded())
+  }catch(error){
+    console.log(error);
+    dispatch(resendConfirmationTokenFailed())
+  }
+};
+
+export const resendConfirmationTokenSucceeded = () =>{
+  return {
+    type: types.RESEND_REGISTRATIONTOKEN_SUCCEEDED,
+    payload: "Successfully resend Token"
+  }
+};
+
+export const resendConfirmationTokenFailed = ()=>{
+  return {
+    type:types.RESEND_REGISTRATIONTOKEN_FAILED,
+    payload: "Error in sending token, please try again."
+  }
+};
+
+
+
+//
+//  @PostMapping("/resendToken")
+//  public ResponseEntity<?> resendConfirmationToken(@RequestBody String email){
+//    User user;
+//    RegistrationConfirmationToken token;
+//    try{
+//      user = userService.findUserByEmail(email);
+//      token = registrationConfirmationTokenService.findTokenByUser(user);
+//    }catch(UsernameNotFoundException e){
+//      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no such user, are you sure that you have registered?", e);
+//    }
+//
+//    String textMail = String.format(Objects.requireNonNull(mailMessage.getText()), token.getToken());
+////    emailService.sendEmail(user.getEmail(),"NewsdMe Registration token", textMail);
+//
+//    return new ResponseEntity<>(HttpStatus.OK);
+//  }
+
 

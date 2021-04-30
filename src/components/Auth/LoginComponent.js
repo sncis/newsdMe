@@ -39,8 +39,8 @@ export class LoginComp extends Component {
 	handelLogin = (e)=> {
 		e.preventDefault()
 		console.log("login called")
-		let isValide = this.validateForm()
-		if(isValide){
+		let isValid = this.validateForm()
+		if(isValid){
 			this.setState({
 				validationError: ""
 			})

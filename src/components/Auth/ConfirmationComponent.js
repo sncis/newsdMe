@@ -2,9 +2,10 @@ import React from 'react'
 import { Redirect, withRouter } from "react-router-dom"
 import { connect } from 'react-redux'
 
-import { getConfirmedSelector } from "../../store/selectors/userSelectors";
-import {confirmRegistration} from "../../store/actions/userActions/registrationActions";
+import { getConfirmedSelector, getResendTokenMsgSelector } from "../../store/selectors/userSelectors";
+import {confirmRegistration,resendConfirmationToken} from "../../store/actions/userActions/registrationActions";
 import "../../css/AuthForm.css"
+import {emailValidator, validateConfirmationToken} from "../../validators/validators";
 
 
 
@@ -16,6 +17,7 @@ export class ConfirmationComponent extends React.Component {
       token:'',
       toggleShow: "hidden",
       email:'',
+      invalidError:''
     }
 
   }
@@ -24,9 +26,11 @@ export class ConfirmationComponent extends React.Component {
     const token = new URLSearchParams(this.props.location.search).get('token');
     console.log("*****************");
     console.log(token);
+    const newToken = validateConfirmationToken(token) ? token : 'wrong otken'
+    console.log(newToken)
     this.setState({
       index: parseInt(this.props.match.params.index),
-      token: token
+      token: validateConfirmationToken(token) ? token : ''
     })
   }
 
@@ -36,19 +40,34 @@ export class ConfirmationComponent extends React.Component {
     this.setState({
       [event.target.name]: isCheckbox ? event.target.checked : event.target.value
     })
-  }
+  };
 
   showEmailField = () => {
-    console.log(this.state.toggleShow)
     this.setState({
-      toggleShow : this.state.toggleShow === "hidden" ? "show" : "hidden"
-    })
+      // toggleShow : this.state.toggleShow === "hidden" ? "show" : "hidden"
+      toggleShow : "show"
 
-    console.log(this.state.toggleShow)
-  }
+    })
+  };
+
+  handleSubmit = (e)=>{
+    e.preventDefault()
+    let isValid = emailValidator(this.state.email)
+  console.log(isValid)
+    if(isValid){
+      console.log(isValid)
+      this.setState({invalidError:""})
+
+
+      this.props.resendConfirmationToken(this.state.email);
+    }else{
+      this.setState({invalidError:" please provide valid email"})
+    }
+  };
+
+
 
   render() {
-
     return (
         <div className="auth-form" >
           <div>
@@ -56,15 +75,19 @@ export class ConfirmationComponent extends React.Component {
               <p> You successful registered</p>
               <p>Check your emails to confirm your registration</p>
 
-              <a onClick={this.showEmailField}>Reset token?</a>
+              <p onClick={this.showEmailField}>Resend token?</p>
 
-            <div  className={`resendTokenEmail ${this.state.toggleShow}`}>
-              <label htmlFor="email">Email</label>
-              <input type="email" placeholder="your Email" name="email" value={this.state.email} onChange={this.handleChange} />
+              <form onSubmit={this.handleSubmit} className={this.state.toggleShow}>
+                <div className="resendTokenEmail" >
+                  <label htmlFor="email">Email</label>
+                  <input type="email" placeholder="your Email" name="email" value={this.state.email} onChange={this.handleChange} />
 
-              <button type="submit" onSubmit={this.handelSubmit}>Submit</button>
+                  <button type="submit">Submit</button>
+                  {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
+                </div>
+                <p>{this.state.invalidError}</p>
 
-            </div>
+              </form>
 
             </div>}
 
@@ -86,7 +109,8 @@ export class ConfirmationComponent extends React.Component {
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    confirmUser: (token) => dispatch(confirmRegistration(token))
+    confirmUser: (token) => dispatch(confirmRegistration(token)),
+    resendConfirmationToken: (email) => dispatch(resendConfirmationToken(email))
   }
 
 };
@@ -96,6 +120,7 @@ const mapStateToProps = state => {
     isRegistered: true,
     isConfirmed: getConfirmedSelector(state),
     isConfirmationSuccess: getConfirmedSelector(state),
+    resendTokenMsg: getResendTokenMsgSelector(state)
   }
 
 };

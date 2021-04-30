@@ -69,6 +69,7 @@ describe("userReducer", () => {
 			isLoading:false,
 			loggedIn:false,
 			registered: true,
+			errorMsg:'',
 			isAdmin:false,
 			confirmed: true,
 
@@ -131,6 +132,28 @@ describe("userReducer", () => {
 			}
 		)
 	})
+	it("should handle RESEND_REGISTRATIONTOKEN_SUCCEEDED", () => {
+		const action = { type: types.RESEND_REGISTRATIONTOKEN_SUCCEEDED, payload: "send token again"}
+		expect(userReducer(undefined, action)).toEqual({
+			loggedIn: false,
+			isAdmin:false,
+			resendTokenMsg:"send token again",
+			confirmed: false,
+		})
+
+	});
+
+	it("should handle RESEND_REGISTRATIONTOKEN_FAILED", () => {
+		const action = { type: types.RESEND_REGISTRATIONTOKEN_FAILED, payload: "error is send token again"}
+		expect(userReducer(undefined, action)).toEqual({
+			loggedIn: false,
+			isAdmin:false,
+			resendTokenMsg:"error is send token again",
+			confirmed: false,
+		})
+
+	});
+
 
 	it("should handle userLogout", () =>{
 		const action ={type: types.DO_LOGOUT_USER}

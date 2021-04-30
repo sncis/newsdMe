@@ -14,7 +14,7 @@ describe("userReducer", () => {
 
 				}
 		)
-	})
+	});
 
 	it("should handle REGISTER_USER_LOADING", () => {
 		const action = { type: types.IS_LOADING}
@@ -28,7 +28,7 @@ describe("userReducer", () => {
 
 			}
 		)
-	})
+	});
 
 	it("should handle USER_REGISTER_SUCCEEDED", () => {
 		const action = { type: types.USER_REGISTER_SUCCEEDED, payload:{username: "some user", confirmationToken: "some token"}}
@@ -45,7 +45,7 @@ describe("userReducer", () => {
 
 			}
 		)
-	})
+	});
 
 	it("should handle USER_REGISTRATION_FAILED", () => {
 		const action = { type: types.USER_REGISTRATION_FAILED, payload: "register error"}
@@ -60,7 +60,7 @@ describe("userReducer", () => {
 
 			}
 		)
-	})
+	});
 
 
 	it("should handle CONFIRM_REGISTRATION_SUCCEEDED", () => {
@@ -74,7 +74,7 @@ describe("userReducer", () => {
 			confirmed: true,
 
 		})
-	})
+	});
 
 	it("should handle CONFIRM_REGISTRATION_FAILED", () => {
 		const action = {type: types.CONFIRM_REGISTRATION_FAILED, payload: "registration error"}
@@ -87,9 +87,7 @@ describe("userReducer", () => {
 			confirmed: false,
 
 		})
-	})
-
-
+	});
 
 	it("should handle LOGIN_USER_LOADING", () => {
 		const action = { type: types.IS_LOADING}
@@ -102,7 +100,7 @@ describe("userReducer", () => {
 				confirmed: false
 			}
 		)
-	})
+	});
 
 	it("should handle USER_LOGIN_SUCCEEDED", () => {
 		const action = { type: types.USER_LOGIN_SUCCEEDED, payload: {username: "some user"}}
@@ -117,7 +115,7 @@ describe("userReducer", () => {
 
 			}
 		)
-	})
+	});
 
 	it("should handle USER_LOGIN_FAILED", () => {
 		const action = { type: types.USER_LOGIN_FAILED, payload: "login error"}
@@ -131,20 +129,10 @@ describe("userReducer", () => {
 
 			}
 		)
-	})
-	it("should handle RESEND_REGISTRATIONTOKEN_SUCCEEDED", () => {
-		const action = { type: types.RESEND_REGISTRATIONTOKEN_SUCCEEDED, payload: "send token again"}
-		expect(userReducer(undefined, action)).toEqual({
-			loggedIn: false,
-			isAdmin:false,
-			resendTokenMsg:"send token again",
-			confirmed: false,
-		})
-
 	});
 
-	it("should handle RESEND_REGISTRATIONTOKEN_FAILED", () => {
-		const action = { type: types.RESEND_REGISTRATIONTOKEN_FAILED, payload: "error is send token again"}
+	it("should handle RESEND_REGISTRATIONTOKEN_MSG", () => {
+		const action = { type: types.RESEND_REGISTRATIONTOKEN_MSG, payload: "error is send token again"}
 		expect(userReducer(undefined, action)).toEqual({
 			loggedIn: false,
 			isAdmin:false,
@@ -163,4 +151,4 @@ describe("userReducer", () => {
 			isAdmin:false,
 		})
 	})
-})
+});

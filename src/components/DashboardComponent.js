@@ -21,7 +21,7 @@ export class DashboardComponent extends React.Component {
         <div>
          <h2>Your bookmarked Articles</h2>
           <Link onClick={() => this.props.goToAdminSide()} to='/admin'>go to admin side</Link>
-          {this.props.backendErrorMsg() && <p>{this.props.backendErrorMsg()}</p>}
+          {this.props.backendErrorMsg && <p>{this.props.backendErrorMsg}</p>}
           <ArticleList listType='userArticle'/>
        </div>
      </div>
@@ -38,7 +38,7 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state =>{
   return {
-    backendErrorMsg: () => getBackendBackendErrorMsgSelector(state)
+    backendErrorMsg: getBackendBackendErrorMsgSelector(state)
   }
 }
 

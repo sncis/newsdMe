@@ -13,8 +13,7 @@ export const usernameValidator = username => {
   return !username ? false : !!username.match(regex)
 };
 export const cleanUrlValidator = cleanUrl => {
-  const regex = "^([A-Za-z0-9]{1,20}\\.)([a-z]{2,4})$";
-  console.log("link matches ")
+  const regex = "^([A-Za-z0-9&_\\-#!?%,\\-_]{1,40})\\.([a-zA-Z]{2,4})$";
   return !!cleanUrl.match(regex)
 };
 

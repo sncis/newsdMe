@@ -35,13 +35,11 @@ export class Article extends React.Component {
 
 
 	render(){
-		const validateLink = linkValidator(this.props.article.link);
-
 		return(
 
 			<div className="article_container" >
 					
-					<a className="article_link-to-article" href={linkValidator(this.props.article.link) ? this.props.article.link : ""} target="_blank">
+					<a className="article_link-to-article" href={linkValidator(this.props.article.link) ? this.props.article.link : ""} target="_blank" rel="noreferrer">
 						
 						<div className="article_thumbnail">
 							<img src={dummy} alt="article thumbnail" />
@@ -52,7 +50,7 @@ export class Article extends React.Component {
 					</a>
 
 
-					<a href={linkValidator(this.props.article.link) ? this.props.article.link : ""} target="_blank">
+					<a href={linkValidator(this.props.article.link) ? this.props.article.link : ""} target="_blank" rel="noreferrer">
 						<p className="article_source">{cleanUrlValidator(this.props.article.clean_url) ? this.props.article.clean_url : ""}</p>
 					</a>
 

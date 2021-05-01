@@ -15,8 +15,7 @@ export const loginUserAction = user =>
        await backendFetcher(options)
         dispatch(loginUserSucceeded(user.username))
     }catch(error){
-       console.log("login error")
-      dispatch(loginUserError("Wrong username or password"));
+      dispatch(loginUserError(error.message));
     }
 };
 
@@ -27,10 +26,10 @@ export const loginUserLoading = () => {
   }
 };
 
-export const loginUserSucceeded = (username, jwtToken ) => {
+export const loginUserSucceeded = (username ) => {
   return{
     type: types.USER_LOGIN_SUCCEEDED,
-    payload: {username: username, jwtToken: jwtToken}
+    payload: username
   }
 };
 

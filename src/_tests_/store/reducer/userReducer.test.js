@@ -103,7 +103,7 @@ describe("userReducer", () => {
 	});
 
 	it("should handle USER_LOGIN_SUCCEEDED", () => {
-		const action = { type: types.USER_LOGIN_SUCCEEDED, payload: {username: "some user"}}
+		const action = { type: types.USER_LOGIN_SUCCEEDED, payload: "some user"}
 		expect(userReducer(undefined, action)).toEqual(
 			{
 				username: 'some user',

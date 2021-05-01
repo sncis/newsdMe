@@ -51,7 +51,7 @@ const userReducer = (state = initialState, action='') => {
     case types.USER_LOGIN_SUCCEEDED:
       return{
         ...state,
-        username : action.payload.username,
+        username : action.payload,
         isLoading: false,
         loggedIn: true,
         errorMsg:'',

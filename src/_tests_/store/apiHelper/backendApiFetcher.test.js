@@ -48,7 +48,7 @@ describe("backendFetcher", ()=> {
     const mockFailure = jest.fn()
     const options = {url: '/some/url/post',method:'post',data: 'some data'}
 
-    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {message:'some auth error', status:401}
+    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {data:'some auth error', status:401}
     }));
 
     await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError('some auth error');
@@ -60,7 +60,7 @@ describe("backendFetcher", ()=> {
     const mockFailure = jest.fn()
     const options = {url: '/some/url/post',method:'post',data: 'some data'}
 
-    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {message:'forbidden', status:403}
+    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {data:'forbidden', status:403}
     }));
     await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError('forbidden')
 
@@ -73,11 +73,25 @@ describe("backendFetcher", ()=> {
     const mockFailure = jest.fn()
     const options = {url: '/some/url/post',method:'post',data: 'some data'}
 
-    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {message:'some test msg', status:500}
+    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {data:'some test msg', status:500}
     }));
 
-    await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError("Ups something went wrong with the server. We are sorry for that!");
+    await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError("some test msg");
     expect(mockFailure).not.toHaveBeenCalled()
 
   })
+
+  it("should handle error, NOT call onAuthFailure", async ()=> {
+
+    const mockFailure = jest.fn()
+    const options = {url: '/some/url/post',method:'post',data: 'some data'}
+
+    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {data:'some test msg'}
+    }));
+
+    await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError("unexpected Error");
+    expect(mockFailure).not.toHaveBeenCalled()
+
+  })
+
 })

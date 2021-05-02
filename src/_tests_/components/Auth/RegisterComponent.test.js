@@ -31,13 +31,12 @@ describe("RegisterComponent", () => {
 	})
 
 	it("should dispatch registration if form is valid", () => {
-		component.setState({
-			username: "someUser",
-			password: "someUser1234!",
-			confirmPassword:"someUser1234!",
-			email: "some@email.com",
-		})
-		// console.log(component.debug())
+
+		component.find('#username').simulate('change',{target:{value:"someUser",name:'username'}})
+		component.find('#email').simulate('change',{target:{value:"some@email.com",name:'email'}})
+		component.find('#password').simulate('change',{target:{value:"someUser1234!",name:'password'}})
+		component.find('#confPassword').simulate('change',{target:{value:"someUser1234!",name:'confPassword'}})
+
 
 		const onRegistrationSpy = jest.spyOn(component.instance(), 'submitRegistration')
 

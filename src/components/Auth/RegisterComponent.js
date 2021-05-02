@@ -92,7 +92,7 @@ export class RegisterComp extends Component {
               <label htmlFor="email">Email</label>
               <input
                 id="email"
-                type="email"
+                type="text"
                 name="email"
                 placeholder="enter Email"
                 value={this.state.email || ''}
@@ -144,6 +144,8 @@ export class RegisterComp extends Component {
         {this.props.registrationErrorMsg && <div><p id="#registrationErrorMsg">{this.props.registrationErrorMsg}</p></div>}
         {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration </p><
           p>{this.props.confirmationToken}</p></div>}
+        {this.props.isLoading && <p>{this.props.isLoading}</p>}
+
 
         {this.props.isRegistrationSuccess && <Redirect to="/confirm/1" />}
 

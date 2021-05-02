@@ -2,14 +2,14 @@ import React from 'react'
 import { Redirect, withRouter } from "react-router-dom"
 import { connect } from 'react-redux'
 
-import { getConfirmedSelector, getResendTokenMsgSelector } from "../../store/selectors/userSelectors";
+import { getConfirmedSelector, getResendTokenMsgSelector,getRegistrationSuccessSelector, isLoadingUserSelector } from "../../store/selectors/userSelectors";
 import {confirmRegistration,resendConfirmationToken} from "../../store/actions/userActions/registrationActions";
 import "../../css/AuthForm.css"
 import {emailValidator, validateConfirmationToken} from "../../validators/validators";
 
 
 
-export class ConfirmationComponent extends React.Component {
+export class ConfirmationComp extends React.Component {
   constructor(props){
     super(props);
     this.state={
@@ -23,15 +23,19 @@ export class ConfirmationComponent extends React.Component {
   }
 
   componentDidMount(){
-    const token = new URLSearchParams(this.props.location.search).get('token');
-    console.log("*****************");
-    console.log(token);
-    const newToken = validateConfirmationToken(token) ? token : 'wrong otken'
-    console.log(newToken)
+    let token = new URLSearchParams(this.props.location.search).get('token');
+    let newToken = '';
+    if(token !== null){
+      console.log("token from url")
+       newToken = validateConfirmationToken(token) ? token : ''
+    }
+
     this.setState({
       index: parseInt(this.props.match.params.index),
-      token: validateConfirmationToken(token) ? token : ''
+      token: newToken
     })
+
+
   }
 
   handleChange = event =>{
@@ -44,48 +48,42 @@ export class ConfirmationComponent extends React.Component {
 
   showEmailField = () => {
     this.setState({
-      // toggleShow : this.state.toggleShow === "hidden" ? "show" : "hidden"
       toggleShow : "show"
-
     })
   };
 
   handleSubmit = (e)=>{
     e.preventDefault()
     let isValid = emailValidator(this.state.email)
-  console.log(isValid)
+    console.log(isValid)
     if(isValid){
-      console.log(isValid)
       this.setState({invalidError:""})
-
-
       this.props.resendConfirmationToken(this.state.email);
     }else{
       this.setState({invalidError:" please provide valid email"})
     }
   };
 
-
-
   render() {
     return (
         <div className="auth-form" >
           <div>
-            {this.state.index === 1 &&<div>
+            {this.state.index === 1 &&<div className='registered'>
               <p> You successful registered</p>
               <p>Check your emails to confirm your registration</p>
 
-              <p onClick={this.showEmailField}>Resend token?</p>
+              <p id="resent-token-link" onClick={this.showEmailField}>Resend token?</p>
 
-              <form onSubmit={this.handleSubmit} className={this.state.toggleShow}>
+              <form onSubmit={this.handleSubmit} id='resendForm' className={this.state.toggleShow}>
                 <div className="resendTokenEmail" >
                   <label htmlFor="email">Email</label>
-                  <input type="email" placeholder="your Email" name="email" value={this.state.email} onChange={this.handleChange} />
+                  <input  id='emailField' type="email" placeholder="your Email" name="email" value={this.state.email} onChange={this.handleChange} />
+                  <p id='errorMsg'>{this.state.invalidError}</p>
 
-                  <button type="submit">Submit</button>
+                  <button id='submitBtn' type="submit">Submit</button>
                   {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
                 </div>
-                <p>{this.state.invalidError}</p>
+                {this.props.isLoading && <p>{this.props.isLoading}</p>}
 
               </form>
 
@@ -94,10 +92,13 @@ export class ConfirmationComponent extends React.Component {
             {this.state.index === 2 && <div className="confirmation-text-container">
             <p>Yeayyy Your almost in!</p>
               <p>click button below to confirm your registration</p>
-              <button onClick={() =>this.props.confirmUser(this.state.token)}>Confirm</button>
+              <button id='confirmRegistration' onClick={() => this.props.confirmUser(this.state.token)}>Confirm</button>
             </div>}
 
-            {this.props.isConfirmationSuccess && <Redirect to="/"/>}
+            {this.props.isLoading && <p>{this.props.isLoading}</p>}
+            {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
+
+            {this.props.isConfirmed && <Redirect to="/"/>}
             {!this.props.isRegistered && <Redirect to='/confirm/1'/>}
 
           </div>
@@ -112,17 +113,19 @@ const mapDispatchToProps = (dispatch)=>{
     confirmUser: (token) => dispatch(confirmRegistration(token)),
     resendConfirmationToken: (email) => dispatch(resendConfirmationToken(email))
   }
-
 };
 
 const mapStateToProps = state => {
   return{
-    isRegistered: true,
+    isRegistered: getRegistrationSuccessSelector(state),
     isConfirmed: getConfirmedSelector(state),
-    isConfirmationSuccess: getConfirmedSelector(state),
+    isLoading: isLoadingUserSelector(state),
+    // isConfirmationSuccess: getConfirmedSelector(state),
     resendTokenMsg: getResendTokenMsgSelector(state)
   }
 
 };
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(ConfirmationComponent))
+
+const ConfirmationComponent = withRouter(connect(mapStateToProps,mapDispatchToProps)(ConfirmationComp))
+export default ConfirmationComponent;

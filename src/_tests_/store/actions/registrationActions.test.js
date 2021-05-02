@@ -68,7 +68,7 @@ describe("RegistrationAction", () => {
     store = mockStore()
 
     const expectedAction = [{
-      type: types.DO_CONFIRM_REGISTRATION
+      type: types.IS_LOADING
     }, {
       type: types.CONFIRM_REGISTRATION_SUCCEEDED,
     }]
@@ -88,7 +88,7 @@ describe("RegistrationAction", () => {
 
 
     const expectedActions = [{
-      type: types.DO_CONFIRM_REGISTRATION
+      type: types.IS_LOADING
     }, {
       type: types.CONFIRM_REGISTRATION_FAILED,
       payload: "some error"

@@ -4,7 +4,7 @@ import * as types from "../../types/userTypes";
 
 export const registerUserAction = (user) =>
   async (dispatch, getState, {backendFetcher}) => {
-    dispatch(registerUserLoading());
+    dispatch(userActionLoading());
     await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e))
 
     const options = {url: "/auth/register", method: "post",data: JSON.stringify(user)}
@@ -20,7 +20,7 @@ export const registerUserAction = (user) =>
   };
 
 
-export const registerUserLoading = () => {
+export const userActionLoading = () => {
   return {
     type: types.IS_LOADING
   }
@@ -42,7 +42,7 @@ export const registerUserFailed =(errorMsg)=>{
 
 export const confirmRegistration = (token) =>
     async (dispatch, getState, { backendFetcher }) => {
-      dispatch(doConfirmRegistration());
+      dispatch(userActionLoading());
 
       const options = {
         url: `/auth/confirm?token=${token}`,
@@ -79,7 +79,9 @@ export const confirmRegistrationFailed = msg => {
 
 export const resendConfirmationToken = email =>
   async (dispatch, getState , {backendFetcher}) => {
-  const options ={
+    dispatch(userActionLoading());
+
+    const options ={
     url: "/auth/resendConfirmationToken",
     method:"post",
     data: email

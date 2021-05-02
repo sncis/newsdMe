@@ -62,13 +62,13 @@ describe("backendFetcher", ()=> {
 
     backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {data:'forbidden', status:403}
     }));
-    await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError('forbidden')
+    await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError('Sorry you are not allowed to access this resource')
 
     expect(mockFailure).not.toHaveBeenCalled()
 
   })
 
-  it("should handle 500 error, NOT call onAuthFailure and  return default errorMSg", async ()=> {
+  it("should handle 500 error, NOT call onAuthFailure and return default errorMSg", async ()=> {
 
     const mockFailure = jest.fn()
     const options = {url: '/some/url/post',method:'post',data: 'some data'}
@@ -81,15 +81,14 @@ describe("backendFetcher", ()=> {
 
   })
 
-  it("should handle error, NOT call onAuthFailure", async ()=> {
+  it("should return default errror whenno error message ", async ()=> {
 
     const mockFailure = jest.fn()
     const options = {url: '/some/url/post',method:'post',data: 'some data'}
 
-    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response: {data:'some test msg'}
-    }));
+    backendAxiosInstance.request.mockImplementationOnce(() => Promise.reject({response:{}}));
 
-    await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError("unexpected Error");
+    await expect(backendApiFetcher(mockFailure)(options)).rejects.toThrowError("Unexpected Error occurred");
     expect(mockFailure).not.toHaveBeenCalled()
 
   })

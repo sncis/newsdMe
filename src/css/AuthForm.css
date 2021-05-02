@@ -79,3 +79,8 @@
 .show{
 	display: block
 }
+
+#resent-token-link{
+	color: blue;
+	cursor: pointer;
+}

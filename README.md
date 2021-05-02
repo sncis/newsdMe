@@ -12,6 +12,17 @@ In addition this project is used to shows some implemented measurements taken ag
 
 A Live version of the project hosted on Heroku can be seen here --> [NewsdMe](https://newsdme.herokuapp.com/)  
 
+TO test the app you can use 2 pre-registered accounts:
+1. User credentials:
+   - username: nantis
+   - password: somePass1234! 
+
+
+2. Admin credentials:
+   - usernae: adminUser
+   - password: adminPass1234! 
+
+
 # Getting Started
 NewsdMe is a `ReactJs App` generated with creat-react-app and uses yarn to manage dependencies.
 The articles displayde on the Homepage are fetched from Newscatcher for which you would need to create an own API Key on the [rapidApi website](https://rapidapi.com/newscatcher-api-newscatcher-api-default/api/newscatcher).

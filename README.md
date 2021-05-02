@@ -9,8 +9,9 @@ This Repository contains the frontend for the NewsdMe WebApplication. It is a st
 The backend is needed for user Registration and Authentication as well as for all actions an authenticated user can perform.
 In addition this project is used to shows some implemented measurements taken against common WebAppplication vulnerabilities. At the end of this Document a security sections explains the implemented measurements and shows which measurements could be taken to secure the webApplication even more. The security measures refer only to the Frontend. Backend measures are listed separably in the [Newsauthentication](https://github.com/snzew/newsdAuthentication) README file.
 
+The Threat model for the project can be found on this [miro board](https://miro.com/app/board/o9J_lLlbh3Y=/) or as PDF file in the root folder.\n
 
-A Live version of the project hosted on Heroku can be seen here --> [NewsdMe](https://newsdme.herokuapp.com/)  
+A Live version of the project hosted on Heroku can be seen here --> [NewsdMe](https://newsdme.herokuapp.com/)  \n
 
 TO test the app you can use 2 pre-registered accounts:
 1. User credentials:
@@ -20,7 +21,7 @@ TO test the app you can use 2 pre-registered accounts:
 
 2. Admin credentials:
    - usernae: adminUser
-   - password: adminPass1234! 
+   - password: adminPass1234! \n
 
 
 # Getting Started

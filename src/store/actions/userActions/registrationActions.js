@@ -11,10 +11,8 @@ export const registerUserAction = (user) =>
 
     try{
       const response = await backendFetcher(options);
-      console.log(response.data.token);
       dispatch(registerUserSucceeded(user.username, response.data.token))
     }catch(error){
-      console.log(error.message);
       dispatch(registerUserFailed(error.message));
     }
   };
@@ -49,11 +47,9 @@ export const confirmRegistration = (token) =>
         method: "get"}
 
       try{
-        const response = await backendFetcher(options);
-        console.log(response)
+        await backendFetcher(options);
         dispatch(confirmRegistrationSucceeded())
       }catch(error){
-        console.log(error.message);
         dispatch(confirmRegistrationFailed(error.message))
       }
   };

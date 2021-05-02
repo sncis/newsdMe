@@ -10,9 +10,5 @@ const backendAxiosInstance = axios.create({
   withCredentials: true,
 });
 
-backendAxiosInstance.setHeader = (header, value) => {
-  backendAxiosInstance.defaults.headers[header] = value
-};
-
 
 export default backendAxiosInstance;

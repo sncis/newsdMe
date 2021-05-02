@@ -19,7 +19,6 @@ const backendApiFetcher = onAuthFailure => async(options) => {
     }else{
       if(error.response.status === 401){
         onAuthFailure()
-        console.log(error.response.reason)
         throw new Error(error.response.data)
       }else if(error.response.status === 403){
         throw new Error("Sorry you are not allowed to access this resource")

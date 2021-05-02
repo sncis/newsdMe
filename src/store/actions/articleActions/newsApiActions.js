@@ -2,7 +2,6 @@ import * as types from "../../types/newsAPIdailyArticleTypes"
 import newsApiFetcher from "../../apiHelpers/newsApiFetcher";
 
 
-// need to ADD bookmark response action
 export const fetchArticles = ()=>{
   return async dispatch => {
     dispatch(isLoadingArticles())
@@ -14,8 +13,6 @@ export const fetchArticles = ()=>{
       const response = await newsApiFetcher(options)
       dispatch(fetchArticlesSucceeded(response.data.articles))
     }catch(error){
-
-      console.log(error)
       dispatch(fetchArticlesFailed(error.message))
     }
   }

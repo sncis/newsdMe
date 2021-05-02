@@ -144,7 +144,7 @@ export class RegisterComp extends Component {
         {this.props.registrationErrorMsg && <div><p id="#registrationErrorMsg">{this.props.registrationErrorMsg}</p></div>}
         {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration </p><
           p>{this.props.confirmationToken}</p></div>}
-        {this.props.isLoading && <p>{this.props.isLoading}</p>}
+        {this.props.isLoading && <p>Loading...</p>}
 
 
         {this.props.isRegistrationSuccess && <Redirect to="/confirm/1" />}

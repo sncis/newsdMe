@@ -11,19 +11,16 @@ export const addArticleToLocalStorage = (article) => {
 };
 
 export const getItemFromLocalStorage = (key, defaultValue) => {
-
   const articles = localStorage.getItem(key)
   if(articles !== null ){
     try{
        return JSON.parse(localStorage.getItem(key));
     }catch(error){
-      console.log(error);
       return defaultValue
     }
   }else{
     return defaultValue
   }
-
 };
 
 export const addItemToLocalStorage = (key, value) => {

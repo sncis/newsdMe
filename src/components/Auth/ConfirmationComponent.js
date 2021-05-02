@@ -71,9 +71,7 @@ export class ConfirmationComp extends React.Component {
             {this.state.index === 1 &&<div className='registered'>
               <p> You successful registered</p>
               <p>Check your emails to confirm your registration</p>
-
               <p id="resent-token-link" onClick={this.showEmailField}>Resend token?</p>
-
               <form onSubmit={this.handleSubmit} id='resendForm' className={this.state.toggleShow}>
                 <div className="resendTokenEmail" >
                   <label htmlFor="email">Email</label>
@@ -81,9 +79,10 @@ export class ConfirmationComp extends React.Component {
                   <p id='errorMsg'>{this.state.invalidError}</p>
 
                   <button id='submitBtn' type="submit">Submit</button>
-                  {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
                 </div>
-                {this.props.isLoading && <p>{this.props.isLoading}</p>}
+                {this.props.isLoading && <p>Loading...</p>}
+                {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
+
 
               </form>
 
@@ -92,11 +91,15 @@ export class ConfirmationComp extends React.Component {
             {this.state.index === 2 && <div className="confirmation-text-container">
             <p>Yeayyy Your almost in!</p>
               <p>click button below to confirm your registration</p>
-              <button id='confirmRegistration' onClick={() => this.props.confirmUser(this.state.token)}>Confirm</button>
-            </div>}
 
-            {this.props.isLoading && <p>{this.props.isLoading}</p>}
-            {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
+              <button id='confirmRegistration' onClick={() => this.props.confirmUser(this.state.token)}>Confirm</button>
+              {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
+              {this.props.isLoading && <p>Loading...</p>}
+
+            </div>
+
+            }
+
 
             {this.props.isConfirmed && <Redirect to="/"/>}
             {!this.props.isRegistered && <Redirect to='/confirm/1'/>}

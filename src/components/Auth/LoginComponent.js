@@ -69,7 +69,7 @@ export class LoginComp extends Component {
 					{this.state.validationError && <div className="validationError">{this.state.validationError}</div>}
 					<button type="submit">Login</button>
 				</form>
-				{this.props.isLoading && <div><p id="loadingMsg">Loading </p></div>}
+				{this.props.isLoading && <div><p id="loadingMsg">Loading...!</p></div>}
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}
 
 			</div>

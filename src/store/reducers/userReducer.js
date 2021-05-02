@@ -67,27 +67,38 @@ const userReducer = (state = initialState, action='') => {
       };
     case types.DO_LOGOUT_USER:
       return{
+        ...state,
         loggedIn: false,
         isAdmin:false,
+        isLoading:false,
+        errorMsg:'',
+
+
       };
     case types.DO_ADMIN_FAILED:
       return{
         ...state,
         isAdmin: false,
         errorMsg: action.payload,
+        isLoading:false,
+
       };
     case types.DO_ADMIN_SUCCEEDED:
       return{
         ...state,
         backendText: action.payload,
         isAdmin: true,
+        isLoading:false,
+        errorMsg:'',
+
       };
     case types.RESEND_REGISTRATIONTOKEN_MSG:
      return {
       ...state,
-       resendTokenMsg: action.payload
-    };
-
+       resendTokenMsg: action.payload,
+      isLoading:false,
+       errorMsg:'',
+     };
     default:
       return state;
   }

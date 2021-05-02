@@ -12,12 +12,12 @@
     "X-Content-Type-Options": "nosniff",
     "Strict-Transport-Security": "max-age=21600000; includeSubDomains",
     "Content-Security-Policy": "default-src 'self' https://newsdbackend.herokuapp.com; connect-src 'self' https://newscatcher.p.rapidapi.com https://newsdbackend.herokuapp.com https://localhost:8443; script-src 'self'; img-src 'self' https://newscatcher.p.rapidapi.com https://localhost:8443 https://newsdbackend.herokuapp.com; manifest-src 'self'; style-src 'self'; object-src 'none'; media-src 'self';",
-    "Feature-Policy": "camera 'none'; autoplay 'none'; battery 'none'; display-capture 'self'; ; execution-while-not-rendered 'self'; execution-while-out-of-viewport 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self'; layout-animations 'self'; legacy-image-formats 'none'; magnetometer 'self'; microphone 'none'; midi 'none'; navigation-override 'self'; payment 'none'; picture-in-picture 'none'; publickey-credentials-get 'none'; sync-xhr 'self'; usb 'none'; wake-lock 'none'; screen-wake-lock 'none'; web-share 'self'; xr-spatial-tracking 'none'",
-    "Permissions-Policy": "camera=(), autoplay= (),battery=(), display-capture=(),execution-while-not-rendered=(),execution-while-out-of-viewport=(),fullscreen=(),geolocation=(),gyroscope=(),layout-animations=(),legacy-image-formats=(),magnetometer=(),microphone=(),midi=(),navigation-override=(),payment=(),picture-in-picture=(),publickey-credentials-get=(),sync-xhr=(), usb=(), wake-lock=(),screen-wake-lock=(),web-share=(),xr-spatial-tracking=()",
+    "Feature-Policy": "camera 'none'; autoplay 'none'; fullscreen 'self'; geolocation 'self'; gyroscope 'self';  magnetometer 'self'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; publickey-credentials-get 'none'; sync-xhr 'self'; usb 'none'; xr-spatial-tracking 'none'",
+    "Permissions-Policy": "camera=('none'), autoplay= ('none'),fullscreen=('self'),geolocation=('self'),gyroscope=('self'),magnetometer=('self'),microphone=('none'),payment=('none'),picture-in-picture=('none'),publickey-credentials-get=('none'),sync-xhr=('self'), usb=('none'),xr-spatial-tracking=('none')",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Cross-Origin-Resource-Policy": "cross-origin",
     "Access-Control-Allow-Origins": "https://newsdbackend.herokuapp.com https://newscatcher.p.rapidapi.com",
-    "Access-Control-Allow-Credentials": true
+    "Access-Control-Allow-Credentials": true,
   }
   }
 }

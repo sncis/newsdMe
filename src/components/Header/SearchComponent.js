@@ -17,8 +17,8 @@ export class Search extends React.Component {
 	render(){
 		return(
 			<div className="search">
-				<input className="search-input" placeholder="enter searchterm" onChange={(e) => this.setState({searchTerm: e.target.value})}></input>
-				<button onClick={()=>this.props.handelArticleSearch(this.state.searchTerm)}>search</button>
+				{/*<input className="search-input" placeholder="enter searchterm" onChange={(e) => this.setState({searchTerm: e.target.value})}></input>*/}
+				{/*<button onClick={()=>this.props.handelArticleSearch(this.state.searchTerm)}>search</button>*/}
 			</div>
 		)
 	}

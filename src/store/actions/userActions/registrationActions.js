@@ -5,9 +5,9 @@ import * as types from "../../types/userTypes";
 export const registerUserAction = (user) =>
   async (dispatch, getState, {backendFetcher}) => {
     dispatch(userActionLoading());
-    await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e))
+    await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e));
 
-    const options = {url: "/auth/register", method: "post",data: JSON.stringify(user)}
+    const options = {url: "/auth/register", method: "post",data: JSON.stringify(user)};
 
     try{
       const response = await backendFetcher(options);
@@ -44,7 +44,7 @@ export const confirmRegistration = (token) =>
 
       const options = {
         url: `/auth/confirm?token=${token}`,
-        method: "get"}
+        method: "get"};
 
       try{
         await backendFetcher(options);
@@ -53,12 +53,6 @@ export const confirmRegistration = (token) =>
         dispatch(confirmRegistrationFailed(error.message))
       }
   };
-
-export const doConfirmRegistration= () =>{
-  return{
-    type: types.DO_CONFIRM_REGISTRATION
-  }
-};
 
 export const confirmRegistrationSucceeded = () =>{
   return{
@@ -83,9 +77,15 @@ export const resendConfirmationToken = email =>
     data: email
   };
 
-    const response = await backendFetcher(options);
+    try{
+      await backendFetcher(options);
+      dispatch(resendConfirmationTokenDone("Successfully resend token."))
 
-    dispatch(resendConfirmationTokenDone(response.message))
+
+    }catch(error){
+      dispatch(resendConfirmationTokenDone(error.message))
+
+    }
 
 };
 

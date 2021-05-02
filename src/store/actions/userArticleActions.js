@@ -9,7 +9,7 @@ export const getUserArticles = () =>
       dispatch(loadUserArticles());
       const options ={ url: "/articles", method: 'get'};
       try{
-        const response = await backendFetcher(options)
+        const response = await backendFetcher(options);
         dispatch(getUserArticlesSucceeded(response.data))
       }catch(error){
         dispatch(getUserArticlesError(error.message))
@@ -53,7 +53,6 @@ export const getUserArticlesSucceeded = (articles) => {
 };
 
 
-///to have artcile in dashboard list where articles from backend are stored
 export const addArticleToUserArticleList = article => {
   return{
    type: types.ADD_ARTICLE_TO_USER_ARTICLELIST,
@@ -110,7 +109,6 @@ export const removeArticleFromLocalStorage = article => {
 export const removeBookmarkInDailyArticles = (article) => {
   return (dispatch, getState) => {
     const ownProps ={listType: "newsApiArticle"};
-    // const articleArray = getArticlesSelector(getState,ownProps)
     const articles = replaceArticleInArticlesArray(article, getArticlesSelector(getState(),ownProps));
     dispatch(fetchArticlesSucceeded(articles))
   }

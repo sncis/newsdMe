@@ -25,13 +25,4 @@ export const setDailyArticlesSuccess = articles => {
     type: types.SET_DAILY_ARTICLES_SUCCESS,
     payload: articles
   }
-}
-
-
-// export const setDailyArticlesError = (message) => {
-// 	return {
-// 		type: types.SET_DAILY_ARTICLES_ERROR,
-// 		payload: message
-// 	}
-// }
-
+};

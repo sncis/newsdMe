@@ -16,7 +16,9 @@ const userArticleReducer = (state = initialState, action='') =>{
 		case IS_LOADING_ARTICLES:
 			return{
 				...state,
-				isLoading:true
+				isLoading:true,
+				errorMsg:''
+
 			}
 		case GET_USER_ARTICLES_SUCCESS:
 		return {
@@ -32,11 +34,12 @@ const userArticleReducer = (state = initialState, action='') =>{
 				errorMsg: action.payload
 			}
 			case ADD_ARTICLE_TO_USER_ARTICLELIST:
-				console.log("called user article reducer")
 			return{
 				...state,
 				isLoading:false,
-				articles: [...state.articles, action.payload]
+				articles: [...state.articles, action.payload],
+				errorMsg:''
+
 			}
 
 		default:

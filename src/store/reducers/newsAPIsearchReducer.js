@@ -13,17 +13,17 @@ const newsAPIsearchReducer = (state= initialState, action='') => {
 			return {
 				...state,
 				isLoading:true,
-			}
+			};
 			case ARTICLE_SEARCH_SUCCESS:
 				return {
 					...state,
 					articles: action.payload
-				}
+				};
 				case ARTICLE_SEARCH_ERROR:
 					return {
 						...state,
 						errorMsg: action.payload
-					}
+					};
 			default:
 				return state
 

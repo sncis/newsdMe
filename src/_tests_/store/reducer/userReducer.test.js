@@ -138,6 +138,9 @@ describe("userReducer", () => {
 			isAdmin:false,
 			resendTokenMsg:"error is send token again",
 			confirmed: false,
+			isLoading: false,
+			errorMsg: "",
+
 		})
 
 	});
@@ -149,6 +152,11 @@ describe("userReducer", () => {
 		expect(userReducer(undefined,action)).toEqual({
 			loggedIn: false,
 			isAdmin:false,
+			confirmed: false,
+			errorMsg:'',
+			isLoading: false,
+
+
 		})
 	})
 });

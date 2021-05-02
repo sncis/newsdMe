@@ -34,7 +34,6 @@ export const loginUserSucceeded = (username ) => {
 };
 
 export const loginUserError = (msg) => {
-  console.log(msg)
   return{
     type: types.USER_LOGIN_FAILED,
     payload: msg
@@ -50,7 +49,6 @@ export const logoutAction = () =>
     try{
       await backendFetcher(options)
     }catch(error){
-      console.log(error)
       return;
     }
     deleteCookies();
@@ -77,7 +75,6 @@ export const goToAdminSide = () =>
       const response = await backendFetcher(options)
       dispatch(goAdminSucceeded(response.data))
     }catch(error){
-      console.log(error.message)
       dispatch(goAdminFailed(error.message))
     }
   };
@@ -97,49 +94,4 @@ export const goAdminFailed = (errorMsg) =>{
   }
 };
 
-/**********Geolocation actions */
-
-// const googleGeo = (latitude, longitude) => {
-//   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
-//   console.log(`$url for google: ${url}`)
-//   return axios.get(url).then(response =>{
-//     console.log(response)
-//   }).catch(error => {
-//     console.log(error)
-//   })
-// }
-
-// const success= (pos) => {
-//   console.log(`longitude ${pos.coords.longitude}`)
-//   console.log(`latitude ${pos.coords.latitude}`)
-//   googleGeo(pos.coords.latitude, pos.coords.longitude)
-// }
-// const error = () => {
-//   return (dispatch) => {
-//     dispatch(setGeolocation(['us']))
-//   }
-
-// }
-// const retrieveGeolocation = () => {
-
-// navigator.geolocation.getCurrentPosition(success, error)
-  
-// }
-
-
-// export const getGeolocation = () => {
-//   const location = retrieveGeolocation() 
-//   console.log(location)
-//   return dispatch => {
-//     dispatch(setGeolocation(location))
-//   }
-// }
-
-// export const setGeolocation = location => {
-//   return {
-//     type: SET_GEOLOCATION,
-//     payload: location
-
-//   }
-// }
 

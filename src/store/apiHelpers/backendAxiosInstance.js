@@ -32,7 +32,6 @@ backendAxiosInstance.interceptors.request.use((config) => {
   console.log("*******")
 
   if(csrfToken) config.headers['X-XSRF-TOKEN'] = csrfToken;
-  if(csrfToken) config.headers['X-CSRF-TOKEN'] = csrfToken;
 
 
   console.log("headers from request")

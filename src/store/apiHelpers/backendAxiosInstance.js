@@ -43,7 +43,7 @@ backendAxiosInstance.interceptors.request.use((config) => {
 
   console.log(config.headers['X-XSRF-TOKEN']);
   console.log(config.headers['X-CSRF-TOKEN']);
-  config.withCredentials = true,
+  config.withCredentials = true;
 
   return config;
 })

@@ -4,6 +4,8 @@ const initialState = {
   loggedIn: false,
   isAdmin:false,
   confirmed: false,
+  errorMsg:'',
+
 };
 
 const userReducer = (state = initialState, action='') => {
@@ -72,8 +74,6 @@ const userReducer = (state = initialState, action='') => {
         isAdmin:false,
         isLoading:false,
         errorMsg:'',
-
-
       };
     case types.DO_ADMIN_FAILED:
       return{
@@ -90,7 +90,6 @@ const userReducer = (state = initialState, action='') => {
         isAdmin: true,
         isLoading:false,
         errorMsg:'',
-
       };
     case types.RESEND_REGISTRATIONTOKEN_MSG:
      return {

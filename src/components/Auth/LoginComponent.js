@@ -19,7 +19,6 @@ export class LoginComp extends Component {
 
 
 	handleChange = event =>{
-		console.log(this.state)
 		const isCheckbox = event.target.type === 'checkbox'
 		this.setState({
 			[event.target.name]: isCheckbox ? event.target.checked : event.target.value
@@ -38,7 +37,6 @@ export class LoginComp extends Component {
 
 	handelLogin = (e)=> {
 		e.preventDefault()
-		console.log("login called")
 		let isValid = this.validateForm()
 		if(isValid){
 			this.setState({
@@ -49,7 +47,6 @@ export class LoginComp extends Component {
 			this.props.loginUser(loginUser);
 
 		}
-		// this.props.loginUser(this.state);
 	}
 
 	render() {

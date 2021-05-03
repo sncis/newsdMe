@@ -11,6 +11,7 @@ describe("userReducer", () => {
 			loggedIn: false,
 			isAdmin: false,
 			confirmed: false,
+			errorMsg:'',
 
 				}
 		)

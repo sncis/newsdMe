@@ -1,4 +1,3 @@
-import Cookies from "universal-cookie";
 import backendAxiosInstance from "./backendAxiosInstance";
 
 
@@ -15,6 +14,7 @@ const backendApiFetcher = onAuthFailure => async(options) => {
 
   } catch (error){
     if(!error.response){
+      console.log(error)
       throw new Error("Sorry some Error occurred")
     }else{
       if(error.response.status === 401){
@@ -31,6 +31,8 @@ const backendApiFetcher = onAuthFailure => async(options) => {
   }
 
 };
+
+
 
 
 export default backendApiFetcher

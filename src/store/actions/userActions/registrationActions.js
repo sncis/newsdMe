@@ -70,23 +70,14 @@ export const confirmRegistrationFailed = msg => {
 export const resendConfirmationToken = email =>
   async (dispatch, getState , {backendFetcher}) => {
     dispatch(userActionLoading());
-
-    const options ={
-    url: "/auth/resendConfirmationToken",
-    method:"post",
-    data: email
-  };
+    const options ={ url: "/auth/resendConfirmationToken", method:"post",data: email};
 
     try{
       await backendFetcher(options);
       dispatch(resendConfirmationTokenDone("Successfully resend token."))
-
-
     }catch(error){
       dispatch(resendConfirmationTokenDone(error.message))
-
     }
-
 };
 
 export const resendConfirmationTokenDone = (msg) =>{

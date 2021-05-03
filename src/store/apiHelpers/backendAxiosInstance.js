@@ -19,7 +19,19 @@ const getCookies = ()=>
 
 backendAxiosInstance.interceptors.request.use((config) => {
   const csrfToken = getCookies()['XSRF-TOKEN']
+  console.log("getting cookies")
+  console.log(getCookies())
+  console.log("csrf token ")
+  console.log(csrfToken)
   if(csrfToken) config.headers['X-XSRF-TOKEN'] = csrfToken;
+
+  console.log("headers")
+  console.log(config.headers)
+  console.log("configs")
+  console.log(config)
+  console.log("xsrf cheader")
+
+  console.log(config.headers['X-XSRF-TOKEN']);
   return config;
 })
 

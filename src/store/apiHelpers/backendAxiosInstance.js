@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 
 const backendAxiosInstance = axios.create({
@@ -24,7 +25,8 @@ export const getCookies = ()=>
 backendAxiosInstance.interceptors.request.use((config) => {
   const selfToken = Math.random().toString(36).substring(10)
 
-  //
+  const coo = new Cookies()
+  coo.set("CSRF-TOKEN",selfToken);
   config.xsrfHeaderName= 'X-CSRF-TOKEN';
   config.xsrfCookieName= 'CSRF-TOKEN';
   document.cookie = 'CSRF-TOKEN=' + selfToken;
@@ -35,33 +37,9 @@ backendAxiosInstance.interceptors.request.use((config) => {
   console.log(getCookies()['CSRF-TOKEN'])
   console.log(config.xsrfCookieName)
   console.log("in request interceptor")
-  console.log(config.headers.xsrfHeaderName)
+  console.log(config.xsrfHeaderName)
   console.log(config.headers)
 
-  // const csrfToken = getCookies()['XSRF-TOKEN']
-  // const newCsrfToken = getCookies()["X-CSRF-TOKEN"]
-  // console.log("getting all cookies")
-  // console.log(getCookies())
-  // console.log("csrf token ")
-  // console.log(csrfToken)
-  //
-  // console.log("new cookie header")
-  // console.log(newCsrfToken)
-  // console.log("*********")
-  // console.log("*******")
-  // console.log("*******")
-  //
-  // if(csrfToken) config.headers['X-XSRF-TOKEN'] = csrfToken;
-  //
-  //
-  // console.log("headers from request")
-  // console.log(config.headers)
-  // console.log("configs")
-  // console.log(config)
-  // console.log("xsrf cheader in request ")
-  //
-  // console.log(config.headers['X-XSRF-TOKEN']);
-  // console.log(config.headers['X-CSRF-TOKEN']);
   config.withCredentials = true;
 
   return config;
@@ -70,12 +48,13 @@ backendAxiosInstance.interceptors.request.use((config) => {
 backendAxiosInstance.interceptors.response.use((response) => {
   console.log("response headers**************")
   const cookies = getCookies()['CSRF-TOKEN']
-  console.log("csrf cookie")
+  console.log("csrf cookie from response")
   console.log(cookies)
-  console.log("all cookies")
-  console.log(getCookies())
-  console.log("headers name ")
-  console.log(response.headers.xsrfHeaderName);
+
+  console.log("headers name from response")
+  console.log("headers name from response")
+  console.log(response.headers);
+
   return response;
 })
 

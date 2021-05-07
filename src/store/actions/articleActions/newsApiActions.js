@@ -18,8 +18,6 @@ export const fetchArticles = ()=>{
   }
 }
 
-
-
 export const isLoadingArticles =()=>{
   return{
     type: types.IS_LOADING_ARTICLES,

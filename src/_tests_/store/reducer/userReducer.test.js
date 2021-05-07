@@ -40,7 +40,6 @@ describe("userReducer", () => {
 				registered: true,
 				loggedIn: false,
 				errorMsg:'',
-				confirmationToken:"some token",
 				isAdmin:false,
 				confirmed: false,
 

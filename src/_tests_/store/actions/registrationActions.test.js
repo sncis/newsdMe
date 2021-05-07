@@ -21,9 +21,8 @@ describe("RegistrationAction", () => {
   })
 
   it("should dispatch registrationUserSucceeded", async () => {
-    const backendFetcher = {
-      backendFetcher: () => Promise.resolve({data: {token: "some token"}})
-    }
+    const backendFetcher = () => Promise.resolve({data:'', status:200})
+    
     const mockStore = configureMockStoreWithExtraArg(backendFetcher)
     store = mockStore()
 
@@ -32,7 +31,7 @@ describe("RegistrationAction", () => {
     },
       {
         type: types.USER_REGISTER_SUCCEEDED,
-        payload: {user: "someUser", confirmationToken: "some token"}
+        payload: {user: "someUser"}
       }]
 
     await store.dispatch(userActions.registerUserAction(user)).then(() => {
@@ -41,9 +40,8 @@ describe("RegistrationAction", () => {
   })
 
   it("should dispatch registrationUserFailed", async () => {
-    const backendFetcher = {
-      backendFetcher: () => Promise.reject({message: "some error"})
-    }
+    const backendFetcher =  () => Promise.reject({message: "some error"})
+    
     const mockStore = configureMockStoreWithExtraArg(backendFetcher);
     store = mockStore()
 
@@ -61,9 +59,8 @@ describe("RegistrationAction", () => {
   })
 
   it("should dispatch confirm registration succeeded", async () => {
-    const backendFetcher = {
-      backendFetcher: () => Promise.resolve({status: "ok"})
-    }
+    const backendFetcher =  () => Promise.resolve({status: "ok"})
+    
     const mockStore = configureMockStoreWithExtraArg(backendFetcher)
     store = mockStore()
 
@@ -78,9 +75,8 @@ describe("RegistrationAction", () => {
   })
 
   it("should dispatch confirm registration failed", async () => {
-    const fetcher = {
-      backendFetcher: () => Promise.reject({message: "some error"})
-    }
+    const fetcher = () => Promise.reject({message: "some error"})
+    
 
     const mockStore = configureMockStoreWithExtraArg(fetcher)
     store = mockStore()

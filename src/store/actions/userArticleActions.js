@@ -5,11 +5,11 @@ import {getArticlesSelector} from "../selectors/articleSelectors";
 
 
 export const getUserArticles = () =>
-    async (dispatch, getState, {backendFetcher}) =>{
+    async (dispatch, getState, backendApiFetcher) =>{
       dispatch(loadUserArticles());
       const options ={ url: "/articles", method: 'get'};
       try{
-        const response = await backendFetcher(options);
+        const response = await backendApiFetcher(options);
         dispatch(getUserArticlesSucceeded(response.data))
       }catch(error){
         dispatch(getUserArticlesError(error.message))
@@ -17,11 +17,11 @@ export const getUserArticles = () =>
     };
 
 export const saveUserArticle = article =>
-  async(dispatch,getState,{backendFetcher})=> {
+  async(dispatch,getState,backendApiFetcher)=> {
     const options = {url: "/articles", method: "post",data: JSON.stringify(article)};
 
     try {
-      await backendFetcher(options);
+      await backendApiFetcher(options);
       storeArticleInLocalStorage(article);
       dispatch(addArticleToUserArticleList(article));
       dispatch(replaceArticleInNewsAPIArticlesArray(article))
@@ -84,11 +84,11 @@ export const removeUserArticle = (article) => {
 
 
 export const deleteArticleInDB  = (article)=>
-  async (dispatch, getState, {backendFetcher}) => {
+  async (dispatch, getState, backendApiFetcher) => {
 
     const options = {url: `/articles/article?id=${article._id}`,method: 'delete'};
     try{
-      await backendFetcher(options);
+      await backendApiFetcher(options);
       dispatch(removeBookmarkInDailyArticles(article));
       removeArticleFromLocalStorage(article);
       dispatch(getUserArticles())

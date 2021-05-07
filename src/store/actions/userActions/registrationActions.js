@@ -1,17 +1,17 @@
 import * as types from "../../types/userTypes";
 
-/**********Register actions */
 
 export const registerUserAction = (user) =>
-  async (dispatch, getState, {backendFetcher}) => {
+  async (dispatch, getState, backendApiFetcher) => {
     dispatch(userActionLoading());
-    await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e));
+    // await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e));
 
     const options = {url: "/auth/register", method: "post",data: JSON.stringify(user)};
 
     try{
-      const response = await backendFetcher(options);
-      dispatch(registerUserSucceeded(user.username, response.data.token))
+      await backendApiFetcher({url:"/auth/login", method:'get'})
+      await backendApiFetcher(options);
+      dispatch(registerUserSucceeded(user.username))
     }catch(error){
       dispatch(registerUserFailed(error.message));
     }
@@ -24,10 +24,10 @@ export const userActionLoading = () => {
   }
 };
 
-export const registerUserSucceeded = (username,token) => {
+export const registerUserSucceeded = (username) => {
   return {
     type: types.USER_REGISTER_SUCCEEDED,
-    payload: {user: username, confirmationToken: token }
+    payload: {user: username}
   }
 };
 
@@ -39,15 +39,13 @@ export const registerUserFailed =(errorMsg)=>{
 };
 
 export const confirmRegistration = (token) =>
-    async (dispatch, getState, { backendFetcher }) => {
+    async (dispatch, getState, backendApiFetcher ) => {
       dispatch(userActionLoading());
 
-      const options = {
-        url: `/auth/confirm?token=${token}`,
-        method: "get"};
+      const options = {url: `/auth/confirm?token=${token}`,method: "get"};
 
       try{
-        await backendFetcher(options);
+        await backendApiFetcher(options);
         dispatch(confirmRegistrationSucceeded())
       }catch(error){
         dispatch(confirmRegistrationFailed(error.message))
@@ -68,12 +66,12 @@ export const confirmRegistrationFailed = msg => {
 };
 
 export const resendConfirmationToken = email =>
-  async (dispatch, getState , {backendFetcher}) => {
+  async (dispatch, getState , backendApiFetcher) => {
     dispatch(userActionLoading());
     const options ={ url: "/auth/resendConfirmationToken", method:"post",data: email};
 
     try{
-      await backendFetcher(options);
+      await backendApiFetcher(options);
       dispatch(resendConfirmationTokenDone("Successfully resend token."))
     }catch(error){
       dispatch(resendConfirmationTokenDone(error.message))

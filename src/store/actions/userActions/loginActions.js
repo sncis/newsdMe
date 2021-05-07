@@ -2,17 +2,14 @@ import * as types from "../../types/userTypes";
 import { deleteCookies } from "../actionHelpers/actionUtils";
 
 
-/********** login actions *******************/
-
 export const loginUserAction = user =>
-   async (dispatch, getState, {backendFetcher}) => {
+   async (dispatch, getState, backendApiFetcher) => {
      dispatch(loginUserLoading())
 
-     await backendFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e))
-
+     await backendApiFetcher({url:"/auth/login", method:'get'}).catch(e => console.log(e))
      const options = {url: "/auth/login",method: "post",data: JSON.stringify(user)}
     try{
-       await backendFetcher(options)
+       await backendApiFetcher(options)
         dispatch(loginUserSucceeded(user.username))
     }catch(error){
       dispatch(loginUserError(error.message));
@@ -41,20 +38,17 @@ export const loginUserError = (msg) => {
 };
 
 export const logoutAction = () =>
-  async (dispatch, getState, {backendFetcher}) => {
-    const options={
-      url:"/logout",
-      method: "post",
-    }
+  async (dispatch, getState, backendApiFetcher) => {
+    const options={url:"/logout",method: "post"}
+
     try{
-      await backendFetcher(options)
+      await backendApiFetcher(options)
     }catch(error){
       return;
     }
     deleteCookies();
     window.sessionStorage.clear()
     dispatch(logout())
-
 };
 
 
@@ -66,13 +60,10 @@ export const logout = () => {
 };
 
 export const goToAdminSide = () =>
-  async (dispatch,getState, {backendFetcher}) => {
-    const options = {
-      url:'/admin',
-      method:'get'
-    }
+  async (dispatch, getState, backendApiFetcher) => {
+    const options = {url:'/admin',method:'get'}
     try{
-      const response = await backendFetcher(options)
+      const response = await backendApiFetcher(options)
       dispatch(goAdminSucceeded(response.data))
     }catch(error){
       dispatch(goAdminFailed(error.message))
@@ -90,7 +81,6 @@ export const goAdminFailed = (errorMsg) =>{
   return{
     type: types.DO_ADMIN_FAILED,
     payload: errorMsg
-
   }
 };
 

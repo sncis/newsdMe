@@ -1,24 +1,26 @@
 import backendAxiosInstance from "./backendAxiosInstance";
+import { logoutAction } from "../actions/userActions/loginActions"
 
 
 const backendApiFetcher = onAuthFailure => async(options) => {
-
+// const backendApiFetcher = async (options) => {
   try{
-    const response =  await backendAxiosInstance.request({
+    return await backendAxiosInstance.request({
       url: options.url,
       method: options.method,
       data: options.data
     });
 
-    return response
+    // return response
 
   } catch (error){
     if(!error.response){
-      console.log(error)
+      // console.log(error)
       throw new Error("Sorry some Error occurred")
     }else{
       if(error.response.status === 401){
         onAuthFailure()
+        // logoutAction()
         throw new Error(error.response.data)
       }else if(error.response.status === 403){
         throw new Error("Sorry you are not allowed to access this resource")

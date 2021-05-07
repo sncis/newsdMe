@@ -33,9 +33,9 @@ export const getUsernameSelector = state => {
 };
 
 
-export const getRegistrationSuccessSelector=(state)=>{
-	return state.userReducer.registered
-};
+// export const getRegistrationSuccessSelector=(state)=>{
+// 	return state.userReducer.registered
+// };
 
 export const getResendTokenMsgSelector= (state)=>{
 	return state.userReducer.resendTokenMsg

@@ -9,12 +9,8 @@ import { logoutAction } from "../actions/userActions/loginActions"
 // export default store;
 
 const store = createStore(rootReducer,
-    applyMiddleware(thunk.withExtraArgument(
-        {backendFetcher: backendApiFetcher(() => {
-            store.dispatch(logoutAction())
-        }
-          )}
-        )
+    // applyMiddleware(thunk.withExtraArgument(backendApiFetcher)
+    applyMiddleware(thunk.withExtraArgument(backendApiFetcher(() => {store.dispatch(logoutAction())}))
     )
 )
 

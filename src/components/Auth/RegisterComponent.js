@@ -23,13 +23,12 @@ const initialState = {
 export class RegisterComp extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      initialState
-    };
+    this.state=initialState;
+ 
   }
 
   handleChange = event =>{
-    console.log(this.state)
+    // console.log(this.state)
     const isCheckbox = event.target.type === 'checkbox'
     this.setState({
       [event.target.name]: isCheckbox ? event.target.checked : event.target.value
@@ -64,14 +63,18 @@ export class RegisterComp extends Component {
     if(usernameError || passwordError || emailError){
       this.setState(({usernameError, passwordError, emailError}))
       return false
-    }if(matchingError){
-      this.setState({matchingError})
+    }
+    if(matchingError){
+      this.setState({matchingError: matchingError})
       return false
     }
     return true
   }
 
   render() {
+    if(this.props.isLoading){
+      return("Loading....")
+    }
     return (
       <div>
         <form id="registrationForm" className='auth-form' onSubmit={this.submitRegistration}>
@@ -126,7 +129,7 @@ export class RegisterComp extends Component {
             <div className="input-container">
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
-                id="confPassword"
+                id="confirmPassword"
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm password"
@@ -140,14 +143,17 @@ export class RegisterComp extends Component {
               >Register</button>
         </form>
 
+       {/* <p id="passwordMatchingError">{this.state.matchingError}</p> */}
+       {this.props.registrationErrorMsg && <div><p id="#registrationErrorMsg">{this.props.registrationErrorMsg}</p></div>}
+
         {this.state.matchingError && <div id="passwordMatchingError"><p>{this.state.matchingError}</p></div>}
-        {this.props.registrationErrorMsg && <div><p id="#registrationErrorMsg">{this.props.registrationErrorMsg}</p></div>}
-        {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration </p><
-          p>{this.props.confirmationToken}</p></div>}
-        {this.props.isLoading && <p>Loading...</p>}
+        {/* {this.props.registrationErrorMsg && <div><p id="#registrationErrorMsg">{this.props.registrationErrorMsg}</p></div>} */}
+        {/* {this.props.confirmationToken && <div onClick={() => this.props.confirmRegistration(this.props.confirmationToken)}><p>click here to confirm registration </p><
+          p>{this.props.confirmationToken}</p></div>} */}
+        {/* {this.props.isLoading && <p>Loading...</p>} */}
 
 
-        {this.props.isRegistrationSuccess && <Redirect to="/confirm/1" />}
+        {this.props.registerSuccessful && <Redirect to="/confirm/1" />}
 
 
       </div>
@@ -169,7 +175,7 @@ const mapStateToProps = state => {
     registrationErrorMsg : getErrorMsgSelector(state),
     registerSuccessful: getRegisteredSelector(state),
     confirmationToken : getConfirmationTokenSelector(state),
-    isRegistrationSuccess: getRegistrationSuccessSelector(state),
+    // isRegistrationSuccess: getRegistrationSuccessSelector(state),
 
   }
 }

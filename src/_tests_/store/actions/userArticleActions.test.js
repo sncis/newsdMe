@@ -50,9 +50,8 @@ describe("userArticleActions", () => {
 		// })
 
 		it("should dispatch loadUserArticles and getUserArticlesSucceeded", async() => {
-			const backendFetcher = {
-				backendFetcher: () => Promise.resolve({headers:{cookie:'some cookie'}, data: testArticles}),
-			}
+			const backendFetcher =  () => Promise.resolve({headers:{cookie:'some cookie'}, data: testArticles})
+			
 
 			const mockStore = configureMockStoreWithArg(backendFetcher);
 			store = mockStore(mockState);
@@ -70,9 +69,8 @@ describe("userArticleActions", () => {
 		});
 		it("should dispatch loadUserArticles and getUserArticlesfailed", async() => {
 
-			const backendFetcher = {
-				backendFetcher: () => Promise.reject({message: "some error"}),
-			}
+			const backendFetcher =  () => Promise.reject({message: "some error"})
+			
 
 			const mockStore = configureMockStoreWithArg(backendFetcher)
 			store = mockStore(mockState)
@@ -175,9 +173,8 @@ describe("userArticleActions", () => {
 				isBookmarked: false
 			}
 
-			const backendFetcher = {
-				backendFetcher: () => Promise.resolve({headers:{cookie:'some cookie'}, data: article1}),
-			}
+			const backendFetcher =  () => Promise.resolve({headers:{cookie:'some cookie'}, data: article1})
+			
 			const mockState ={
 				userArticleReducer: {articles:[]},
 				userReducer: {username: 'someUser'},
@@ -214,9 +211,8 @@ describe("userArticleActions", () => {
 				isBookmarked: true
 			}
 
-			const backendFetcher = {
-				backendFetcher: () => Promise.reject({message: "some error message"}),
-			}
+			const backendFetcher = () => Promise.reject({message: "some error message"})
+			
 			const mockState ={userArticleReducer: {articles:testArticles}, userReducer: {username: 'someUser'},newsApiArticleReducer:{articles:[]}}
 			const mockStore = configureMockStoreWithArg(backendFetcher)
 			store = mockStore(mockState)
@@ -258,9 +254,8 @@ describe("userArticleActions", () => {
 				userReducer: {username: 'someUser'},
 				newsApiArticleReducer: {articles: articles}}
 
-			const backendFetcher = {
-				backendFetcher: () => Promise.resolve( {data: testArticles}),
-			}
+			const backendFetcher =  () => Promise.resolve( {data: testArticles})
+			
 			const mockStore = configureMockStoreWithArg(backendFetcher)
 			store = mockStore(mockState)
 
@@ -285,9 +280,8 @@ describe("userArticleActions", () => {
 
 		it("should dispatch getUserArticlesFailed", async() =>{
 
-			const backendFetcher = {
-				backendFetcher: () => Promise.reject( {message: "some error"}),
-			}
+			const backendFetcher = () => Promise.reject( {message: "some error"})
+			
 			const mockStore = configureMockStoreWithArg(backendFetcher)
 			store = mockStore(mockState)
 

@@ -33,16 +33,10 @@ let articles = [{author: null,
 
 describe("HomeComponent", () =>{
 	it("should render daily articles", async () => {
-	// 	 mockAxios.get.mockImplementationOnce(() =>
-	// 	Promise.resolve({data:{articles:articles}}
-	// ))
+
 		newsApiFetcher.mockImplementationOnce(()=> Promise.resolve({
 			data:{articles:testArticles}
 		}))
-		// const spy = jest.spyOn(global.localStorage, "getItem")
-	//
-	// spy.mockImplementationOnce().mockReturnValueOnce(JSON.stringify(articles))
-
 	const component = mount(<Provider store={store}> 
 			<BrowserRouter> 	
 				<HomeComponent />

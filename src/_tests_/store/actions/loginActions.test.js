@@ -12,7 +12,6 @@ import {goToAdminSide} from "../../../store/actions/userActions/loginActions";
 const configureMockStoreWithArg = (backendFetcher) => configureMockStore([thunk.withExtraArgument(backendFetcher)]);
 
 
-
 describe("loginActions", () => {
 	let user
 	let store
@@ -27,9 +26,8 @@ describe("loginActions", () => {
 	})
 
 	it("should dispatch login succeeded", async () => {
-		const backendFetcher = {
-			backendFetcher: () => Promise.resolve({headers:{cookie:'some cookie'}}),
-		}
+		const backendFetcher =  () => Promise.resolve({headers:{cookie:'some cookie'}})
+		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
 		store = mockStore()
 
@@ -46,9 +44,8 @@ describe("loginActions", () => {
 	})
 
 	it("should dispatch loginUserFailed", async () => {
-		const backendFetcher = {
-			backendFetcher: () => Promise.reject({message:"some error"}),
-		}
+		const backendFetcher =  () => Promise.reject({message:"some error"})
+		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
 		store = mockStore()
 		const expectedActions=[{
@@ -64,9 +61,8 @@ describe("loginActions", () => {
 	})
 
 	it("should perform logout",  async() => {
-		const backendFetcher = {
-			backendFetcher: () => Promise.resolve({status:"ok"}),
-		}
+		const backendFetcher =  () => Promise.resolve({status:"ok"})
+		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
 		store = mockStore()
 
@@ -79,9 +75,8 @@ describe("loginActions", () => {
 	})
 
 	it("should go to Admin side if user is admin", async() =>{
-		const backendFetcher = {
-			backendFetcher: () => Promise.resolve({data:"its an admin"}),
-		}
+		const backendFetcher =  () => Promise.resolve({data:"its an admin"})
+		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
 		store = mockStore()
 		const expectedActions =[{
@@ -94,9 +89,8 @@ describe("loginActions", () => {
 	})
 
 	it("should should not go to AdminSide if user is normal user", async() =>{
-		const backendFetcher = {
-			backendFetcher: () => Promise.reject({message:"sorry you are not allowed"}),
-		}
+		const backendFetcher =  () => Promise.reject({message:"sorry you are not allowed"})
+		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
 		store = mockStore()
 		const expectedActions =[{

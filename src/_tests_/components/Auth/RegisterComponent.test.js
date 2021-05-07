@@ -35,7 +35,7 @@ describe("RegisterComponent", () => {
 		component.find('#username').simulate('change',{target:{value:"someUser",name:'username'}})
 		component.find('#email').simulate('change',{target:{value:"some@email.com",name:'email'}})
 		component.find('#password').simulate('change',{target:{value:"someUser1234!",name:'password'}})
-		component.find('#confPassword').simulate('change',{target:{value:"someUser1234!",name:'confPassword'}})
+		component.find('#confirmPassword').simulate('change',{target:{value:"someUser1234!",name:'confirmPassword'}})
 
 
 		const onRegistrationSpy = jest.spyOn(component.instance(), 'submitRegistration')
@@ -107,13 +107,23 @@ describe("RegisterComponent", () => {
 describe("RegisterComp", () => {
 
 	it("should render errorMsg", () => {
-		const component = shallow(<RegisterComp isLoading={true} registerUser={jest.fn()} registrationErrorMsg="some error"/>);
+		const component = shallow(<RegisterComp isLoading={false} registerUser={jest.fn()} registrationErrorMsg="some error"/>);
 
 		console.log(component.debug())
 
 		expect(component.instance().props.registrationErrorMsg).toEqual("some error")
-
-		// expect(component.find("#registrationErrorMsg").length).toEqual(1)
 	
+	})
+	it("should render isLoading while loading", () => {
+		const component = shallow(<RegisterComp isLoading={true} registerUser={jest.fn()}/>);
+
+		console.log(component.debug())
+
+		expect(component.find("#registrationErrorMsg").length).toEqual(0)
+		
+		expect(component.length).toEqual(1)
+		expect(component.find("input").length).toEqual(0)
+		expect(component.find('button').length).toEqual(0)
+			
 	})
 })

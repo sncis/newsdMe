@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, withRouter } from "react-router-dom"
 import { connect } from 'react-redux'
 
-import { getConfirmedSelector, getResendTokenMsgSelector,getRegistrationSuccessSelector, isLoadingUserSelector } from "../../store/selectors/userSelectors";
+import { getConfirmedSelector, getResendTokenMsgSelector,getRegisteredSelector, isLoadingUserSelector } from "../../store/selectors/userSelectors";
 import {confirmRegistration,resendConfirmationToken} from "../../store/actions/userActions/registrationActions";
 import "../../css/AuthForm.css"
 import {emailValidator, validateConfirmationToken} from "../../validators/validators";
@@ -82,8 +82,6 @@ export class ConfirmationComp extends React.Component {
                 </div>
                 {this.props.isLoading && <p>Loading...</p>}
                 {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
-
-
               </form>
 
             </div>}
@@ -96,9 +94,7 @@ export class ConfirmationComp extends React.Component {
               {this.props.resendTokenMsg && <p>{this.props.resendTokenMsg}</p>}
               {this.props.isLoading && <p>Loading...</p>}
 
-            </div>
-
-            }
+            </div>}
 
 
             {this.props.isConfirmed && <Redirect to="/"/>}
@@ -120,7 +116,7 @@ const mapDispatchToProps = (dispatch)=>{
 
 const mapStateToProps = state => {
   return{
-    isRegistered: getRegistrationSuccessSelector(state),
+    isRegistered: getRegisteredSelector(state),
     isConfirmed: getConfirmedSelector(state),
     isLoading: isLoadingUserSelector(state),
     // isConfirmationSuccess: getConfirmedSelector(state),

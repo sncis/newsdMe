@@ -24,7 +24,6 @@ const userReducer = (state = initialState, action='') => {
         isLoading: false,
         registered: true,
         errorMsg:'',
-        confirmationToken: action.payload.confirmationToken
       };
     case types.USER_REGISTRATION_FAILED:
     return{

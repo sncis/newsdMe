@@ -21,7 +21,7 @@ TO test the app you can use 2 pre-registered accounts:
 
 2. Admin credentials:
    - usernae: adminUser
-   - password: adminPass1234! \n
+   - password: adminPass1234! 
 
 
 # Getting Started

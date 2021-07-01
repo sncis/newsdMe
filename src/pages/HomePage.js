@@ -6,7 +6,7 @@ import PageContainer from '../containers/PageContainer'
 export const HomePage =() => {
 	return(
 		<PageContainer onlyLogo ={false}>
-			<Link to="/dashboard">Dashboard</Link>
+			<Link to="/dashboard" data-cy="dashboard-link">Dashboard</Link>
 			<HomeComponent />		
 		</PageContainer>
 	)

@@ -24,8 +24,7 @@ export const cleanUrlValidator = cleanUrl => {
 export const linkValidator = url => {
   const parsedURl =  new URL(url);
   const isValid =  ['http:', 'https:'].includes(parsedURl.protocol)
-  return isValid
-
+  return isValid;
 };
 
 

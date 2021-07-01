@@ -64,7 +64,7 @@ export class LoginComp extends Component {
 						<input type="password" placeholder="enter password" name="password" id="password" value ={this.state.password} onChange={this.handleChange} />
 					</div>
 					{this.state.validationError && <div className="validationError">{this.state.validationError}</div>}
-					<button type="submit">Login</button>
+					<button type="submit" data-cy='login-btn'>Login</button>
 				</form>
 				{this.props.isLoading && <div><p id="loadingMsg">Loading...!</p></div>}
         {this.props.errorMsg && <div><p id="errorMsg">{this.props.errorMsg}</p></div>}

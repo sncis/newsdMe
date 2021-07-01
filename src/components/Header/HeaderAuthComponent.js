@@ -18,7 +18,7 @@ export const HeaderAuth =(props)=> {
 					</Link>
 
 					<Link to="/auth/2" className="register">
-						<button className="login-btn">Register</button>
+						<button className="register-btn">Register</button>
 					</Link>
 				</div>
 			}

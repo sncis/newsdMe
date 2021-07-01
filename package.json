@@ -12,19 +12,20 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.3",
+    "react-router": "latest",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "universal-cookie": "^4.0.4",
-    "uuid": "^8.3.2",
-    "react-router": "latest"
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -50,8 +51,10 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.4",
     "axios-mock-adapter": "^1.19.0",
+    "cypress": "^7.3.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "redux-mock-store": "^1.5.4"
+    "redux-mock-store": "^1.5.4",
+    "start-server-and-test": "^1.12.2"
   }
 }

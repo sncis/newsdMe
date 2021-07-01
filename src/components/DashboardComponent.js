@@ -20,7 +20,7 @@ export class DashboardComponent extends React.Component {
       <div className="">
         <div>
          <h2>Your bookmarked Articles</h2>
-          <Link onClick={() => this.props.goToAdminSide()} to='/admin'>go to admin side</Link>
+          <Link onClick={() => this.props.goToAdminSide()} to='/admin' data-cy="admin-link">go to admin side</Link>
           {this.props.backendErrorMsg && <p>{this.props.backendErrorMsg}</p>}
           <ArticleList listType='userArticle'/>
        </div>

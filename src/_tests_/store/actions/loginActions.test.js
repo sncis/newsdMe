@@ -13,66 +13,66 @@ const configureMockStoreWithArg = (backendFetcher) => configureMockStore([thunk.
 
 
 describe("loginActions", () => {
-	let user
-	let store
+	let user;
+	let store;
 
 	beforeEach(()=>{
 		user = {"username": "someUser", "password": "somePassword"}
 
-	})
+	});
 
 	afterEach(()=>{
 		store.clearActions()
-	})
+	});
 
 	it("should dispatch login succeeded", async () => {
 		const backendFetcher =  () => Promise.resolve({headers:{cookie:'some cookie'}})
 		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
-		store = mockStore()
+		store = mockStore();
 
 		const expectedActions=[{
 			type: types.IS_LOADING
 		},{
 			type: types.USER_LOGIN_SUCCEEDED,
 			payload: user.username
-		}]
+		}];
 
 		await store.dispatch(actions.loginUserAction(user)).then(()=>{
 			expect(store.getActions()).toEqual(expectedActions)
 		})
-	})
+	});
 
 	it("should dispatch loginUserFailed", async () => {
 		const backendFetcher =  () => Promise.reject({message:"some error"})
 		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
-		store = mockStore()
+		store = mockStore();
 		const expectedActions=[{
 			type: types.IS_LOADING
 		},{
 			type: types.USER_LOGIN_FAILED,
 			payload: "some error"
-		}]
+		}];
 
 		await store.dispatch(actions.loginUserAction(user)).then(()=>{
 			expect(store.getActions()).toEqual(expectedActions)
 		})
-	})
+	});
 
 	it("should perform logout",  async() => {
 		const backendFetcher =  () => Promise.resolve({status:"ok"})
 		
 		const mockStore = configureMockStoreWithArg(backendFetcher)
-		store = mockStore()
+		store = mockStore();
 
 		const expectedActions=[{
 			type: types.DO_LOGOUT_USER
-		}]
+		}];
 		await store.dispatch(actions.logoutAction())
 		expect(store.getActions()).toEqual(expectedActions)
 
-	})
+	});
 
 	it("should go to Admin side if user is admin", async() =>{
 		const backendFetcher =  () => Promise.resolve({data:"its an admin"})
@@ -82,11 +82,11 @@ describe("loginActions", () => {
 		const expectedActions =[{
 			type: types.DO_ADMIN_SUCCEEDED,
 			payload: "its an admin"
-		}]
+		}];
 		await store.dispatch(actions.goToAdminSide())
 
 		expect(store.getActions()).toEqual(expectedActions)
-	})
+	});
 
 	it("should should not go to AdminSide if user is normal user", async() =>{
 		const backendFetcher =  () => Promise.reject({message:"sorry you are not allowed"})
@@ -101,25 +101,4 @@ describe("loginActions", () => {
 
 		expect(store.getActions()).toEqual(expectedActions)
 	})
-
-// 	it("should catch error when logout failed", async()=>{
-// 		const backendFetcher = {
-// 			backendFetcher: () => Promise.reject({message:"some error"}),
-// 		}
-// 		const mockStore = configureMockStoreWithArg(backendFetcher)
-// 		store = mockStore()
-//
-// 		await store.dispatch(actions.logoutAction())
-//
-// 		const expectedActions=[{
-// 			type: types.DO_LOGOUT_USER
-// 		}]
-// 		expect(store.getActions()).toEqual(expectedActions)
-//
-// 		const consoleSpy = jest.spyOn(global.window.sessionStorage, 'clear')
-//
-// 		expect(consoleSpy).toHaveBeenCalled()
-// 		// expect(console.warn).toHaveBeenCalledWith("some error")
-//
-// 	})
-})
+});

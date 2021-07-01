@@ -66,7 +66,7 @@ export const storeArticleInLocalStorage = (article) => {
   addArticleToLocalStorage(bookmarkedArticles)
 };
 
-export const replaceArticleInNewsAPIArticlesArray = (article)=> {
+export const replaceArticleInNewsAPIArticlesArray = (article) => {
   return (dispatch, getState) => {
     const ownProps={listType:"newsApiArticle"};
     const apiArticles = getArticlesSelector(getState(), ownProps);

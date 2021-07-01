@@ -12,7 +12,7 @@ export const handelArticleSearch = (searchTerm) => {
 		const url = `${BASE_URL}${searchTerm}&apiKey=${NEWS_API_KEY}`
 		try{
 			const response = await axios.get(url)
-			dispatch(articleSearchSuccesful(response.data.articles))
+			dispatch(articleSearchSuccessful(response.data.articles))
 		}catch(error) {
 			console.log(error)
 			let message = error.response !== undefined ? error.response.data : "could not get articles"
@@ -27,7 +27,7 @@ export const loadArticleSearch = () => {
 	}
 }
 
-export const articleSearchSuccesful = (articles) => {
+export const articleSearchSuccessful = (articles) => {
 	return {
 		type: types.ARTICLE_SEARCH_SUCCESS,
 		payload: articles
